@@ -1,8 +1,8 @@
-import { createUser, checkUser } from './repository.js';
+import { createUser, checkUser, blackListToken } from './repository.js';
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
 const generateJWT = (user) => {
-    console.log(process.env.TOKEN_EXPIRY)
     return jwt.sign({
         username: user.username
     }, process.env.SECRET_TOKEN, { expiresIn: process.env.TOKEN_EXPIRY })
@@ -13,6 +13,8 @@ export async function ormCreateUser(username, password) {
     try {
         const user = await checkUser({username});
         if (user.length === 0) {
+            const salt = await bcrypt.genSalt()
+            password = await bcrypt.hash(password, salt)
             const newUser = await createUser({username, password});
             newUser.save();
             return newUser;     
@@ -32,7 +34,7 @@ export async function ormLoginUser(username, password) {
             throw new Error("Authentication Failed")
         }
 
-        if (password === user[0].password) {
+        if (await bcrypt.compare(password,user[0].password)) {
             const token = generateJWT(user[0])
             return {token}
         } else {
@@ -40,6 +42,17 @@ export async function ormLoginUser(username, password) {
         }
     } catch (err) {
         console.log("ERROR: Could not verify user")
+        return { err }
+    }
+}
+
+export async function ormLogoutUser(token) {
+    try {
+        const blacklistToken = await blackListToken({token})
+        blacklistToken.save()
+        return true
+    } catch (err) {
+        console.log("ERROR: Could not blacklist token")
         return { err }
     }
 }

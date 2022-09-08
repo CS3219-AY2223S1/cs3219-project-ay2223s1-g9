@@ -1,4 +1,5 @@
 import UserModel from './user-model.js';
+import TokenModel from './token-blacklist-model.js'
 import 'dotenv/config'
 
 //Set up mongoose connection
@@ -17,4 +18,12 @@ export async function createUser(params) {
 
 export async function checkUser(params) {
   return await UserModel.find({ username: params.username})
+}
+
+export async function blackListToken(params) {
+  return new TokenModel(params)
+}
+
+export async function getToken(params) {
+  return TokenModel.find({token: params.token})
 }
