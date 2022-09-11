@@ -1,4 +1,4 @@
-import { createUser, checkUser, deleteUser, blackListToken } from './repository.js';
+import { createUser, checkUser, deleteUser, updateUser, blackListToken } from './repository.js';
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
@@ -27,14 +27,28 @@ export async function ormCreateUser(username, password) {
     }
 }
 
-export async function ormDeleteUser(username, token) {
+export async function ormDeleteUser(token) {
     try {
+        const { username } = jwt.decode(token)
         await deleteUser({username})
         const blacklistToken = await blackListToken({token})
         blacklistToken.save()
         return true
     } catch (err) {
         console.log("ERROR: Could not delete user")
+        return { err }
+    }
+}
+
+export async function ormUpdateUser(token, password) {
+    try {
+        const { username } = jwt.decode(token)
+        const salt = await bcrypt.genSalt()
+        password = await bcrypt.hash(password, salt)
+        await updateUser({username, password})
+        return true
+    } catch (err) {
+        console.log("ERROR: Could not update user")
         return { err }
     }
 }

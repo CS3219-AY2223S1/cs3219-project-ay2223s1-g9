@@ -1,7 +1,14 @@
 import { ormCreateUser as _createUser } from '../model/user-orm.js'
 import { ormDeleteUser as _deleteUser} from '../model/user-orm.js'
+import { ormUpdateUser as _updateUser} from '../model/user-orm.js'
 import { ormLoginUser as _loginUser} from '../model/user-orm.js'
 import { ormLogoutUser as _logoutUser } from "../model/user-orm.js"
+
+function getToken(req) {
+    const authHeader = req.headers["authorization"]
+    const token = authHeader && authHeader.split(" ")[1]
+    return token
+}
 
 export async function registerUser(req, res, next) {
     try {
@@ -25,18 +32,31 @@ export async function registerUser(req, res, next) {
 
 export async function deleteUser(req, res, next) {
     try {
-        const {username} = req.body
-        const authHeader = req.headers["authorization"]
-        const token = authHeader && authHeader.split(" ")[1]
-        if (username) {
-            const resp = await _deleteUser(username, token)
-            console.log(resp)
-            if (resp.err) {
-                return res.status(400).json({message: 'Could not delete user!', error: resp.err.message});
-            } else {
-                console.log(`Delete user successfully!`)
-                return res.status(200).json({message: `Delete user successfully!`});
-            }
+        const token = getToken(req)
+        const resp = await _deleteUser(token)
+        console.log(resp)
+        if (resp.err) {
+            return res.status(400).json({message: 'Could not delete user!', error: resp.err.message});
+        } else {
+            console.log(`Delete user successfully!`)
+            return res.status(200).json({message: `Delete user successfully!`});
+        }
+    } catch (err) {
+        next(err)
+    }
+}
+
+export async function updateUser(req, res, next) {
+    try {
+        const token = getToken(req)
+        const { password } = req.body
+        const resp = await _updateUser(token, password)
+        console.log(resp)
+        if (resp.err) {
+            return res.status(400).json({message: 'Could not update user!', error: resp.err.message});
+        } else {
+            console.log(`Updated user successfully!`)
+            return res.status(200).json({message: `Updated user successfully!`});
         }
     } catch (err) {
         next(err)

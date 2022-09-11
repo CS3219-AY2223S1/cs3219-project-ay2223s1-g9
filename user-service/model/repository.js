@@ -24,6 +24,10 @@ export async function deleteUser(params) {
   return await UserModel.findOneAndDelete({username: params.username})
 }
 
+export async function updateUser(params) {
+  return await UserModel.findOneAndUpdate({username: params.username}, {password: params.password})
+}
+
 export async function blackListToken(params) {
   return new TokenModel(params)
 }
