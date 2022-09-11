@@ -12,7 +12,7 @@ import HomePage from "./pages/HomePage";
 function App() {
   return (
     <div className="App">
-      <Box display={"flex"} flexDirection={"column"} padding={"4rem"}>
+      <Box display={"flex"} flexDirection={"column"}>
         <Router>
           <Routes>
             <Route
