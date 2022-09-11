@@ -29,7 +29,7 @@ export async function loginUser(req, res, next) {
             const resp = await _loginUser(username, password)
             console.log(resp)
             if (resp.err) {
-                return res.status(401).json({message: "Could not login", error: res.err.message})
+                return res.status(401).json({message: "Failed to login", error: resp.err.message})
             } else {
                 return res.status(200).json({message: 'Logged in successfully', token: resp.token})
             }

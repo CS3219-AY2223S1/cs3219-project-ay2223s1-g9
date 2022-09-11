@@ -7,13 +7,17 @@ const authenticate = async (req, res, next) => {
 
     const tokenArr = await getToken({token})
     if (tokenArr.length > 0) {
-        return res.status(401).json({message: "Authenticated Failed"})
+        return res.status(401).json({message: "Authentication Failed"})
     }
 
     if (token) {
-        jwt.verify(token, process.env.SECRET_TOKEN)
+        try {
+            jwt.verify(token, process.env.SECRET_TOKEN)
+        } catch (err) {
+            return res.status(401).json({message: "Authentication Failed", error: "Invalid Token"})
+        }
     } else {
-        return res.status(401).json({message: "Authenticated Failed"})
+        return res.status(401).json({message: "Authentication Failed", error: "Invalid Token"})
     }
 
     next()

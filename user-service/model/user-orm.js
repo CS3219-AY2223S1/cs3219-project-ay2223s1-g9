@@ -31,7 +31,7 @@ export async function ormLoginUser(username, password) {
     try {
         const user = await checkUser({username})
         if (user.length === 0) {
-            throw new Error("Authentication Failed")
+            throw new Error("User not found")
         }
 
         if (await bcrypt.compare(password,user[0].password)) {
