@@ -1,8 +1,9 @@
 import { ormCreateUser as _createUser } from '../model/user-orm.js'
+import { ormDeleteUser as _deleteUser} from '../model/user-orm.js'
 import { ormLoginUser as _loginUser} from '../model/user-orm.js'
 import { ormLogoutUser as _logoutUser } from "../model/user-orm.js"
 
-export async function registerUser(req, res) {
+export async function registerUser(req, res, next) {
     try {
         const { username, password } = req.body;
         if (username && password) {
@@ -16,6 +17,26 @@ export async function registerUser(req, res) {
             }
         } else {
             return res.status(400).json({message: 'Username and/or Password are missing!'});
+        }
+    } catch (err) {
+        next(err)
+    }
+}
+
+export async function deleteUser(req, res, next) {
+    try {
+        const {username} = req.body
+        const authHeader = req.headers["authorization"]
+        const token = authHeader && authHeader.split(" ")[1]
+        if (username) {
+            const resp = await _deleteUser(username, token)
+            console.log(resp)
+            if (resp.err) {
+                return res.status(400).json({message: 'Could not delete user!', error: resp.err.message});
+            } else {
+                console.log(`Delete user successfully!`)
+                return res.status(200).json({message: `Delete user successfully!`});
+            }
         }
     } catch (err) {
         next(err)

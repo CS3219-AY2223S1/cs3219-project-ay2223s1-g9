@@ -1,4 +1,4 @@
-import { createUser, checkUser, blackListToken } from './repository.js';
+import { createUser, checkUser, deleteUser, blackListToken } from './repository.js';
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
@@ -24,6 +24,18 @@ export async function ormCreateUser(username, password) {
     } catch (err) {
         console.log('ERROR: Could not create new user');
         return { err };
+    }
+}
+
+export async function ormDeleteUser(username, token) {
+    try {
+        await deleteUser({username})
+        const blacklistToken = await blackListToken({token})
+        blacklistToken.save()
+        return true
+    } catch (err) {
+        console.log("ERROR: Could not delete user")
+        return { err }
     }
 }
 

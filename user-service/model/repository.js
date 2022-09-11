@@ -20,6 +20,10 @@ export async function checkUser(params) {
   return await UserModel.find({ username: params.username})
 }
 
+export async function deleteUser(params) {
+  return await UserModel.findOneAndDelete({username: params.username})
+}
+
 export async function blackListToken(params) {
   return new TokenModel(params)
 }
