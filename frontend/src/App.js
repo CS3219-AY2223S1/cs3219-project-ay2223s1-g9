@@ -8,6 +8,7 @@ import SignupPage from "./pages/SignupPage";
 import { Box } from "@mui/material";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
+import RoomPage from "./pages/RoomPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             ></Route>
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/room" element={<RoomPage />} />
           </Routes>
         </Router>
       </Box>

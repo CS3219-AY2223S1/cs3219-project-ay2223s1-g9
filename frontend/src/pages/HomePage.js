@@ -9,59 +9,80 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
+import MatchingPage from "./MatchingPage";
 
 const HomePage = () => {
+  const [isMatching, setIsMatching] = useState(false);
+  const [difficulty, setDifficulty] = useState("");
   const handleSelectDifficulty = (event) => {
-    alert(event.currentTarget.id);
+    setIsMatching(true);
+    setDifficulty(event.currentTarget.id);
   };
+  useEffect(() => {
+    console.log(isMatching);
+  }, [isMatching]);
   return (
-    <div
-      style={{
-        padding: "0 !important",
-      }}
-    >
-      <NavBar />
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        height={"100%"}
-        padding={"4rem"}
-        justifyContent={"center"}
-      >
-        <Typography variant={"h6"} marginBottom={"10px"}>
-          Start coding!
-        </Typography>
-        <Typography>Select a difficulty level</Typography>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          gap={"10px"}
-          justifyContent={"flex-end"}
-        >
-          <Button
-            id={"easy"}
-            variant={"outlined"}
-            onClick={handleSelectDifficulty}
+    <div>
+      {!isMatching && (
+        <div>
+          <NavBar />
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            height={"100%"}
+            padding={"4rem"}
+            justifyContent={"center"}
           >
-            Easy
-          </Button>
-          <Button
-            id={"medium"}
-            variant={"outlined"}
-            onClick={handleSelectDifficulty}
-          >
-            Medium
-          </Button>
-          <Button
-            id={"hard"}
-            variant={"outlined"}
-            onClick={handleSelectDifficulty}
-          >
-            Hard
-          </Button>
-        </Box>
-      </Box>
+            <Typography variant={"h6"} marginBottom={"10px"}>
+              Start coding!
+            </Typography>
+            <Typography>Select a difficulty level</Typography>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              gap={"10px"}
+              justifyContent={"flex-end"}
+            >
+              <Button
+                id={"easy"}
+                variant={"outlined"}
+                onClick={handleSelectDifficulty}
+              >
+                Easy
+              </Button>
+              <Button
+                id={"medium"}
+                variant={"outlined"}
+                onClick={handleSelectDifficulty}
+              >
+                Medium
+              </Button>
+              <Button
+                id={"hard"}
+                variant={"outlined"}
+                onClick={handleSelectDifficulty}
+              >
+                Hard
+              </Button>
+            </Box>
+          </Box>
+        </div>
+      )}
+      {isMatching && (
+        <MatchingPage
+          setIsMatching={setIsMatching}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+        />
+      )}
     </div>
   );
 };

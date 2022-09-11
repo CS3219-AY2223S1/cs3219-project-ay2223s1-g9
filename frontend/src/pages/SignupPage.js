@@ -85,6 +85,11 @@ function SignupPage() {
           Create account
         </Button>
       </Box>
+      <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+        <Typography>
+          or <Link to={"/login"}> login</Link>
+        </Typography>
+      </Box>
 
       <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogTitle>{dialogTitle}</DialogTitle>
