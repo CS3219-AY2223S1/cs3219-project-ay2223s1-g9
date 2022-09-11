@@ -1,4 +1,4 @@
-import { createUser, checkUser, deleteUser, updateUser, blackListToken } from './repository.js';
+import { createUser, checkUser, deleteUser, blackListToken } from './repository.js';
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
@@ -13,8 +13,6 @@ export async function ormCreateUser(username, password) {
     try {
         const user = await checkUser({username});
         if (user.length === 0) {
-            const salt = await bcrypt.genSalt()
-            password = await bcrypt.hash(password, salt)
             const newUser = await createUser({username, password});
             newUser.save();
             return newUser;     
@@ -43,10 +41,14 @@ export async function ormDeleteUser(token) {
 export async function ormUpdateUser(token, password) {
     try {
         const { username } = jwt.decode(token)
-        const salt = await bcrypt.genSalt()
-        password = await bcrypt.hash(password, salt)
-        await updateUser({username, password})
-        return true
+        const user = await checkUser({username});
+        if (user.length !== 0) {
+            user[0].password = password
+            user[0].save();
+            return true; 
+        } else {
+            throw new Error("User does not exist in database");
+        }
     } catch (err) {
         console.log("ERROR: Could not update user")
         return { err }
