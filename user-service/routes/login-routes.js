@@ -4,13 +4,10 @@ import authentication from "../middleware/authentication.js"
 
 const router = express.Router()
 
-router.route('/registerUser')
-    .post(registerUser)
-
 router.route('/login')
-    .post(loginUser)
+    .get(loginUser)
 
 router.route('/logout')
-    .post(authentication, logoutUser)
+    .get(authentication, logoutUser)
 
 export default router
