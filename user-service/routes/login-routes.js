@@ -5,9 +5,9 @@ import authentication from "../middleware/authentication.js"
 const router = express.Router()
 
 router.route('/login')
-    .get(loginUser)
+    .post(loginUser)
 
 router.route('/logout')
-    .get(authentication, logoutUser)
+    .post(authentication, logoutUser)
 
 export default router
