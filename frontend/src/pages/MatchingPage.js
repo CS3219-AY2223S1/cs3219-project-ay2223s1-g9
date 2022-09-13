@@ -13,9 +13,11 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import Countdown from "react-countdown";
+import io from "socket.io-client";
 
 const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
-  const waitTime = 5000;
+  const waitTime = 30000;
+  const SOCKET_ROUTE = "http://localhost:8001";
   const [key, setKey] = useState(0);
 
   const navigate = useNavigate();
@@ -27,12 +29,36 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
   };
 
   useEffect(() => {
-    // this function runs whenever the timer reloads
-    // set this place to be where the matching thing reloads
-    const matchFound = false;
-    if (matchFound) {
+    const socket = io(SOCKET_ROUTE);
+    socket.emit(
+      "match",
+      { username: "Jerry", roomDifficulty: difficulty },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    socket.on("matchSuccess", (matchRoom) => {
+      console.log(matchRoom);
+      /*
+      matchRoom object for reference.
+      {
+        _id: new ObjectId("63209dcde3bd1a4c9964874b"),
+        personOneUsername: 'Jerry',
+        personTwoUsername: 'Jerry',
+        roomId: 'iIe6WLDWULeb7tT6AAAB',
+        isRoomAvailable: false,
+        roomDifficulty: 'easy',
+        __v: 0
+      }
+      */
+      socket.disconnect();
       navigate("/room");
-    }
+    });
+
+    socket.on("matchUnsuccess", () => {
+      socket.disconnect();
+    });
   }, [key]);
 
   const Completionist = () => (
