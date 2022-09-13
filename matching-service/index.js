@@ -3,6 +3,7 @@ import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { ormCreateMatch, ormDeleteMatchRoom } from "./model/matching-orm.js";
+import { event } from "./constant/constant.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -17,11 +18,11 @@ app.get("/", (req, res) => {
   res.send("Hello World from matching-service");
 });
 
-io.on("connection", (socket) => {
+io.on(event.CONNECTION, (socket) => {
   console.log("New socket has been connected");
   let roomId = "";
 
-  socket.on("match", async ({ username, roomDifficulty }, callback) => {
+  socket.on(event.MATCH, async ({ username, roomDifficulty }, callback) => {
     const { matchRoom, err } = await ormCreateMatch({
       username,
       roomDifficulty,
@@ -33,23 +34,21 @@ io.on("connection", (socket) => {
     roomId = matchRoom.roomId;
     socket.join(matchRoom.roomId);
 
-    console.log(matchRoom);
-
     if (matchRoom.personTwoUsername) {
-      io.to(matchRoom.roomId).emit("matchSuccess", matchRoom);
+      io.to(matchRoom.roomId).emit(event.MATCH_SUCCESS, matchRoom);
       return;
     }
   });
 
   const timer = setTimeout(() => {
-    socket.emit("matchUnsuccess");
+    socket.emit(event.MATCH_UNSUCCESS);
   }, 30000);
 
-  socket.on("matchSuccess", () => {
+  socket.on(event.MATCH_SUCCESS, () => {
     clearTimeout(timer);
   });
 
-  socket.on("disconnect", async () => {
+  socket.on(event.DISONNECTION, async () => {
     console.log("A socket has been disconnected");
     if (roomId !== "") {
       await ormDeleteMatchRoom(roomId);
