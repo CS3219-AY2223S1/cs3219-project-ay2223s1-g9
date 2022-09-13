@@ -26,8 +26,8 @@ let MatchRoomModelSchema = new Schema({
       const difficultyLevel = value.toLowerCase();
       if (
         difficultyLevel !== "easy" &&
-        difficultyLevel !== "normal" &&
-        difficultyLevel !== "difficult"
+        difficultyLevel !== "medium" &&
+        difficultyLevel !== "hard"
       ) {
         throw new Error("The difficulty you have selected is invalid!");
       }

@@ -11,7 +11,7 @@ app.use(cors()); // config cors so that front-end can use
 app.options("*", cors());
 
 const httpServer = createServer(app);
-const io = new Server(httpServer);
+const io = new Server(httpServer, { cors: { origin: "*" } });
 
 app.get("/", (req, res) => {
   res.send("Hello World from matching-service");
@@ -32,14 +32,27 @@ io.on("connection", (socket) => {
     }
     roomId = matchRoom.roomId;
     socket.join(matchRoom.roomId);
-    // socket.emit("")
+
+    console.log(matchRoom);
+
+    if (matchRoom.personTwoUsername) {
+      io.to(matchRoom.roomId).emit("matchSuccess", matchRoom);
+      return;
+    }
+  });
+
+  const timer = setTimeout(() => {
+    socket.emit("matchUnsuccess");
+  }, 30000);
+
+  socket.on("matchSuccess", () => {
+    clearTimeout(timer);
   });
 
   socket.on("disconnect", async () => {
+    console.log("A socket has been disconnected");
     if (roomId !== "") {
       await ormDeleteMatchRoom(roomId);
-      // have to ask client side to disconnect.
-      // socket.broadcast.to(roomId).emit("client disconnect");
     }
   });
 });
