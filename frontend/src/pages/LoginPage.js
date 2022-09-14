@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
-import { URL_USER_SVC } from "../configs";
+import { URI_USER_SVC } from "../configs";
 import {
   STATUS_CODE_CONFLICT,
   STATUS_CODE_CREATED,
@@ -31,13 +31,14 @@ function LoginPage() {
 
   const handleLogIn = async () => {
     const res = await axios
-      .post(URL_USER_SVC, { username, password })
+      .post(URI_USER_SVC + "/login", { username, password })
       .catch((err) => {
         if (err.response.status === STATUS_CODE_BAD_REQUEST) {
           setErrorDialog("Wrong username or password");
         } else {
           setErrorDialog("Please try again later");
         }
+        console.log(err);
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
       const jwt = res.data; //store jwt, change as needed
