@@ -115,11 +115,9 @@ export default function NavBar() {
           alert(err);
         } else {
           alert("Please try again later");
+          console.log("hi", err);
         }
       });
-    if (res && res.status === STATUS_CODE_SUCCESS) {
-      const jwt = res.data; //store jwt, change as needed
-    }
   };
 
   return (

@@ -9,15 +9,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
-import { URL_USER_SVC } from "../configs";
+import { URL_USER_SVC, URI_USER_SVC } from "../configs";
 import {
   STATUS_CODE_BAD_REQUEST,
   STATUS_CODE_CONFLICT,
   STATUS_CODE_CREATED,
+  STATUS_CODE_SUCCESS,
 } from "../constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 
 function SignupPage() {
   const [username, setUsername] = useState("");
@@ -26,7 +28,8 @@ function SignupPage() {
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogMsg, setDialogMsg] = useState("");
   const [isSignupSuccess, setIsSignupSuccess] = useState(false);
-
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleSignup = async () => {
     setIsSignupSuccess(false);
     const res = await axios
@@ -41,6 +44,24 @@ function SignupPage() {
     if (res && res.status === STATUS_CODE_CREATED) {
       setSuccessDialog("Account successfully created");
       setIsSignupSuccess(true);
+    }
+  };
+
+  const handleLogIn = async () => {
+    const res = await axios
+      .post(URI_USER_SVC + "/login", { username, password })
+      .catch((err) => {
+        if (err.response.status === STATUS_CODE_BAD_REQUEST) {
+          setErrorDialog("Missing username or password");
+        } else if (err.response.status === 401) {
+          setErrorDialog(err.response.data.error);
+        } else {
+          setErrorDialog("Please try again later");
+        }
+      });
+    if (res && res.status === STATUS_CODE_SUCCESS) {
+      setUser({ username: username, token: res.data.token });
+      navigate("/");
     }
   };
 
@@ -102,9 +123,10 @@ function SignupPage() {
         </DialogContent>
         <DialogActions>
           {isSignupSuccess ? (
-            <Button component={Link} to="/login">
-              Log in
-            </Button>
+            <>
+              <Button onClick={closeDialog}>Cancel</Button>
+              <Button onClick={handleLogIn}>Log in</Button>
+            </>
           ) : (
             <Button onClick={closeDialog}>Done</Button>
           )}
