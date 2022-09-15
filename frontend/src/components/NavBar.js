@@ -57,6 +57,7 @@ export default function NavBar() {
       handleUpdate();
       setPassword("");
       setIsDialogOpen(false);
+      handleClose();
     }
   };
 
