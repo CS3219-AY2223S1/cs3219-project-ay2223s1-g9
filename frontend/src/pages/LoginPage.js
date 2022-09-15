@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { URI_USER_SVC } from "../configs";
 import {
@@ -19,6 +19,8 @@ import {
   STATUS_CODE_SUCCESS,
 } from "../constants";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -27,24 +29,25 @@ function LoginPage() {
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogMsg, setDialogMsg] = useState("");
   const [isLoginSuccess, setIsLoginSuccess] = useState(false);
-  const [jwt, setJwt] = useState(); //set upon successful loginr
-
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleLogIn = async () => {
     const res = await axios
       .post(URI_USER_SVC + "/login", { username, password })
       .catch((err) => {
         if (err.response.status === STATUS_CODE_BAD_REQUEST) {
-          setErrorDialog("Wrong username or password");
+          setErrorDialog("Missing username or password");
+        } else if (err.response.status === 401) {
+          setErrorDialog(err.response.data.error);
         } else {
           setErrorDialog("Please try again later");
         }
-        console.log(err);
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
-      const jwt = res.data; //store jwt, change as needed
+      setUser({ username: username, token: res.data.token });
+      navigate("/");
     }
   };
-
   const closeDialog = () => setIsDialogOpen(false);
 
   const setErrorDialog = (msg) => {

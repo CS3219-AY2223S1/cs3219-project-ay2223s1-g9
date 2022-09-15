@@ -26,14 +26,15 @@ import { URL_USER_SVC, URI_USER_SVC } from "../configs";
 import axios from "axios";
 import { AuthContext } from "../AuthContext";
 import { STATUS_CODE_SUCCESS, STATUS_CODE_BAD_REQUEST } from "../constants";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
-  const [auth, setAuth] = useState(true);
+  //const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  const navigate = useNavigate();
   const closeDialog = () => {
     setIsDialogOpen(false);
   };
@@ -54,6 +55,8 @@ export default function NavBar() {
   const handleConfirm = () => {
     if (password != "") {
       handleUpdate();
+      setPassword("");
+      setIsDialogOpen(false);
     }
   };
 
@@ -96,6 +99,7 @@ export default function NavBar() {
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
       alert("Delete user successfully");
+      navigate("/login");
     }
   };
 
@@ -108,11 +112,10 @@ export default function NavBar() {
       })
       .catch((err) => {
         if (err.response.status === STATUS_CODE_BAD_REQUEST) {
-          alert("Wrong username or password");
+          alert(err);
         } else {
           alert("Please try again later");
         }
-        console.log(err);
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
       const jwt = res.data; //store jwt, change as needed
@@ -136,6 +139,10 @@ export default function NavBar() {
               onClick={handleMenu}
               color="inherit"
             >
+              {user && (
+                <Typography marginRight={"5px"}>{user.username}</Typography>
+              )}
+
               <MdAccountCircle />
             </IconButton>
             <Menu
@@ -156,7 +163,7 @@ export default function NavBar() {
             >
               <MenuItem onClick={handleChange}>Change password</MenuItem>
               <MenuItem onClick={handleDelete}>Delete account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleLogOut}>Logout</MenuItem>
             </Menu>
           </div>
         </Toolbar>

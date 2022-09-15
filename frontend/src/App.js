@@ -11,11 +11,13 @@ import HomePage from "./pages/HomePage";
 import RoomPage from "./pages/RoomPage";
 import { AuthContext } from "./AuthContext";
 import { useState } from "react";
+import { AuthProvider } from "./AuthProvider";
 
 function App() {
-  const [user, setUser] = useState({ user: "", token: "" });
+  const [auth, setAuth] = useState({ user: "", token: "" });
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    //<AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthProvider>
       <div className="App">
         <Box display={"flex"} flexDirection={"column"}>
           <Router>
@@ -33,7 +35,8 @@ function App() {
           </Router>
         </Box>
       </div>
-    </AuthContext.Provider>
+    </AuthProvider>
+    //</AuthContext.Provider>
   );
 }
 
