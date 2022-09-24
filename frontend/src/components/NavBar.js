@@ -106,19 +106,27 @@ export default function NavBar() {
 
   const handleLogOut = async () => {
     const res = await axios
-      .post(URI_USER_SVC + "/logout", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      .post(
+        URI_USER_SVC + "/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
       .catch((err) => {
         if (err.response.status === STATUS_CODE_BAD_REQUEST) {
           alert(err);
         } else {
           alert("Please try again later");
-          console.log("hi", err);
+          console.log("logout error: ", err);
         }
       });
+    if (res && res.status === STATUS_CODE_SUCCESS) {
+      alert("Logout successfully");
+      navigate("/login");
+    }
   };
 
   return (
