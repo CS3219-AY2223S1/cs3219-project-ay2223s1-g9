@@ -10,13 +10,20 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RoomPage from "./pages/RoomPage";
 import { AuthContext } from "./AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthProvider } from "./AuthProvider";
 
 function App() {
-  const [auth, setAuth] = useState({ user: "", token: "" });
+  const [user, setUser] = useState({ user: "", token: "" });
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("user");
+    if (currentUser) {
+      setUser(JSON.parse(currentUser));
+    }
+  }, []);
+
   return (
-    //<AuthContext.Provider value={{ auth, setAuth }}>
     <AuthProvider>
       <div className="App">
         <Box display={"flex"} flexDirection={"column"}>
@@ -36,7 +43,6 @@ function App() {
         </Box>
       </div>
     </AuthProvider>
-    //</AuthContext.Provider>
   );
 }
 

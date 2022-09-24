@@ -17,10 +17,17 @@ import io from "socket.io-client";
 import { AuthContext } from "../AuthContext";
 
 const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
-  const { user } = useContext(AuthContext); // contains user.username and user.token
+  const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
   const waitTime = 30000;
   const SOCKET_ROUTE = "http://localhost:8001";
   const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("user");
+    if (currentUser) {
+      setUser(JSON.parse(currentUser));
+    }
+  }, []);
 
   const navigate = useNavigate();
   const handleReturn = () => {

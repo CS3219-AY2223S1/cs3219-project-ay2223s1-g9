@@ -27,14 +27,26 @@ import axios from "axios";
 import { AuthContext } from "../AuthContext";
 import { STATUS_CODE_SUCCESS, STATUS_CODE_BAD_REQUEST } from "../constants";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function NavBar() {
   //const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log("home: ", user);
+  }, [user]);
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("user");
+    if (currentUser) {
+      setUser(JSON.parse(currentUser));
+    }
+  }, []);
+
   const closeDialog = () => {
     setIsDialogOpen(false);
   };
@@ -124,6 +136,7 @@ export default function NavBar() {
         }
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
+      localStorage.removeItem("user");
       alert("Logout successfully");
       navigate("/login");
     }

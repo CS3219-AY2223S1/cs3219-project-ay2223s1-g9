@@ -44,7 +44,9 @@ function LoginPage() {
         }
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
-      setUser({ username: username, token: res.data.token });
+      const currentUser = { username: username, token: res.data.token };
+      setUser(currentUser);
+      localStorage.setItem("user", JSON.stringify(currentUser));
       navigate("/");
     }
   };

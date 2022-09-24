@@ -9,12 +9,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../AuthContext";
 
 const RoomPage = () => {
-  const { user } = useContext(AuthContext); // contains user.username and user.token
-  console.log(user);
+  const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("user");
+    if (currentUser) {
+      setUser(JSON.parse(currentUser));
+    }
+  }, []);
   return (
     <Box
       display={"flex"}
