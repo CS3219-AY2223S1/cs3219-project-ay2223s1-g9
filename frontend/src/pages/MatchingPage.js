@@ -11,14 +11,23 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Countdown from "react-countdown";
 import io from "socket.io-client";
+import { AuthContext } from "../AuthContext";
 
 const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
+  const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
   const waitTime = 30000;
   const SOCKET_ROUTE = "http://localhost:8001";
   const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("user");
+    if (currentUser) {
+      setUser(JSON.parse(currentUser));
+    }
+  }, []);
 
   const navigate = useNavigate();
   const handleReturn = () => {
@@ -32,7 +41,7 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
     const socket = io(SOCKET_ROUTE);
     socket.emit(
       "match",
-      { username: "Jerry", roomDifficulty: difficulty },
+      { username: user.username, roomDifficulty: difficulty },
       (error) => {
         console.log(error);
       }
