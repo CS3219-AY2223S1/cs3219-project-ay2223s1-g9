@@ -10,6 +10,10 @@ let CollaborationModelSchema = new Schema({
   roomDifficulty: {
     type: String,
   },
+  questionTitle: {
+    type: String,
+    default: "",
+  },
   question: {
     type: String,
     required: true,

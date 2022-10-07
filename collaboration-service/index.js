@@ -3,6 +3,7 @@ import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { event } from "./constant/constant.js";
+import { ormInitiateCollaboration } from "./model/collaboration-orm.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +19,8 @@ io.on(event.CONNECTION, (socket) => {
 
   socket.on(event.JOIN_ROOM, async ({ roomId, roomDifficulty }) => {
     socket.join(roomId);
-
+    const collab = await ormInitiateCollaboration({ roomId, roomDifficulty });
+    console.log(collab);
     // TODO: Get question from question microservice, store into db.
     // TODO: Use ormCreateCollaboration function. Have not check whether it is correct.
     // TODO: Emit an event to tell frontend the question for both users.
@@ -33,6 +35,6 @@ io.on(event.CONNECTION, (socket) => {
   });
 });
 
-httpServer.listen(8002, () => {
-  console.log("App is listening on port 8002");
+httpServer.listen(8004, () => {
+  console.log("App is listening on port 8004");
 });
