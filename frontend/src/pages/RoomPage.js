@@ -13,22 +13,39 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import CodeEditor from "../components/CodeEditor";
+import io from "socket.io-client";
 
 const RoomPage = () => {
+  const SOCKET_ROUTE = "http://localhost:8004";
+
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
   const [question, setQuestion] = useState({
+    title: "",
     data: <p>question data here</p>,
-    difficulty: "harderest",
+    difficulty: "Easy", // This will be passed from matching page.
   });
-  const [room, setRoom] = useState({ id: "1", users: "andey, bobhao" });
-  const [code, setCode] = useState(`function add(a, b) {\n  return a + b;\n}`); //<---------- CODE FOR COLLAB SET HEREE
+  const [room, setRoom] = useState({ id: "1", users: "andey, bobhao" }); // This will be passed from the matching page.
+  const socket = io(SOCKET_ROUTE);
 
   useEffect(() => {
     const currentUser = localStorage.getItem("user");
     if (currentUser) {
       setUser(JSON.parse(currentUser));
     }
+    socket.emit("joinRoom", {
+      roomId: room.id,
+      roomDifficulty: question.difficulty,
+    });
+
+    socket.on("question", (questionData) => {
+      setQuestion({
+        ...question,
+        title: questionData.questionTitle,
+        data: questionData.question,
+      });
+    });
   }, []);
+
   return (
     <Box
       display={"flex"}
@@ -78,7 +95,7 @@ const RoomPage = () => {
           flex={1}
           sx={{ boxSizing: "border-box" }}
         >
-          <CodeEditor code={code} setCode={setCode} />
+          <CodeEditor socket={socket} roomId={room.id} />
         </Box>
       </Box>
     </Box>

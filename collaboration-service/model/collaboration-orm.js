@@ -20,10 +20,10 @@ export const ormInitiateCollaboration = async ({ roomId, roomDifficulty }) => {
         questionTitle: questionJSON.question_content,
       });
       await newCollab.save();
-      return { collab: newCollab };
+      return newCollab;
     }
-    await removeCollab({ roomId });
-    return { collab };
+    // await removeCollab({ roomId });
+    return collab;
   } catch (err) {
     console.log("There is issues in initiating collaboration");
     return { err };

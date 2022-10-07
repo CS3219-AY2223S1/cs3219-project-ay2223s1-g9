@@ -20,10 +20,10 @@ io.on(event.CONNECTION, (socket) => {
   socket.on(event.JOIN_ROOM, async ({ roomId, roomDifficulty }) => {
     socket.join(roomId);
     const collab = await ormInitiateCollaboration({ roomId, roomDifficulty });
-    console.log(collab);
-    // TODO: Get question from question microservice, store into db.
-    // TODO: Use ormCreateCollaboration function. Have not check whether it is correct.
-    // TODO: Emit an event to tell frontend the question for both users.
+    io.to(roomId).emit("question", {
+      question: collab.question,
+      questionTitle: collab.questionTitle,
+    });
   });
 
   socket.on(event.WRITE_CODE, async ({ roomId, code }) => {

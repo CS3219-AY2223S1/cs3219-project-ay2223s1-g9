@@ -1,15 +1,35 @@
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Editor = ({ code, setCode }) => {
+const Editor = ({ socket, roomId }) => {
+  const [code, setCode] = useState(`function add(a, b) {\n  return a + b;\n}`);
+  const [isTyping, setIsTyping] = useState(false);
   document.documentElement.setAttribute("data-color-mode", "light");
+
+  useEffect(() => {
+    socket.on("updateCode", (updatedCode) => {
+      setCode(updatedCode);
+      setIsTyping(false);
+    });
+  });
+
+  useEffect(() => {
+    if (isTyping) {
+      socket.emit("writeCode", { roomId, code });
+    }
+  }, [code]);
+
+  const handleChange = (evn) => {
+    setCode(evn.target.value);
+    setIsTyping(true);
+  };
 
   return (
     <CodeEditor
       value={code}
       language="js"
       placeholder="Type solution here"
-      onChange={(evn) => setCode(evn.target.value)}
+      onChange={handleChange}
       padding={15}
       rows={100}
       style={{
