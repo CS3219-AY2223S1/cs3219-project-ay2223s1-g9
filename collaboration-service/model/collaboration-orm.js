@@ -9,18 +9,24 @@ export const ormCreateCollaboration = async ({
   roomDifficulty,
   question,
 }) => {
-  const collab = await findCollaboration({ roomId });
+  try {
+    const collab = await findCollaboration({ roomId });
 
-  if (collab.err) {
-    const newCollab = await createCollaboration({
-      roomId,
-      roomDifficulty,
-      question,
-    });
-    await newCollab.save();
-    return { collab: newCollab };
+    if (collab.err) {
+      const newCollab = await createCollaboration({
+        roomId,
+        roomDifficulty,
+        question,
+      });
+      await newCollab.save();
+      return { collab: newCollab };
+    }
+    // Probably do deletion here, since the second person found the collaboration already. There is no use for this record.
+    return { collab };
+  } catch (err) {
+    console.log("Error in creating collaboration");
+    return { err };
   }
-  return { collab };
 };
 
 export const ormDeleteCollaboration = async (roomId) => {
