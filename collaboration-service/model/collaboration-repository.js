@@ -1,4 +1,4 @@
-import CollaborationModel from "./collaboration-model";
+import CollaborationModel from "./collaboration-model.js";
 import mongoose from "mongoose";
 
 // the url is for local set up only.

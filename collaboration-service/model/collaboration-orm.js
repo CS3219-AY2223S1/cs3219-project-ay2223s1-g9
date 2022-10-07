@@ -2,38 +2,30 @@ import {
   createCollaboration,
   findCollaboration,
   removeCollab,
-} from "./collaboration-repository";
+} from "./collaboration-repository.js";
+import request from "async-request";
 
-export const ormCreateCollaboration = async ({
-  roomId,
-  roomDifficulty,
-  question,
-}) => {
+export const ormInitiateCollaboration = async ({ roomId, roomDifficulty }) => {
   try {
     const collab = await findCollaboration({ roomId });
-
     if (collab.err) {
+      const response = await request(
+        "http://localhost:8002/api/question?difficulty=" + roomDifficulty
+      );
+      const questionJSON = JSON.parse(response.body).data;
       const newCollab = await createCollaboration({
         roomId,
         roomDifficulty,
-        question,
+        question: questionJSON.question_content,
+        questionTitle: questionJSON.question_content,
       });
       await newCollab.save();
-      return { collab: newCollab };
+      return newCollab;
     }
-    // Probably do deletion here, since the second person found the collaboration already. There is no use for this record.
-    return { collab };
+    // await removeCollab({ roomId });
+    return collab;
   } catch (err) {
-    console.log("Error in creating collaboration");
-    return { err };
-  }
-};
-
-export const ormDeleteCollaboration = async (roomId) => {
-  try {
-    return { deletedCollab: removeCollab({ roomId }) };
-  } catch (err) {
-    console.log("ERROR: Could not delete the collaboration");
+    console.log("There is issues in initiating collaboration");
     return { err };
   }
 };
