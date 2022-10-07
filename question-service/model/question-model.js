@@ -7,6 +7,10 @@ let QuestionModelSchema = new Schema({
         required: true,
         unique: true,
     },
+    question_difficulty: {
+        type: String,
+        required: true,
+    },
     question_title: {
         type: String,
         required: true,
