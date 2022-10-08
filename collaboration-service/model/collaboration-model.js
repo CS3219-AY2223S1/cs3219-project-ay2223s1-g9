@@ -18,6 +18,11 @@ let CollaborationModelSchema = new Schema({
     type: String,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    expires: "1d",
+    default: Date.now,
+  },
 });
 
 export default mongoose.model("CollaborationModel", CollaborationModelSchema);
