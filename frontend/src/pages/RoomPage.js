@@ -85,7 +85,9 @@ const RoomPage = () => {
             {<Typography>Difficulty: {question.difficulty}</Typography>}
           </Box>
           <Box flex={1}>
-            <Typography>{question.data}</Typography>
+            <Typography
+              dangerouslySetInnerHTML={{ __html: question.data }}
+            ></Typography>
           </Box>
         </Box>
         <Box
