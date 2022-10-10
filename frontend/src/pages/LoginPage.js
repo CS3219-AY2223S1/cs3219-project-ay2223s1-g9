@@ -21,6 +21,7 @@ import {
 import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -30,7 +31,10 @@ function LoginPage() {
   const [dialogMsg, setDialogMsg] = useState("");
   const [isLoginSuccess, setIsLoginSuccess] = useState(false);
   const { user, setUser } = useContext(AuthContext);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
   const navigate = useNavigate();
+
   const handleLogIn = async () => {
     const res = await axios
       .post(URI_USER_SVC + "/login", { username, password })
@@ -44,12 +48,17 @@ function LoginPage() {
         }
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
-      const currentUser = { username: username, token: res.data.token };
+      let token = res.data.token;
+      const currentUser = { username: username, token: token };
       setUser(currentUser);
-      localStorage.setItem("user", JSON.stringify(currentUser));
+
+      setCookie("username", username, { path: "/" });
+      setCookie("token", token, { path: "/" });
+
       navigate("/");
     }
   };
+
   const closeDialog = () => setIsDialogOpen(false);
 
   const setErrorDialog = (msg) => {

@@ -13,38 +13,41 @@ import { AuthContext } from "./AuthContext";
 import { useEffect, useState, useContext } from "react";
 import { AuthProvider } from "./AuthProvider";
 import ProtectedRoute from "./ProtectedRoute";
+import { CookiesProvider } from "react-cookie";
 
 function App() {
   return (
     <AuthProvider>
-      <div className="App">
-        <Box display={"flex"} flexDirection={"column"}>
-          <Router>
-            <Routes>
-              <Route
-                exact
-                path="/"
-                //element={<Navigate replace to="/login" />}
-                element={
-                  <ProtectedRoute>
-                    <HomePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/room"
-                element={
-                  <ProtectedRoute>
-                    <RoomPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<LoginPage />} />
-            </Routes>
-          </Router>
-        </Box>
-      </div>
+      <CookiesProvider>
+        <div className="App">
+          <Box display={"flex"} flexDirection={"column"}>
+            <Router>
+              <Routes>
+                <Route
+                  exact
+                  path="/"
+                  //element={<Navigate replace to="/login" />}
+                  element={
+                    <ProtectedRoute>
+                      <HomePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/room"
+                  element={
+                    <ProtectedRoute>
+                      <RoomPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/login" element={<LoginPage />} />
+              </Routes>
+            </Router>
+          </Box>
+        </div>
+      </CookiesProvider>
     </AuthProvider>
   );
 }
