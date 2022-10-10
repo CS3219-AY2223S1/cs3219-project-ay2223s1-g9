@@ -36,16 +36,6 @@ export default function NavBar() {
   const [password, setPassword] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log("home: ", user);
-  }, [user]);
-
-  useEffect(() => {
-    const currentUser = localStorage.getItem("user");
-    if (currentUser) {
-      setUser(JSON.parse(currentUser));
-    }
-  }, []);
 
   const closeDialog = () => {
     setIsDialogOpen(false);

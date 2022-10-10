@@ -22,13 +22,6 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
   const SOCKET_ROUTE = "http://localhost:8001";
   const [key, setKey] = useState(0);
 
-  useEffect(() => {
-    const currentUser = localStorage.getItem("user");
-    if (currentUser) {
-      setUser(JSON.parse(currentUser));
-    }
-  }, []);
-
   const navigate = useNavigate();
   const handleReturn = () => {
     setIsMatching(false);
