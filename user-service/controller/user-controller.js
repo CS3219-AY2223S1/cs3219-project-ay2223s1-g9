@@ -3,6 +3,8 @@ import { ormDeleteUser as _deleteUser } from "../model/user-orm.js";
 import { ormUpdateUser as _updateUser } from "../model/user-orm.js";
 import { ormLoginUser as _loginUser } from "../model/user-orm.js";
 import { ormLogoutUser as _logoutUser } from "../model/user-orm.js";
+import { getToken as _verifyToken} from "../model/repository.js"
+import jwt from 'jsonwebtoken'
 
 function getToken(req) {
   const authHeader = req.headers["authorization"];
@@ -102,8 +104,7 @@ export async function loginUser(req, res, next) {
 
 export async function logoutUser(req, res, next) {
   try {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
+    const token = getToken(req)
     const resp = await _logoutUser(token);
     if (resp.err) {
       return res
@@ -111,6 +112,31 @@ export async function logoutUser(req, res, next) {
         .json({ message: "Could not logout user", error: resp.err.message });
     } else {
       return res.status(200).json({ message: "User logged out successfully" });
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function verifyToken(req, res, next) {
+  try {
+    const token = getToken(req)
+
+    const tokenArr = await _verifyToken({token})
+    console.log(tokenArr)
+    if (tokenArr.length > 0) {
+        return res.status(401).json({message: "Authentication Failed"})
+    }
+
+    if (token) {
+      try {
+          jwt.verify(token, process.env.SECRET_TOKEN)
+          return res.status(200).json({message: "Authenticated"})
+      } catch (err) {
+          return res.status(401).json({message: "Authentication Failed", error: err.message})
+      }
+    } else {
+        return res.status(401).json({message: "Authentication Failed", error: "Invalid Token"})
     }
   } catch (err) {
     next(err);
