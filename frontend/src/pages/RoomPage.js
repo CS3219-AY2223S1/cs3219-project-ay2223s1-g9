@@ -28,10 +28,6 @@ const RoomPage = () => {
   const socket = io(SOCKET_ROUTE);
 
   useEffect(() => {
-    const currentUser = localStorage.getItem("user");
-    if (currentUser) {
-      setUser(JSON.parse(currentUser));
-    }
     socket.emit("joinRoom", {
       roomId: room.id,
       roomDifficulty: question.difficulty,

@@ -20,6 +20,7 @@ import {
 } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
+import { useCookies } from "react-cookie";
 
 function SignupPage() {
   const [username, setUsername] = useState("");
@@ -29,6 +30,8 @@ function SignupPage() {
   const [dialogMsg, setDialogMsg] = useState("");
   const [isSignupSuccess, setIsSignupSuccess] = useState(false);
   const { user, setUser } = useContext(AuthContext);
+  const [cookies, setCookie] = useCookies(["user"]);
+
   const navigate = useNavigate();
   const handleSignup = async () => {
     setIsSignupSuccess(false);
@@ -60,7 +63,11 @@ function SignupPage() {
         }
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
-      setUser({ username: username, token: res.data.token });
+      let token = res.data.token;
+      const currentUser = { username: username, token: token };
+      setUser(currentUser);
+      setCookie("username", username, { path: "/" });
+      setCookie("token", token, { path: "/" });
       navigate("/");
     }
   };

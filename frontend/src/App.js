@@ -10,38 +10,44 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RoomPage from "./pages/RoomPage";
 import { AuthContext } from "./AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { AuthProvider } from "./AuthProvider";
+import ProtectedRoute from "./ProtectedRoute";
+import { CookiesProvider } from "react-cookie";
 
 function App() {
-  const [user, setUser] = useState({ user: "", token: "" });
-
-  useEffect(() => {
-    const currentUser = localStorage.getItem("user");
-    if (currentUser) {
-      setUser(JSON.parse(currentUser));
-    }
-  }, []);
-
   return (
     <AuthProvider>
-      <div className="App">
-        <Box display={"flex"} flexDirection={"column"}>
-          <Router>
-            <Routes>
-              <Route
-                exact
-                path="/"
-                //element={<Navigate replace to="/login" />}
-                element={<HomePage />}
-              ></Route>
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/room" element={<RoomPage />} />
-            </Routes>
-          </Router>
-        </Box>
-      </div>
+      <CookiesProvider>
+        <div className="App">
+          <Box display={"flex"} flexDirection={"column"}>
+            <Router>
+              <Routes>
+                <Route
+                  exact
+                  path="/"
+                  //element={<Navigate replace to="/login" />}
+                  element={
+                    <ProtectedRoute>
+                      <HomePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/room"
+                  element={
+                    <ProtectedRoute>
+                      <RoomPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/login" element={<LoginPage />} />
+              </Routes>
+            </Router>
+          </Box>
+        </div>
+      </CookiesProvider>
     </AuthProvider>
   );
 }
