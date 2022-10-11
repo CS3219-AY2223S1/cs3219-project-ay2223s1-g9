@@ -53,21 +53,21 @@ const HomePage = () => {
               justifyContent={"flex-end"}
             >
               <Button
-                id={"easy"}
+                id={"Easy"}
                 variant={"outlined"}
                 onClick={handleSelectDifficulty}
               >
                 Easy
               </Button>
               <Button
-                id={"medium"}
+                id={"Medium"}
                 variant={"outlined"}
                 onClick={handleSelectDifficulty}
               >
                 Medium
               </Button>
               <Button
-                id={"hard"}
+                id={"Hard"}
                 variant={"outlined"}
                 onClick={handleSelectDifficulty}
               >
