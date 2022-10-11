@@ -17,14 +17,23 @@ const io = new Server(httpServer, { cors: { origin: "*" } });
 io.on(event.CONNECTION, (socket) => {
   console.log("New socket has been connected");
 
-  socket.on(event.JOIN_ROOM, async ({ roomId, roomDifficulty }) => {
-    socket.join(roomId);
-    const collab = await ormInitiateCollaboration({ roomId, roomDifficulty });
-    io.to(roomId).emit("question", {
-      question: collab.question,
-      questionTitle: collab.questionTitle,
-    });
-  });
+  socket.on(
+    event.JOIN_ROOM,
+    async ({ roomId, roomDifficulty, isCreatingRoom }) => {
+      socket.join(roomId);
+      if (isCreatingRoom) {
+        const collab = await ormInitiateCollaboration({
+          roomId,
+          roomDifficulty,
+          isCreatingRoom,
+        });
+        io.to(roomId).emit("question", {
+          question: collab.question,
+          questionTitle: collab.questionTitle,
+        });
+      }
+    }
+  );
 
   socket.on(event.WRITE_CODE, async ({ roomId, code }) => {
     socket.broadcast.to(roomId).emit(event.UPDATE_CODE, code);
