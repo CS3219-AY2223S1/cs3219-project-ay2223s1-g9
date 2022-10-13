@@ -6,6 +6,7 @@ import { ormLogoutUser as _logoutUser } from "../model/user-orm.js";
 import { getToken as _verifyToken} from "../model/repository.js"
 import jwt from 'jsonwebtoken'
 import { StatusCodes } from "http-status-codes"
+import { AuthenticationError, InvalidTokenError, MissingFieldError } from "../exceptions/exceptions.js"
 
 function getToken(req) {
   const authHeader = req.headers["authorization"];
@@ -19,22 +20,13 @@ export async function registerUser(req, res, next) {
     if (username && password) {
       const resp = await _createUser(username, password);
       console.log(resp);
-      if (resp.err) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-          message: "Could not create a new user!",
-          error: resp.err.message,
-        });
-      } else {
-        console.log(`Created new user ${username} successfully!`);
-        return res.status(StatusCodes.CREATED).json({
-          message: `Created new user ${username} successfully!`,
-          id: resp._id,
-        });
-      }
+      console.log(`Created new user ${username} successfully!`);
+      return res.status(StatusCodes.CREATED).json({
+        message: `Created new user ${username} successfully!`,
+        id: resp._id,
+      });
     } else {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Username and/or Password are missing!" });
+      throw new MissingFieldError("Username and/or Password are missing!")
     }
   } catch (err) {
     next(err);
@@ -46,14 +38,8 @@ export async function deleteUser(req, res, next) {
     const token = getToken(req);
     const resp = await _deleteUser(token);
     console.log(resp);
-    if (resp.err) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Could not delete user!", error: resp.err.message });
-    } else {
-      console.log(`Delete user successfully!`);
-      return res.status(StatusCodes.OK).json({ message: `Delete user successfully!` });
-    }
+    console.log(`Delete user successfully!`);
+    return res.status(StatusCodes.OK).json({ message: `Delete user successfully!` });
   } catch (err) {
     next(err);
   }
@@ -65,14 +51,8 @@ export async function updateUser(req, res, next) {
     const { password } = req.body;
     const resp = await _updateUser(token, password);
     console.log(resp);
-    if (resp.err) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Could not update user!", error: resp.err.message });
-    } else {
-      console.log(`Updated user successfully!`);
-      return res.status(StatusCodes.OK).json({ message: `Updated user successfully!` });
-    }
+    console.log(`Updated user successfully!`);
+    return res.status(StatusCodes.OK).json({ message: `Updated user successfully!` });
   } catch (err) {
     next(err);
   }
@@ -84,19 +64,11 @@ export async function loginUser(req, res, next) {
     if (username && password) {
       const resp = await _loginUser(username, password);
       console.log(resp);
-      if (resp.err) {
-        return res
-          .status(StatusCodes.UNAUTHORIZED)
-          .json({ message: "Failed to login", error: resp.err.message });
-      } else {
-        return res
-          .status(StatusCodes.OK)
-          .json({ message: "Logged in successfully", token: resp.token });
-      }
-    } else {
       return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Missing field/s in logging in!" });
+        .status(StatusCodes.OK)
+        .json({ message: "Logged in successfully", token: resp.token });
+    } else {
+      throw new MissingFieldError("Missing field/s for logging in!")
     }
   } catch (err) {
     next(err);
@@ -107,13 +79,7 @@ export async function logoutUser(req, res, next) {
   try {
     const token = getToken(req)
     const resp = await _logoutUser(token);
-    if (resp.err) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Could not logout user", error: resp.err.message });
-    } else {
-      return res.status(StatusCodes.OK).json({ message: "User logged out successfully" });
-    }
+    return res.status(StatusCodes.OK).json({ message: "User logged out successfully" });
   } catch (err) {
     next(err);
   }
@@ -124,20 +90,15 @@ export async function verifyToken(req, res, next) {
     const token = getToken(req)
 
     const tokenArr = await _verifyToken({token})
-    console.log(tokenArr)
     if (tokenArr.length > 0) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({message: "Authentication Failed"})
+      throw new AuthenticationError("Authentication Failed")
     }
 
-    if (token) {
-      try {
-          jwt.verify(token, process.env.SECRET_TOKEN)
-          return res.status(StatusCodes.OK).json({message: "Authenticated"})
-      } catch (err) {
-          return res.status(StatusCodes.UNAUTHORIZED).json({message: "Authentication Failed", error: err.message})
-      }
-    } else {
-        return res.status(StatusCodes.UNAUTHORIZED).json({message: "Authentication Failed", error: "Invalid Token"})
+    try {
+        jwt.verify(token, process.env.SECRET_TOKEN)
+        return res.status(StatusCodes.OK).json({message: "Authenticated"})
+    } catch (err) {
+      throw new InvalidTokenError(err.message)
     }
   } catch (err) {
     next(err);
