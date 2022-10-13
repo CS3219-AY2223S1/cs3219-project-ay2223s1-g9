@@ -14,7 +14,7 @@ import questionRoutes from './routes/question-routes.js'
 import errorHandlerMiddleware from './middleware/error-handling.js'
 
 app.get('/', (_, res) => res.send('Hello World from question-service'))
-app.use('/api/question', questionRoutes).all((_, res) => {
+app.use('/', questionRoutes).all((_, res) => {
     res.setHeader('content-type', 'application/json')
     res.setHeader('Access-Control-Allow-Origin', '*')
 })
