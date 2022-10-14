@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import matchRouter from "./routes/matchingServiceRouter.js";
+import matchRouter from "./routes/matching-service-router.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
