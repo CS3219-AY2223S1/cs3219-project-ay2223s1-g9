@@ -30,7 +30,7 @@ export const ormCreateMatch = async ({ username, roomDifficulty, roomId }) => {
 
 export const ormDeleteMatchRoom = async (id) => {
   try {
-    return { deletedMatchRoom: removeMatch(id) };
+    return { deletedMatchRoom: await removeMatch(id) };
   } catch (err) {
     console.log("ERROR: Could not delete the match room");
     return { err };
