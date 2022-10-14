@@ -15,12 +15,13 @@ import Countdown from "react-countdown";
 import io from "socket.io-client";
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../RoomContext";
+import { SocketContext } from "../SocketContext";
 
 const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { setRoom } = useContext(RoomContext);
+  const { room, setRoom } = useContext(RoomContext);
+  const { socket } = useContext(SocketContext);
   const waitTime = 30000;
-  const SOCKET_ROUTE = "http://localhost:8001";
   const [key, setKey] = useState(0);
 
   const navigate = useNavigate();
@@ -32,41 +33,26 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
   };
 
   useEffect(() => {
-    const socket = io(SOCKET_ROUTE);
     socket.emit(
       "match",
-      { username: user.username, roomDifficulty: difficulty },
+      {
+        username: user.username,
+        roomDifficulty: difficulty,
+        previousRoomId: room.roomId,
+      },
       (error) => {
         console.log(error);
       }
     );
 
     socket.on("matchSuccess", (matchRoom) => {
-      console.log(matchRoom);
       setRoom({
         personOne: matchRoom.personOneUsername,
         personTwo: matchRoom.personTwoUsername,
         roomId: matchRoom.roomId + "",
         difficulty: matchRoom.roomDifficulty,
       });
-      /*
-      matchRoom object for reference.
-      {
-        _id: new ObjectId("63209dcde3bd1a4c9964874b"),
-        personOneUsername: 'Jerry',
-        personTwoUsername: 'Jerry',
-        roomId: 'iIe6WLDWULeb7tT6AAAB',
-        isRoomAvailable: false,
-        roomDifficulty: 'easy',
-        __v: 0
-      }
-      */
-      socket.disconnect();
       navigate("/room");
-    });
-
-    socket.on("matchUnsuccess", () => {
-      socket.disconnect();
     });
   }, [key]);
 

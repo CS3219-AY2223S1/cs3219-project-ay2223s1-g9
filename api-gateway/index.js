@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 import user_service_router from "./routes/user-service-route.js";
 import { SOCKET_EVENT, API_PATH, HTTP_METHODS } from "./constant/constant.js";
@@ -28,15 +29,17 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
   // MATCHING SERVICE
   socket.on(
     SOCKET_EVENT.MATCH,
-    async ({ username, roomDifficulty }, callback) => {
+    async ({ username, roomDifficulty, previousRoomId }, callback) => {
       try {
+        socket.leave(previousRoomId);
+
         const response = await axios({
           method: HTTP_METHODS.POST,
           url: `${config.MATCHING_SERVICE_URL}${API_PATH.CREATE_MATCH}`,
           data: {
             username,
             roomDifficulty,
-            roomId: socket.id,
+            roomId: uuidv4(),
           },
         });
         if (response.status === 500) {
@@ -48,9 +51,13 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
         roomId = matchRoom.roomId;
         socket.join(matchRoom.roomId);
 
-        if (matchRoom.personTwoUserName) {
+        if (matchRoom.personTwoUsername) {
           io.to(matchRoom.roomId).emit(SOCKET_EVENT.MATCH_SUCCESS, matchRoom);
-          return;
+          await axios({
+            method: HTTP_METHODS.DELETE,
+            url:
+              `${config.MATCHING_SERVICE_URL}${API_PATH.DELETE_MATCH}` + roomId,
+          });
         }
       } catch (err) {
         console.log(err);
@@ -59,11 +66,17 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
     }
   );
 
-  const timer = setTimeout(() => {
+  const timer = setTimeout(async () => {
     socket.emit(SOCKET_EVENT.MATCH_UNSUCCESS);
+    if (roomId !== "") {
+      await axios({
+        method: HTTP_METHODS.DELETE,
+        url: `${config.MATCHING_SERVICE_URL}${API_PATH.DELETE_MATCH}` + roomId,
+      });
+    }
   }, 30000);
 
-  socket.on(SOCKET_EVENT.MATCH_SUCCESS, () => {
+  socket.on(SOCKET_EVENT.MATCH_SUCCESS, async () => {
     clearTimeout(timer);
   });
 
@@ -99,15 +112,8 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
     }
   });
 
-  // DISCONNECTING
   socket.on(SOCKET_EVENT.DISONNECTION, async () => {
     console.log("A socket has been disconnected");
-    if (roomId !== "") {
-      await axios({
-        method: HTTP_METHODS.DELETE,
-        url: `${config.MATCHING_SERVICE_URL}${API_PATH.DELETE_MATCH}` + roomId,
-      });
-    }
   });
 });
 
