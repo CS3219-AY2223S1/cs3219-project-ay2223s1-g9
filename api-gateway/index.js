@@ -25,6 +25,7 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
   console.log("New socket has been connected");
   let roomId = "";
 
+  // MATCHING SERVICE
   socket.on(
     SOCKET_EVENT.MATCH,
     async ({ username, roomDifficulty }, callback) => {
@@ -52,7 +53,8 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
           return;
         }
       } catch (err) {
-        callback(err);
+        console.log(err);
+        // callback(err);
       }
     }
   );
@@ -65,6 +67,39 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
     clearTimeout(timer);
   });
 
+  // COLLABORATION & QUESTION SERVICE
+  socket.on(SOCKET_EVENT.WRITE_CODE, async ({ roomId, code }) => {
+    socket.broadcast.to(roomId).emit(SOCKET_EVENT.UPDATE_CODE, code);
+  });
+
+  socket.on(SOCKET_EVENT.JOIN_ROOM, async ({ roomDifficulty }) => {
+    try {
+      const questionResponse = await axios({
+        method: HTTP_METHODS.GET,
+        url: "http://localhost:8002/api/question?difficulty=" + roomDifficulty,
+      });
+      const questionJSON = questionResponse.data.data;
+
+      const collabResponse = await axios({
+        method: HTTP_METHODS.POST,
+        url: `${config.COLLABORATION_SERVICE_URL}${API_PATH.CREATE_COLLAB}`,
+        data: {
+          roomId,
+          roomDifficulty,
+          question: questionJSON.question_content,
+          questionTitle: questionJSON.question_title,
+        },
+      });
+      io.to(roomId).emit(SOCKET_EVENT.QUESTION, {
+        question: collabResponse.data.question,
+        questionTitle: collabResponse.data.questionTitle,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  // DISCONNECTING
   socket.on(SOCKET_EVENT.DISONNECTION, async () => {
     console.log("A socket has been disconnected");
     if (roomId !== "") {

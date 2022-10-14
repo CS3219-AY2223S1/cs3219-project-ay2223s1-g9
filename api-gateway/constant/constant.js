@@ -7,6 +7,8 @@ export const API_PATH = {
 
   CREATE_MATCH: "/createMatch",
   DELETE_MATCH: "/deleteMatch/",
+
+  CREATE_COLLAB: "/createCollab",
 };
 
 export const HTTP_METHODS = {
@@ -28,7 +30,14 @@ export const HTTP_STATUS_CODE = {
 export const SOCKET_EVENT = {
   CONNECTION: "connection",
   DISONNECTION: "disconnect",
+
   MATCH: "match",
   MATCH_SUCCESS: "matchSuccess",
   MATCH_UNSUCCESS: "matchUnsuccess",
+
+  JOIN_ROOM: "joinRoom",
+  WRITE_CODE: "writeCode",
+  UPDATE_CODE: "updateCode",
+
+  QUESTION: "question",
 };
