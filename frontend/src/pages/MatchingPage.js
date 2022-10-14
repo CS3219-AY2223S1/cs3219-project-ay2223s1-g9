@@ -10,14 +10,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Countdown from "react-countdown";
 import io from "socket.io-client";
 import { AuthContext } from "../AuthContext";
+import { RoomContext } from "../RoomContext";
 
 const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
+  const { setRoom } = useContext(RoomContext);
   const waitTime = 30000;
   const SOCKET_ROUTE = "http://localhost:8001";
   const [key, setKey] = useState(0);
@@ -42,6 +43,12 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
 
     socket.on("matchSuccess", (matchRoom) => {
       console.log(matchRoom);
+      setRoom({
+        personOne: matchRoom.personOneUsername,
+        personTwo: matchRoom.personTwoUsername,
+        roomId: matchRoom.roomId + "",
+        difficulty: matchRoom.roomDifficulty,
+      });
       /*
       matchRoom object for reference.
       {

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
+import { RoomContext } from "../RoomContext";
 import CodeEditor from "../components/CodeEditor";
 import io from "socket.io-client";
 
@@ -19,18 +20,18 @@ const RoomPage = () => {
   const SOCKET_ROUTE = "http://localhost:8004";
 
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
+  const { room, setRoom } = useContext(RoomContext);
   const [question, setQuestion] = useState({
     title: "",
     data: <p>question data here</p>,
-    difficulty: "Easy", // This will be passed from matching page.
   });
-  const [room, setRoom] = useState({ id: "1", users: "andey, bobhao" }); // This will be passed from the matching page.
   const socket = io(SOCKET_ROUTE);
 
   useEffect(() => {
     socket.emit("joinRoom", {
-      roomId: room.id,
-      roomDifficulty: question.difficulty,
+      roomId: room.roomId,
+      roomDifficulty: room.difficulty,
+      isCreatingRoom: room.personOne === user.username,
     });
 
     socket.on("question", (questionData) => {
@@ -59,11 +60,11 @@ const RoomPage = () => {
       >
         <Box display={"flex"} flexDirection={"row"}>
           <Typography>Room: </Typography>
-          <Typography>{room.id}</Typography>
+          <Typography>{room.roomId}</Typography>
         </Box>
         <Box display={"flex"} flexDirection={"row"}>
           <Typography>Users: </Typography>
-          <Typography>{room.users}</Typography>
+          <Typography>{room.personOne + ", " + room.personTwo}</Typography>
         </Box>
       </Box>
       <Box display={"flex"} flexDirection={"row"} flex={1}>
@@ -77,9 +78,7 @@ const RoomPage = () => {
           sx={{ boxSizing: "border-box" }}
           gap={"0.5rem"}
         >
-          <Box>
-            {<Typography>Difficulty: {question.difficulty}</Typography>}
-          </Box>
+          <Box>{<Typography>Difficulty: {room.difficulty}</Typography>}</Box>
           <Box flex={1}>
             <Typography
               dangerouslySetInnerHTML={{ __html: question.data }}
@@ -93,7 +92,7 @@ const RoomPage = () => {
           flex={1}
           sx={{ boxSizing: "border-box" }}
         >
-          <CodeEditor socket={socket} roomId={room.id} />
+          <CodeEditor socket={socket} roomId={room.roomId} />
         </Box>
       </Box>
     </Box>
