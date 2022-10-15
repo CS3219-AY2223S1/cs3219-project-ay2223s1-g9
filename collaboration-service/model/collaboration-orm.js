@@ -26,7 +26,6 @@ export const ormInitiateCollaboration = async ({
     question,
     questionTitle,
   });
-  console.log(newCollab);
   await newCollab.save();
   return newCollab;
 };
