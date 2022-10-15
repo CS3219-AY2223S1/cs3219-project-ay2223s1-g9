@@ -7,7 +7,12 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import user_service_router from "./routes/user-service-route.js";
-import { SOCKET_EVENT, API_PATH, HTTP_METHODS, API_QUERY_PATH } from "./constant/constant.js";
+import {
+  SOCKET_EVENT,
+  API_PATH,
+  HTTP_METHODS,
+  API_QUERY_PATH,
+} from "./constant/constant.js";
 import config from "./config/config.js";
 
 dotenv.config();
@@ -27,11 +32,21 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
   let roomId = "";
 
   // MATCHING SERVICE
+  let timer = null;
+
   socket.on(
     SOCKET_EVENT.MATCH,
     async ({ username, roomDifficulty, previousRoomId }, callback) => {
       try {
         socket.leave(previousRoomId);
+
+        timer = setTimeout(async () => {
+          await axios({
+            method: HTTP_METHODS.DELETE,
+            url:
+              `${config.MATCHING_SERVICE_URL}${API_PATH.DELETE_MATCH}` + roomId,
+          });
+        }, 30000);
 
         const response = await axios({
           method: HTTP_METHODS.POST,
@@ -65,16 +80,6 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
       }
     }
   );
-
-  const timer = setTimeout(async () => {
-    socket.emit(SOCKET_EVENT.MATCH_UNSUCCESS);
-    if (roomId !== "") {
-      await axios({
-        method: HTTP_METHODS.DELETE,
-        url: `${config.MATCHING_SERVICE_URL}${API_PATH.DELETE_MATCH}` + roomId,
-      });
-    }
-  }, 30000);
 
   socket.on(SOCKET_EVENT.MATCH_SUCCESS, async () => {
     clearTimeout(timer);
