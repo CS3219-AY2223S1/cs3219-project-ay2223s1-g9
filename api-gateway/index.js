@@ -3,17 +3,16 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import user_service_router from "./routes/user-service-route.js";
+import { SOCKET_EVENT } from "./constant/constant.js";
 import {
-  SOCKET_EVENT,
-  API_PATH,
-  HTTP_METHODS,
-  API_QUERY_PATH,
-} from "./constant/constant.js";
-import config from "./config/config.js";
+  deleteMatchingRoom,
+  createMatchingRoom,
+  createCollaboration,
+  getQuestion,
+} from "./utils/socket-apis.js";
 
 dotenv.config();
 
@@ -29,7 +28,7 @@ app.use(user_service_router);
 
 io.on(SOCKET_EVENT.CONNECTION, (socket) => {
   console.log("New socket has been connected");
-  let roomId = "";
+  let roomId = uuidv4();
 
   // MATCHING SERVICE
   let timer = null;
@@ -39,24 +38,15 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
     async ({ username, roomDifficulty, previousRoomId }, callback) => {
       try {
         socket.leave(previousRoomId);
+        roomId = uuidv4();
 
-        timer = setTimeout(async () => {
-          await axios({
-            method: HTTP_METHODS.DELETE,
-            url:
-              `${config.MATCHING_SERVICE_URL}${API_PATH.DELETE_MATCH}` + roomId,
-          });
-        }, 30000);
+        timer = setTimeout(async () => await deleteMatchingRoom(roomId), 30000);
 
-        const response = await axios({
-          method: HTTP_METHODS.POST,
-          url: `${config.MATCHING_SERVICE_URL}${API_PATH.CREATE_MATCH}`,
-          data: {
-            username,
-            roomDifficulty,
-            roomId: uuidv4(),
-          },
-        });
+        const response = await createMatchingRoom(
+          username,
+          roomDifficulty,
+          roomId
+        );
         if (response.status === 500) {
           throw new Error(
             "Internal Server Error at the matching service microservice"
@@ -68,11 +58,7 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
 
         if (matchRoom.personTwoUsername) {
           io.to(matchRoom.roomId).emit(SOCKET_EVENT.MATCH_SUCCESS, matchRoom);
-          await axios({
-            method: HTTP_METHODS.DELETE,
-            url:
-              `${config.MATCHING_SERVICE_URL}${API_PATH.DELETE_MATCH}` + roomId,
-          });
+          await deleteMatchingRoom(roomId);
         }
       } catch (err) {
         console.log(err);
@@ -92,22 +78,15 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
 
   socket.on(SOCKET_EVENT.JOIN_ROOM, async ({ roomDifficulty }) => {
     try {
-      const questionResponse = await axios({
-        method: HTTP_METHODS.GET,
-        url: `${config.QUESTION_SERVICE_URL}${API_QUERY_PATH.GET_RANDOM_QUESTION}${roomDifficulty}`,
-      });
+      const questionResponse = await getQuestion(roomDifficulty);
       const questionJSON = questionResponse.data.data;
 
-      const collabResponse = await axios({
-        method: HTTP_METHODS.POST,
-        url: `${config.COLLABORATION_SERVICE_URL}${API_PATH.CREATE_COLLAB}`,
-        data: {
-          roomId,
-          roomDifficulty,
-          question: questionJSON.question_content,
-          questionTitle: questionJSON.question_title,
-        },
-      });
+      const collabResponse = await createCollaboration(
+        roomId,
+        roomDifficulty,
+        questionJSON.question_content,
+        questionJSON.question_title
+      );
       io.to(roomId).emit(SOCKET_EVENT.QUESTION, {
         question: collabResponse.data.question,
         questionTitle: collabResponse.data.questionTitle,
