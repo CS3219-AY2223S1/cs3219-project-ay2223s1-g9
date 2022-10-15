@@ -1,3 +1,5 @@
+import config from "../config/config.js";
+
 export const API_PATH = {
   USER: "/api/user",
   UPDATE_USER: "/api/user/update",
@@ -10,6 +12,10 @@ export const API_PATH = {
 
   CREATE_COLLAB: "/createCollab",
 };
+
+export const API_QUERY_PATH = {
+  GET_RANDOM_QUESTION: "/api/question?difficulty="
+}
 
 export const HTTP_METHODS = {
   POST: "post",

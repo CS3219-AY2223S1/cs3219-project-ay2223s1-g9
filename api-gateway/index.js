@@ -7,7 +7,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import user_service_router from "./routes/user-service-route.js";
-import { SOCKET_EVENT, API_PATH, HTTP_METHODS } from "./constant/constant.js";
+import { SOCKET_EVENT, API_PATH, HTTP_METHODS, API_QUERY_PATH } from "./constant/constant.js";
 import config from "./config/config.js";
 
 dotenv.config();
@@ -89,7 +89,7 @@ io.on(SOCKET_EVENT.CONNECTION, (socket) => {
     try {
       const questionResponse = await axios({
         method: HTTP_METHODS.GET,
-        url: "http://localhost:8002/api/question?difficulty=" + roomDifficulty,
+        url: `${config.QUESTION_SERVICE_URL}${API_QUERY_PATH.GET_RANDOM_QUESTION}${roomDifficulty}`,
       });
       const questionJSON = questionResponse.data.data;
 

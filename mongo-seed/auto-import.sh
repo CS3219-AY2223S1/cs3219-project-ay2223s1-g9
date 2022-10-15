@@ -1,0 +1,1 @@
+mongoimport --db=cs3219_project --collection=questionmodels --jsonArray --file=docker-entrypoint-initdb.d/question.json

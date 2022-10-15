@@ -7,6 +7,7 @@ import { getToken as _verifyToken} from "../model/repository.js"
 import jwt from 'jsonwebtoken'
 import { StatusCodes } from "http-status-codes"
 import { AuthenticationError, InvalidTokenError, MissingFieldError } from "../exceptions/exceptions.js"
+import config from "../config/config.js";
 
 function getToken(req) {
   const authHeader = req.headers["authorization"];
@@ -95,7 +96,7 @@ export async function verifyToken(req, res, next) {
     }
 
     try {
-        jwt.verify(token, process.env.SECRET_TOKEN)
+        jwt.verify(token, config.SECRET_TOKEN)
         return res.status(StatusCodes.OK).json({message: "Authenticated"})
     } catch (err) {
       throw new InvalidTokenError(err.message)

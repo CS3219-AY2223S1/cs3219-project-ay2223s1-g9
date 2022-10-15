@@ -1,29 +1,31 @@
 import express from "express";
 import { ormCreateMatch, ormDeleteMatchRoom } from "../model/matching-orm.js";
+import { API_PATH } from "../constant/constant.js";
 
 const matchRouter = new express.Router();
 
-matchRouter.post("/createMatch", async (req, res) => {
+matchRouter.post(API_PATH.CREATE_MATCH, async (req, res, next) => {
   try {
     const { username, roomDifficulty, roomId } = req.body;
-    const { matchRoom, err } = await ormCreateMatch({
+    const { matchRoom } = await ormCreateMatch({
       username,
       roomDifficulty,
       roomId,
     });
-    if (err) {
-      throw new Error(err);
-    }
     res.send(matchRoom);
   } catch (err) {
-    res.status(500).send();
+    next()
   }
 });
 
-matchRouter.delete("/deleteMatch/:roomId", async (req, res) => {
-  const _roomId = req.params.roomId;
-  const deletedRoom = await ormDeleteMatchRoom(_roomId);
-  res.send(deletedRoom);
+matchRouter.delete(API_PATH.DELETE_MATCH, async (req, res, next) => {
+  try {
+    const _roomId = req.params.roomId;
+    const deletedRoom = await ormDeleteMatchRoom(_roomId);
+    res.send(deletedRoom);
+  } catch (err) {
+    next()
+  }
 });
 
 export default matchRouter;

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import config from '../config/config.js';
 
 var Schema = mongoose.Schema
 
@@ -9,7 +10,7 @@ let TokenModelSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        expires: process.env.TOKEN_EXPIRY,
+        expires: config.TOKEN_EXPIRY,
         default: Date.now
     }
 })

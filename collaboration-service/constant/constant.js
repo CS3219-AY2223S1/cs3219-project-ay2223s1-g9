@@ -5,3 +5,7 @@ export const event = {
   WRITE_CODE: "writeCode",
   UPDATE_CODE: "updateCode",
 };
+
+export const API_PATH = {
+  CREATE_COLLABORATION: "/createCollab",
+}

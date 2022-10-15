@@ -1,6 +1,6 @@
 import { ormGetRandomQuestion as _getRandomQuestion} from "../model/question-orm.js";
-import pythonShell, { PythonShell } from 'python-shell'
-import { MissingFieldError } from "../exceptions/Exceptions.js";
+import { PythonShell } from 'python-shell'
+import { MissingFieldError } from "../exceptions/exceptions.js";
 
 export async function getRandomQuestionByDifficulty(req, res, next) {
     try {

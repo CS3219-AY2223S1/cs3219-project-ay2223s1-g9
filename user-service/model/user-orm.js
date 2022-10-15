@@ -2,11 +2,12 @@ import { createUser, checkUser, deleteUser, blackListToken } from './repository.
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { NotFoundError, DuplicateEntryError, WrongPasswordError} from '../exceptions/exceptions.js';
+import config from '../config/config.js';
 
 const generateJWT = (user) => {
     return jwt.sign({
         username: user.username
-    }, process.env.SECRET_TOKEN, { expiresIn: process.env.TOKEN_EXPIRY || '10800s'})
+    }, config.SECRET_TOKEN, { expiresIn: config.TOKEN_EXPIRY })
 }
 
 //need to separate orm functions from repository to decouple business logic from persistence

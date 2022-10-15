@@ -1,11 +1,10 @@
 import MatchRoomModel from "./matching-model.js";
 import mongoose from "mongoose";
+import config from "../config/config.js"
 
-// the url is for local set up only.
-mongoose.connect("mongodb://127.0.0.1:27017/matching-service-api", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+let mongoDB = config.ENV == "PROD" ? config.DB_CLOUD_URI : config.DB_LOCAL_URI;
+
+mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true})
 
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));

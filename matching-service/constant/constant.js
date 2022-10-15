@@ -3,3 +3,8 @@ export const roomDifficultyLevel = {
   MEDIUM: "medium",
   HARD: "hard",
 };
+
+export const API_PATH = {
+  CREATE_MATCH: "/createMatch",
+  DELETE_MATCH: "/deleteMatch/:roomId"
+}

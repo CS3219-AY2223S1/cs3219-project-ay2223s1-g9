@@ -1,5 +1,5 @@
 import { getQuestionsByDifficulty } from './repository.js';
-import { NotFoundError } from '../exceptions/Exceptions.js';
+import { NotFoundError } from '../exceptions/exceptions.js';
 
 export async function ormGetRandomQuestion(difficulty) {
     const listOfQuestions = await getQuestionsByDifficulty({difficulty})
