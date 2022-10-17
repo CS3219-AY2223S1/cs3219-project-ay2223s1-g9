@@ -28,15 +28,11 @@ const RoomPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    window.onpopstate = (e) => {
+    window.onpopstate = (_) => {
       navigate("/");
     };
     if (user.username === room.personOne) {
-      socket.emit("joinRoom", {
-        roomId: room.roomId,
-        roomDifficulty: room.difficulty,
-        isCreatingRoom: room.personOne === user.username,
-      });
+      socket.emit("joinRoom", { roomDifficulty: room.difficulty });
     }
 
     socket.on("question", (questionData) => {
