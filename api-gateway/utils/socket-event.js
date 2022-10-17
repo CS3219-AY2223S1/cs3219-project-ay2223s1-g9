@@ -23,9 +23,8 @@ export const initiateSocket = (app) => {
 
     socket.on(
       SOCKET_EVENT.MATCH,
-      async ({ username, roomDifficulty, previousRoomId }, callback) => {
+      async ({ username, roomDifficulty }, callback) => {
         try {
-          socket.leave(previousRoomId);
           roomId = uuidv4();
 
           timer = setTimeout(
@@ -85,6 +84,10 @@ export const initiateSocket = (app) => {
       } catch (err) {
         console.log(err);
       }
+    });
+
+    socket.on(SOCKET_EVENT.LEAVE_ROOM, async ({ roomId }) => {
+      socket.leave(roomId);
     });
 
     socket.on(SOCKET_EVENT.DISONNECTION, async () => {

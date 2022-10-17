@@ -29,6 +29,7 @@ const RoomPage = () => {
 
   useEffect(() => {
     window.onpopstate = (_) => {
+      socket.emit("leaveRoom", { roomId: room.roomId });
       navigate("/");
     };
     if (user.username === room.personOne) {

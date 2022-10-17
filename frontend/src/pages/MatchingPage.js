@@ -38,7 +38,6 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
       {
         username: user.username,
         roomDifficulty: difficulty,
-        previousRoomId: room.roomId,
       },
       (error) => {
         console.log(error);

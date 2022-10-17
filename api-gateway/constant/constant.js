@@ -14,8 +14,8 @@ export const API_PATH = {
 };
 
 export const API_QUERY_PATH = {
-  GET_RANDOM_QUESTION: "/api/question?difficulty="
-}
+  GET_RANDOM_QUESTION: "/api/question?difficulty=",
+};
 
 export const HTTP_METHODS = {
   POST: "post",
@@ -42,6 +42,7 @@ export const SOCKET_EVENT = {
   MATCH_UNSUCCESS: "matchUnsuccess",
 
   JOIN_ROOM: "joinRoom",
+  LEAVE_ROOM: "leaveRoom",
   WRITE_CODE: "writeCode",
   UPDATE_CODE: "updateCode",
 
