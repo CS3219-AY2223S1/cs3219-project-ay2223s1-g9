@@ -1,4 +1,5 @@
 import { Room } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -13,26 +14,30 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../RoomContext";
+import { SocketContext } from "../SocketContext";
 import CodeEditor from "../components/CodeEditor";
-import io from "socket.io-client";
 
 const RoomPage = () => {
-  const SOCKET_ROUTE = "http://localhost:8004";
-
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
   const { room, setRoom } = useContext(RoomContext);
+  const { socket, setSocket } = useContext(SocketContext);
   const [question, setQuestion] = useState({
     title: "",
     data: <p>question data here</p>,
   });
-  const socket = io(SOCKET_ROUTE);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    socket.emit("joinRoom", {
-      roomId: room.roomId,
-      roomDifficulty: room.difficulty,
-      isCreatingRoom: room.personOne === user.username,
-    });
+    window.onpopstate = (e) => {
+      navigate("/");
+    };
+    if (user.username === room.personOne) {
+      socket.emit("joinRoom", {
+        roomId: room.roomId,
+        roomDifficulty: room.difficulty,
+        isCreatingRoom: room.personOne === user.username,
+      });
+    }
 
     socket.on("question", (questionData) => {
       setQuestion({
