@@ -22,7 +22,7 @@ export async function getRandomQuestionByDifficulty(req, res, next) {
 
 export async function fetchQuestionsFromLeetcode(req, res, next) {
     try {
-        const uri = process.env.ENV == "PROD" ? process.env.DB_CLOUD_URI : process.env.DB_LOCAL_URI
+        const uri = config.ENV == "PROD" ? config.DB_CLOUD_URI : config.DB_LOCAL_URI;
         const pyshell = new PythonShell('./utils/leetcode_scrapper.py', { mode:'text', args:[uri]})
         pyshell.on('message', (message) => {
             console.log(message)
