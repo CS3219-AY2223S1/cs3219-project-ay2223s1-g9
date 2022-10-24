@@ -14,13 +14,11 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../RoomContext";
-import { SocketContext } from "../SocketContext";
 import CodeEditor from "../components/CodeEditor";
 
 const RoomPage = () => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { room, setRoom } = useContext(RoomContext);
-  const { socket, setSocket } = useContext(SocketContext);
+  const { room, socket } = useContext(RoomContext);
   const [question, setQuestion] = useState({
     title: "",
     data: <p>question data here</p>,
