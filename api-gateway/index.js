@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import user_service_router from "./routes/user-service-route.js";
-import { initiateSocket } from "./utils/socket-event.js";
+import { initiateSocket } from "./routes/socket-event-route.js";
 
 dotenv.config();
 

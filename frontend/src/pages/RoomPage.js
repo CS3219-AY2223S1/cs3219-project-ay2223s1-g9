@@ -33,10 +33,14 @@ const RoomPage = () => {
       navigate("/");
     };
     if (user.username === room.personOne) {
-      socket.emit("joinRoom", { roomDifficulty: room.difficulty });
+      socket.emit("joinRoom", {
+        roomDifficulty: room.difficulty,
+        roomId: room.roomId,
+      });
     }
 
     socket.on("question", (questionData) => {
+      console.log(questionData);
       setQuestion({
         ...question,
         title: questionData.questionTitle,
