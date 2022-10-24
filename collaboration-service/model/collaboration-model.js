@@ -20,7 +20,7 @@ let CollaborationModelSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    expires: "1d",
+    expires: "60d",
     default: Date.now,
   },
 });

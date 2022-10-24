@@ -1,8 +1,8 @@
 import {
   createCollaboration,
-  findCollaboration,
-  removeCollab,
+  findMultipleCollaborations,
 } from "./collaboration-repository.js";
+import _ from "lodash";
 
 export const ormInitiateCollaboration = async ({
   roomId,
@@ -10,16 +10,6 @@ export const ormInitiateCollaboration = async ({
   question,
   questionTitle,
 }) => {
-  // const response = await request(
-  //   "http://localhost:8002/api/question?difficulty=" + roomDifficulty
-  // );
-  // const questionJSON = JSON.parse(response.body).data;
-  // const newCollab = await createCollaboration({
-  //   roomId,
-  //   roomDifficulty,
-  //   question: questionJSON.question_content,
-  //   questionTitle: questionJSON.question_content,
-  // });
   const newCollab = await createCollaboration({
     roomId,
     roomDifficulty,
@@ -28,4 +18,15 @@ export const ormInitiateCollaboration = async ({
   });
   await newCollab.save();
   return newCollab;
+};
+
+export const ormFindMultipleCollaboration = async (roomIds) => {
+  const collaborations = await findMultipleCollaborations(roomIds);
+  const filteredKeysCollabs = [];
+  collaborations.forEach((collab) =>
+    filteredKeysCollabs.push(
+      _.pick(collab, ["roomId", "roomDifficulty", "questionTitle", "question"])
+    )
+  );
+  return filteredKeysCollabs;
 };
