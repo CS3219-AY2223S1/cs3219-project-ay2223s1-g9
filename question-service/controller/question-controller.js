@@ -1,6 +1,7 @@
 import { ormGetRandomQuestion as _getRandomQuestion} from "../model/question-orm.js";
 import { PythonShell } from 'python-shell'
 import { MissingFieldError } from "../exceptions/exceptions.js";
+import { StatusCodes } from "http-status-codes"
 
 export async function getRandomQuestionByDifficulty(req, res, next) {
     try {
@@ -8,7 +9,7 @@ export async function getRandomQuestionByDifficulty(req, res, next) {
         if (difficulty) {
             const resp = await _getRandomQuestion(difficulty)
             console.log(`Get random coding question of ${difficulty} successfully!`)
-            return res.status(200).json({
+            return res.status(StatusCodes.OK).json({
                 message: `Get random coding question of ${difficulty} successfully!`,
                 data: resp
             })
