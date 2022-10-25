@@ -1,5 +1,5 @@
 import QuestionModel from './question-model.js'
-import 'dotenv/config'
+import config from "../config/config.js"
 
 //Set up mongoose conection
 import mongoose from 'mongoose'

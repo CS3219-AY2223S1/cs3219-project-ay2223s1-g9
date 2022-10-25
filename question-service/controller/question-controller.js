@@ -2,6 +2,7 @@ import { ormGetRandomQuestion as _getRandomQuestion} from "../model/question-orm
 import { PythonShell } from 'python-shell'
 import { MissingFieldError } from "../exceptions/exceptions.js";
 import { StatusCodes } from "http-status-codes"
+import config from "../config/config.js"
 
 export async function getRandomQuestionByDifficulty(req, res, next) {
     try {
