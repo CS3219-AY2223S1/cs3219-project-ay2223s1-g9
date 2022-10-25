@@ -14,15 +14,20 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../RoomContext";
+
 import CodeEditor from "../components/CodeEditor";
+import VideoPlayer from "../components/VideoPlayer";
 
 const RoomPage = () => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { room, socket } = useContext(RoomContext);
+  const { room, socket, myStream, me } = useContext(RoomContext);
   const [question, setQuestion] = useState({
     title: "",
     data: <p>question data here</p>,
   });
+  const [myPeerStream, setMyPeerStream] = useState(null);
+  const [isShowingMyStream, setIsShowingMyStream] = useState(false);
+  const [isShowingPeerStream, setIsShowingPeerStream] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,20 +35,41 @@ const RoomPage = () => {
       socket.emit("leaveRoom", { roomId: room.roomId });
       navigate("/");
     };
+
     if (user.username === room.personOne) {
       socket.emit("joinRoom", {
         roomDifficulty: room.difficulty,
         roomId: room.roomId,
       });
+      socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
     }
 
     socket.on("question", (questionData) => {
-      console.log(questionData);
       setQuestion({
         ...question,
         title: questionData.questionTitle,
         data: questionData.question,
       });
+    });
+
+    socket.on("receiveStream", ({ peerId }) => {
+      const call = me.call(peerId, myStream);
+      call.on("stream", (peerStream) => {
+        console.log(peerStream);
+        setMyPeerStream(peerStream);
+      });
+    });
+
+    me.on("call", (call) => {
+      call.answer(myStream);
+      call.on("stream", (peerStream) => {
+        console.log(peerStream);
+        setMyPeerStream(peerStream);
+      });
+    });
+
+    socket.on("togglePeerStream", ({ showStream }) => {
+      setIsShowingPeerStream(showStream);
     });
   }, []);
 
@@ -98,6 +124,19 @@ const RoomPage = () => {
         >
           <CodeEditor socket={socket} roomId={room.roomId} />
         </Box>
+        <Button
+          onClick={(_) => {
+            socket.emit("togglePeerStream", {
+              roomId: room.roomId,
+              showStream: !isShowingMyStream,
+            });
+            setIsShowingMyStream(!isShowingMyStream);
+          }}
+        >
+          Click me
+        </Button>
+        {isShowingMyStream && <VideoPlayer stream={myStream} />}
+        {isShowingPeerStream && <VideoPlayer stream={myPeerStream} />}
       </Box>
     </Box>
   );
