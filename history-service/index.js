@@ -20,4 +20,4 @@ app.use('/', historyRoutes).all((_, res) => {
 })
 app.use(errorHandlerMiddleware)
 
-app.listen(8005, () => console.log('history-service listening on port 8005'));
+app.listen(8004, () => console.log('history-service listening on port 8004'));

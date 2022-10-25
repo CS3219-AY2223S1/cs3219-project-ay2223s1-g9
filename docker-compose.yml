@@ -9,22 +9,20 @@ services:
       - ./.env
     depends_on:
       - mongo_db
-      
+  
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env
+  
   user-service:
     build:
       context: ./user-service
     ports:
       - "8000:8000"
-    env_file:
-      - ./.env
-    depends_on:
-      - mongo_db
-
-  question-service:
-    build:
-      context: ./question-service
-    ports:
-      - "8002:8002"
     env_file:
       - ./.env
     depends_on:
@@ -40,9 +38,29 @@ services:
     depends_on:
       - mongo_db
 
+  question-service:
+    build:
+      context: ./question-service
+    ports:
+      - "8002:8002"
+    env_file:
+      - ./.env
+    depends_on:
+      - mongo_db
+
   collaboration-service:
     build:
       context: ./collaboration-service
+    ports:
+      - "8003:8003"
+    env_file:
+      - ./.env
+    depends_on:
+      - mongo_db
+
+  history-service:
+    build:
+      context: ./history-service
     ports:
       - "8004:8004"
     env_file:
@@ -53,7 +71,7 @@ services:
   mongo_db:
     image: mongo
     ports:
-      - 27017:27017
+      - 27018:27017
     environment:
       MONGO_INITDB_DATABASE: cs3219_project
     volumes:
