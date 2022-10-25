@@ -15,12 +15,10 @@ import Countdown from "react-countdown";
 import io from "socket.io-client";
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../RoomContext";
-import { SocketContext } from "../SocketContext";
 
 const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { room, setRoom } = useContext(RoomContext);
-  const { socket } = useContext(SocketContext);
+  const { room, setRoom, socket } = useContext(RoomContext);
   const waitTime = 30000;
   const [key, setKey] = useState(0);
 
