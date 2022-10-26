@@ -40,6 +40,8 @@ const RoomPage = () => {
       socket.emit("joinRoom", {
         roomDifficulty: room.difficulty,
         roomId: room.roomId,
+        userOne: room.personOne,
+        userTwo: room.personTwo,
       });
       socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
     }

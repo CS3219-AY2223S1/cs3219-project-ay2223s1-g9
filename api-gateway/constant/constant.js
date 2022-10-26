@@ -11,6 +11,8 @@ export const API_PATH = {
   DELETE_MATCH: "/deleteMatch/",
 
   CREATE_COLLAB: "/createCollab",
+
+  CREATE_HISTORY: "/api/history",
 };
 
 export const API_QUERY_PATH = {
