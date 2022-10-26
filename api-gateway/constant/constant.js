@@ -9,7 +9,7 @@ export const API_PATH = {
   DELETE_MATCH: "/deleteMatch/",
 
   CREATE_COLLAB: "/createCollab",
-  GET_MULTIPLE_COLLAB: "/getMultipleCollab",
+  GET_COLLAB_ROOM: "/getMultipleCollab",
 
   CREATE_HISTORY: "/api/history",
   GET_HISTORY: "/api/history"
