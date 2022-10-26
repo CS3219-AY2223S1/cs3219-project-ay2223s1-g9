@@ -10,12 +10,8 @@ export const createCollaboration = async (data) => {
   return new CollaborationModel(data);
 };
 
-export const findMultipleCollaborations = async (roomIds) => {
-  return CollaborationModel.find({
-    roomId: {
-      $in: roomIds,
-    },
-  });
+export const findCollaborationRoom = async (roomId) => {
+  return CollaborationModel.findOne({ roomId });
 };
 
 export const removeCollab = async ({ roomId }) => {
