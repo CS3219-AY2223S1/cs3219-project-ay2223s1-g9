@@ -12,10 +12,10 @@ function getToken(req) {
 
 export async function createHistory(req, res, next) {
   try {
-    const { userOne, userTwo, roomId } = req.body;
-    if (userOne && userTwo && roomId) {
-      await _createHistory({ username: userOne, roomId });
-      await _createHistory({ username: userTwo, roomId });
+    const { userOne, userTwo, roomId, question_title } = req.body;
+    if (userOne && userTwo && roomId && question_title) {
+      await _createHistory({ username: userOne, roomId, question_title });
+      await _createHistory({ username: userTwo, roomId, question_title });
       console.log(`Created new history for ${userOne} successfully`);
       console.log(`Created new history for ${userTwo} successfully`);
       return res.status(StatusCodes.CREATED).json({

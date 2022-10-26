@@ -51,7 +51,12 @@ export const createCollaboration = async (
   });
 };
 
-export const createUserHistory = async (userOne, userTwo, roomId) => {
+export const createUserHistory = async (
+  userOne,
+  userTwo,
+  roomId,
+  question_title
+) => {
   return await axios({
     method: HTTP_METHODS.POST,
     url: `${config.HISTORY_SERVICE_URL}${API_PATH.CREATE_HISTORY}`,
@@ -59,6 +64,7 @@ export const createUserHistory = async (userOne, userTwo, roomId) => {
       userOne,
       userTwo,
       roomId,
+      question_title,
     },
   });
 };

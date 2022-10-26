@@ -56,7 +56,12 @@ export const userJoinRoom = async (
         questionJSON.question_title
       );
 
-      await createUserHistory(userOne, userTwo, roomId);
+      await createUserHistory(
+        userOne,
+        userTwo,
+        roomId,
+        questionJSON.question_title
+      );
 
       io.to(roomId).emit(SOCKET_EVENT.QUESTION, {
         question: collabResponse.data.question,
