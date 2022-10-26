@@ -16,5 +16,5 @@ export async function createHistory(params) {
 }
 
 export async function getHistoryByUsername(params) {
-    return await HistoryModel.find({ username: params.username })
+    return await HistoryModel.find({ username: params.username }).sort({createdAt: -1})
 }

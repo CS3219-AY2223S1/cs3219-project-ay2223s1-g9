@@ -1,5 +1,3 @@
-import config from "../config/config.js";
-
 export const API_PATH = {
   USER: "/api/user",
   UPDATE_USER: "/api/user/update",
@@ -11,8 +9,10 @@ export const API_PATH = {
   DELETE_MATCH: "/deleteMatch/",
 
   CREATE_COLLAB: "/createCollab",
+  GET_MULTIPLE_COLLAB: "/getMultipleCollab",
 
   CREATE_HISTORY: "/api/history",
+  GET_HISTORY: "/api/history"
 };
 
 export const API_QUERY_PATH = {
