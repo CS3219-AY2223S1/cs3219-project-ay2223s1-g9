@@ -4,6 +4,7 @@
 name: user-service-ci-cd
 
 on:
+  workflow_dispatch:
   push:
     paths: ./user-service
     branches: [ "main" ]
