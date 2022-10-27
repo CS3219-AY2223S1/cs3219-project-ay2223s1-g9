@@ -21,3 +21,5 @@ app.use(router).all((_, res) => {
 app.use(errorHandlerMiddleware)
 
 app.listen(8000, () => console.log('user-service listening on port 8000'));
+
+export default app
