@@ -20,11 +20,8 @@ import VideoPlayer from "../components/VideoPlayer";
 
 const RoomPage = () => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { room, socket, myStream, me } = useContext(RoomContext);
-  const [question, setQuestion] = useState({
-    title: "",
-    data: <p>question data here</p>,
-  });
+  const { room, socket, myStream, me, question } = useContext(RoomContext);
+
   const [myPeerStream, setMyPeerStream] = useState(null);
   const [isShowingMyStream, setIsShowingMyStream] = useState(false);
   const [isShowingPeerStream, setIsShowingPeerStream] = useState(false);
@@ -45,14 +42,6 @@ const RoomPage = () => {
       });
       socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
     }
-
-    socket.on("question", (questionData) => {
-      setQuestion({
-        ...question,
-        title: questionData.questionTitle,
-        data: questionData.question,
-      });
-    });
 
     socket.on("receiveStream", ({ peerId }) => {
       const call = me.call(peerId, myStream);

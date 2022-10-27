@@ -2,7 +2,6 @@ import { useState, useEffect, useReducer } from "react";
 
 import io from "socket.io-client";
 import Peer from "peerjs";
-import { v4 as uuidV4 } from "uuid";
 
 import { RoomContext } from "./RoomContext";
 
@@ -16,12 +15,24 @@ export const RoomProvider = ({ children }) => {
     roomId: "",
     difficulty: "",
   });
+  const [question, setQuestion] = useState({
+    title: "",
+    data: <p>question data here</p>,
+  });
+
   const [me, setMe] = useState(null);
   const [myStream, setMyStream] = useState(null);
 
   useEffect(() => {
-    const meId = uuidV4();
-    const peer = new Peer(meId);
+    socket.on("question", (questionData) => {
+      setQuestion({
+        ...question,
+        title: questionData.questionTitle,
+        data: questionData.question,
+      });
+    });
+
+    const peer = new Peer();
     setMe(peer);
 
     try {
@@ -34,7 +45,9 @@ export const RoomProvider = ({ children }) => {
   }, []);
 
   return (
-    <RoomContext.Provider value={{ room, setRoom, me, myStream, socket }}>
+    <RoomContext.Provider
+      value={{ room, setRoom, me, myStream, socket, question }}
+    >
       {children}
     </RoomContext.Provider>
   );
