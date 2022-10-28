@@ -16,6 +16,7 @@ env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   SERVICE: user-service
   REGION: asia-southeast1
+  PORT: 8000
 
 defaults:
   run:
@@ -82,7 +83,7 @@ jobs:
       run: |-
         gcloud run deploy ${{ env.SERVICE }} \
           --region ${{ env.REGION }} \
-          --port 8000 \
+          --port ${{ env.PORT }} \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
           --platform "managed" \
           --quiet
