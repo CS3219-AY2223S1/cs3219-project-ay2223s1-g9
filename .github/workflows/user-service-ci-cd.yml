@@ -15,7 +15,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   SERVICE: user-service
-  REGION: asia_southeast1
+  REGION: asia-southeast1
 
 defaults:
   run:
