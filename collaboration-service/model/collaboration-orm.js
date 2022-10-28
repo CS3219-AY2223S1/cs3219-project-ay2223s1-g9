@@ -1,6 +1,6 @@
 import {
   createCollaboration,
-  findMultipleCollaborations,
+  findCollaborationRoom,
 } from "./collaboration-repository.js";
 import _ from "lodash";
 
@@ -20,13 +20,6 @@ export const ormInitiateCollaboration = async ({
   return newCollab;
 };
 
-export const ormFindMultipleCollaboration = async (roomIds) => {
-  const collaborations = await findMultipleCollaborations(roomIds);
-  const filteredKeysCollabs = [];
-  collaborations.forEach((collab) =>
-    filteredKeysCollabs.push(
-      _.pick(collab, ["roomId", "roomDifficulty", "questionTitle", "question"])
-    )
-  );
-  return filteredKeysCollabs;
+export const ormFindCollaborationRoom = async (roomId) => {
+  return await findCollaborationRoom(roomId);
 };

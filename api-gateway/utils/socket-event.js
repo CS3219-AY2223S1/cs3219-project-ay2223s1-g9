@@ -6,6 +6,7 @@ import {
   createMatchingRoom,
   createCollaboration,
   getQuestion,
+  createUserHistory,
 } from "../utils/socket-apis.js";
 
 export const matchingUsers = async (
@@ -36,7 +37,13 @@ export const matchingSuccessful = (timer) => {
   clearTimeout(timer);
 };
 
-export const userJoinRoom = async (io, roomId, roomDifficulty) => {
+export const userJoinRoom = async (
+  io,
+  roomId,
+  roomDifficulty,
+  userOne,
+  userTwo
+) => {
   try {
     try {
       const questionResponse = await getQuestion(roomDifficulty);
@@ -46,6 +53,13 @@ export const userJoinRoom = async (io, roomId, roomDifficulty) => {
         roomId,
         roomDifficulty,
         questionJSON.question_content,
+        questionJSON.question_title
+      );
+
+      await createUserHistory(
+        userOne,
+        userTwo,
+        roomId,
         questionJSON.question_title
       );
 

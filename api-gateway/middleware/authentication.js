@@ -1,11 +1,11 @@
 import axios from 'axios'
 import config from "../config/config.js"
+import { API_PATH } from "../constant/constant.js"
 import { HTTP_STATUS_CODE } from "../constant/constant.js"
 
 const authenticate = async (req, res, next) => {
     const authHeader = req.headers["authorization"]
     const token = authHeader && authHeader.split(" ")[1]
-
     if (token && await isValidToken(token)) {
         next()
     } else {
@@ -15,11 +15,12 @@ const authenticate = async (req, res, next) => {
 
 const isValidToken = async (token) => {
     try {
-        await axios.get(`${config.USER_SERVICE_URL}${constant.VERIFY_TOKEN}`, { headers: {
+        await axios.get(`${config.USER_SERVICE_URL}${API_PATH.VERIFY_TOKEN}`, { headers: {
             Authorization: `Bearer ${token}`
         }})
         return true
     } catch (err) {
+        console.log(err)
         return false
     }
 }

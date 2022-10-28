@@ -35,9 +35,12 @@ export const initiateSocket = (app) => {
       userWritingCode(socket, roomId, code);
     });
 
-    socket.on(SOCKET_EVENT.JOIN_ROOM, async ({ roomDifficulty, roomId }) => {
-      await userJoinRoom(io, roomId, roomDifficulty);
-    });
+    socket.on(
+      SOCKET_EVENT.JOIN_ROOM,
+      async ({ roomDifficulty, roomId, userOne, userTwo }) => {
+        await userJoinRoom(io, roomId, roomDifficulty, userOne, userTwo);
+      }
+    );
 
     socket.on(SOCKET_EVENT.LEAVE_ROOM, ({ roomId }) => {
       userLeaveRoom(socket, roomId);
@@ -45,6 +48,15 @@ export const initiateSocket = (app) => {
 
     socket.on(SOCKET_EVENT.DISONNECTION, async () => {
       console.log("A socket has been disconnected");
+    });
+
+    // COMMUNICATION
+    socket.on("sendStream", ({ peerId, roomId }) => {
+      socket.broadcast.to(roomId).emit("receiveStream", { peerId });
+    });
+
+    socket.on("togglePeerStream", ({ roomId, showStream }) => {
+      socket.broadcast.to(roomId).emit("togglePeerStream", { showStream });
     });
   });
 

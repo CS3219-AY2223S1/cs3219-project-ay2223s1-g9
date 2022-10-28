@@ -8,5 +8,5 @@ export const event = {
 
 export const API_PATH = {
   CREATE_COLLABORATION: "/createCollab",
-  GET_MULTIPLE_COLLABORATION: "/getMultipleCollab",
+  GET_MULTIPLE_COLLABORATION: "/getCollab",
 };
