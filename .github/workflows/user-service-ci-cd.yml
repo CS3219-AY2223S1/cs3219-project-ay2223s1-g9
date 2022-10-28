@@ -17,12 +17,13 @@ env:
   SERVICE: user-service
   REGION: asia_southeast1
 
+defaults:
+  run:
+    working-directory: ./user-service
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./user-service
     strategy:
       matrix:
         node-version: [16.x]
