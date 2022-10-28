@@ -82,6 +82,7 @@ jobs:
       run: |-
         gcloud run deploy ${{ env.SERVICE }} \
           --region ${{ env.REGION }} \
+          --port 8000 \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
           --platform "managed" \
           --quiet
