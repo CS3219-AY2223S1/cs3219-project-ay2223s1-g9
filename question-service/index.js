@@ -21,3 +21,5 @@ app.use('/', questionRoutes).all((_, res) => {
 app.use(errorHandlerMiddleware)
 
 app.listen(8002, () => console.log('question-service listening on port 8002'));
+
+export default app

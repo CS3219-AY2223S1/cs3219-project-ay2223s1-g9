@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors()); // config cors so that front-end can use
 app.options("*", cors());
 
+app.get('/', (_, res) => res.send('Hello World from matching-service'))
 app.use(matchRouter).all((_, res) => {
     res.setHeader('content-type', 'application/json')
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -20,3 +21,5 @@ app.use(matchRouter).all((_, res) => {
 app.use(errorHandlerMiddleware)
 
 app.listen(8001, () => console.log("matching service listening on port 8001"));
+
+export default app

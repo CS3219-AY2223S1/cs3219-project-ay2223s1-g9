@@ -12,6 +12,7 @@ dotenv.config();
 
 const app = express();
 
+app.get('/', (_, res) => res.send('Hello World from api-gateway'))
 app.use(UserServiceRouter)
 app.use(HistoryServiceRouter)
 app.use(CollabServiceRouter)
@@ -26,3 +27,5 @@ const httpServer = initiateSocket(app);
 httpServer.listen(8010, () =>
   console.log("api-gateway listening on port 8010")
 );
+
+export default app
