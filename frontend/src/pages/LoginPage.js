@@ -23,6 +23,9 @@ import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
+import styles from "./LoginPage.module.scss";
+import "../styles/scss/global.scss";
+
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -74,7 +77,7 @@ function LoginPage() {
       width={"30%"}
       padding={"4rem"}
     >
-      <Typography variant={"h3"} marginBottom={"2rem"}>
+      <Typography variant={"h3"} marginBottom={"2rem"} className={styles.trial}>
         Login
       </Typography>
       <TextField

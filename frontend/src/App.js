@@ -15,6 +15,7 @@ import { AuthProvider } from "./AuthProvider";
 import { RoomProvider } from "./RoomProvider";
 import ProtectedRoute from "./ProtectedRoute";
 import { CookiesProvider } from "react-cookie";
+import "./styles/scss/global.scss";
 
 function App() {
   return (
