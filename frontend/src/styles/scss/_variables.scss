@@ -1,18 +1,15 @@
 // Colours
-$color-primary: #3965b2;
-$color-primary-active: #29497f;
-$color-secondary: #1fa699;
-$color-secondary-active: #167369;
+$color-primary: #a287f4;
+$color-primary-active: #b59ff6;
+$color-easy: #15c79c;
+$color-easy-active: #44d2b0;
+$color-med: #f4dc87;
+$color-med-active: #f6e39f;
+$color-hard: #fd6584;
+$color-hard-active: #fd849d;
 $color-light: #dddddd;
-$color-high: #eb4645;
-// $color-med: #f6723b;
-$color-med: #f6953b;
-$color-purple: #b83bf6;
-
-// Backgrounds
-$bg-gradient-right: linear-gradient(to right, #3965b2, #45c1c8);
-$bg-gradient-bottom: linear-gradient(#3965b2, #45c1c8);
-$bg-gradient-light: linear-gradient(#dddddd, #ffffff);
+$color-dark: #414141;
+$color-background: #000000;
 
 // Opacity
 $op-primary: 0.4;
@@ -23,4 +20,4 @@ $montserrat-regular: "Montserrat Regular", Helvetica, Arial, sans-serif;
 $montserrat-medium: "Montserrat Medium", Helvetica, Arial, sans-serif;
 
 // Border Radius
-$br-primary: 5px;
+$br-primary: 10px;
