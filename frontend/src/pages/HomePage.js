@@ -12,14 +12,14 @@ import {
 } from "@mui/material";
 
 import NavBar from "../components/NavBar";
-import { PageContext } from "../contexts/PageContext";
+import { PageContext, Pages } from "../contexts/PageContext";
 
 const HomePage = ({ setDifficulty }) => {
   const { setPage } = useContext(PageContext);
 
   const handleSelectDifficulty = (event) => {
     setDifficulty(event.currentTarget.id);
-    setPage(1);
+    setPage(Pages.MatchingPage);
   };
 
   return (

@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import { PageContext } from "./PageContext";
+import { PageContext, Pages } from "./PageContext";
 
 export const PageProvider = ({ children }) => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(Pages.HomePage);
 
   return (
     <PageContext.Provider

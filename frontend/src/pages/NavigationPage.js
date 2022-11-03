@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 
-import { PageContext } from "../contexts/PageContext";
+import { PageContext, Pages } from "../contexts/PageContext";
 import { RoomProvider } from "../contexts/RoomProvider";
 import MatchingPage from "./MatchingPage";
 import HomePage from "./HomePage";
@@ -12,11 +12,11 @@ export const NavigationPage = () => {
 
   return (
     <RoomProvider>
-      {page === 0 && (
+      {page === Pages.HomePage && (
         <HomePage difficulty={difficulty} setDifficulty={setDifficulty} />
       )}
-      {page === 1 && <MatchingPage difficulty={difficulty} />}
-      {page === 2 && <RoomPage />}
+      {page === Pages.MatchingPage && <MatchingPage difficulty={difficulty} />}
+      {page === Pages.RoomPage && <RoomPage />}
     </RoomProvider>
   );
 };

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../contexts/RoomContext";
-import { PageContext } from "../contexts/PageContext";
+import { PageContext, Pages } from "../contexts/PageContext";
 import CodeEditor from "../components/CodeEditor";
 import VideoPlayer from "../components/VideoPlayer";
 
@@ -36,7 +36,7 @@ const RoomPage = () => {
     // NOTE TO ANDREA: HELP CREATE A BUTTON TO LEAVE THE ROOM SO WE CAN USE THAT INSTEAD OF THE BROWSER BACK BUTTON.
     window.onpopstate = (_) => {
       socket.emit("leaveRoom", { roomId: room.roomId });
-      setPage(0);
+      setPage(Pages.HomePage);
       navigate("/");
     };
 

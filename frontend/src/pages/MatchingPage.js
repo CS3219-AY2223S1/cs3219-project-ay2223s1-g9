@@ -14,7 +14,7 @@ import Countdown from "react-countdown";
 
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../contexts/RoomContext";
-import { PageContext } from "../contexts/PageContext";
+import { PageContext, Pages } from "../contexts/PageContext";
 
 const MatchingPage = ({ difficulty }) => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
@@ -46,7 +46,7 @@ const MatchingPage = ({ difficulty }) => {
         roomId: matchRoom.roomId + "",
         difficulty: matchRoom.roomDifficulty,
       });
-      setPage(2);
+      setPage(Pages.RoomPage);
     });
   }, [key]);
 
@@ -57,7 +57,7 @@ const MatchingPage = ({ difficulty }) => {
       </Box>
       <Box width={"100%"} display={"flex"} justifyContent={"space-between"}>
         <Button onClick={handleTryAgain}>Try Again</Button>
-        <Button onClick={() => setPage(0)}>Return</Button>
+        <Button onClick={() => setPage(Pages.HomePage)}>Return</Button>
       </Box>
     </span>
   );
@@ -94,7 +94,7 @@ const MatchingPage = ({ difficulty }) => {
             ></Box>
           </Box>
           <Box width={"100%"} display={"flex"} justifyContent={"flex-end"}>
-            <Button onClick={() => setPage(0)}>Cancel</Button>
+            <Button onClick={() => setPage(Pages.HomePage)}>Cancel</Button>
           </Box>
         </span>
       );
