@@ -1,3 +1,4 @@
+import { useState, useContext, useEffect } from "react";
 import {
   Box,
   Button,
@@ -9,23 +10,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
 import Countdown from "react-countdown";
-import io from "socket.io-client";
+
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../contexts/RoomContext";
+import { PageContext } from "../contexts/PageContext";
 
-const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
+const MatchingPage = ({ difficulty }) => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { room, setRoom, socket } = useContext(RoomContext);
+  const { setRoom, socket } = useContext(RoomContext);
+  const { setPage } = useContext(PageContext);
   const waitTime = 30000;
   const [key, setKey] = useState(0);
 
-  const navigate = useNavigate();
-  const handleReturn = () => {
-    setIsMatching(false);
-  };
   const handleTryAgain = () => {
     key == 0 ? setKey(1) : setKey(0);
   };
@@ -49,7 +46,7 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
         roomId: matchRoom.roomId + "",
         difficulty: matchRoom.roomDifficulty,
       });
-      navigate("/room");
+      setPage(2);
     });
   }, [key]);
 
@@ -60,7 +57,7 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
       </Box>
       <Box width={"100%"} display={"flex"} justifyContent={"space-between"}>
         <Button onClick={handleTryAgain}>Try Again</Button>
-        <Button onClick={handleReturn}>Return</Button>
+        <Button onClick={() => setPage(0)}>Return</Button>
       </Box>
     </span>
   );
@@ -97,7 +94,7 @@ const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
             ></Box>
           </Box>
           <Box width={"100%"} display={"flex"} justifyContent={"flex-end"}>
-            <Button onClick={handleReturn}>Cancel</Button>
+            <Button onClick={() => setPage(0)}>Cancel</Button>
           </Box>
         </span>
       );

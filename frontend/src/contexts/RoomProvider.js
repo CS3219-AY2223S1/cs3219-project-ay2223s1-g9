@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect } from "react";
 
 import io from "socket.io-client";
 import Peer from "peerjs";

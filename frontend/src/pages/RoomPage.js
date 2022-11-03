@@ -1,5 +1,4 @@
-import { Room } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,16 +10,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../AuthContext";
 import { RoomContext } from "../contexts/RoomContext";
-
+import { PageContext } from "../contexts/PageContext";
 import CodeEditor from "../components/CodeEditor";
 import VideoPlayer from "../components/VideoPlayer";
 
 const RoomPage = () => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
   const { room, socket, myStream, me } = useContext(RoomContext);
+  const { setPage } = useContext(PageContext);
   const [question, setQuestion] = useState({
     title: "",
     data: <p>question data here</p>,
@@ -28,11 +29,14 @@ const RoomPage = () => {
   const [myPeerStream, setMyPeerStream] = useState(null);
   const [isShowingMyStream, setIsShowingMyStream] = useState(false);
   const [isShowingPeerStream, setIsShowingPeerStream] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    // NOTE TO ANDREA: HELP CREATE A BUTTON TO LEAVE THE ROOM SO WE CAN USE THAT INSTEAD OF THE BROWSER BACK BUTTON.
     window.onpopstate = (_) => {
       socket.emit("leaveRoom", { roomId: room.roomId });
+      setPage(0);
       navigate("/");
     };
 
