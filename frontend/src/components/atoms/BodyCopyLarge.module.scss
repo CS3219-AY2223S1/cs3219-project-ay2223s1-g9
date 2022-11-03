@@ -3,10 +3,14 @@
 .text {
   font-family: $montserrat-regular;
   font-size: 22px;
-  // max-width: 100%;
-  // height: 100%;
+  margin: 0;
   text-overflow: wrap;
   color: white;
+  line-height: 1.5;
+
+  @include mb {
+    font-size: 20px;
+  }
 }
 
 .bold {

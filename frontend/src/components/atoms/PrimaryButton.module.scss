@@ -2,10 +2,19 @@
 
 .wrapper {
   background-color: $color-primary;
-  width: 100%;
+  width: 310px;
   height: 64px;
   border-radius: 32px;
   @include flexCenter;
   text-transform: uppercase;
   color: black;
+
+  @include mb {
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: $color-primary-active;
+    cursor: pointer;
+  }
 }

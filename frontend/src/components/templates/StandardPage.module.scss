@@ -1,0 +1,14 @@
+@import "../../styles/scss/global.scss";
+
+.wrapper {
+  background-color: $color-background;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  padding: 0 12%;
+  @include flexCenter;
+}
