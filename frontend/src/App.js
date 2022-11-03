@@ -12,7 +12,7 @@ import RoomPage from "./pages/RoomPage";
 import { AuthContext } from "./AuthContext";
 import { useEffect, useState, useContext } from "react";
 import { AuthProvider } from "./AuthProvider";
-import { RoomProvider } from "./RoomProvider";
+import { RoomProvider } from "./contexts/RoomProvider";
 import ProtectedRoute from "./ProtectedRoute";
 import { CookiesProvider } from "react-cookie";
 

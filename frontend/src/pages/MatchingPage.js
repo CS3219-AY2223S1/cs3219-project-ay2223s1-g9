@@ -14,7 +14,7 @@ import { useState, useContext, useEffect } from "react";
 import Countdown from "react-countdown";
 import io from "socket.io-client";
 import { AuthContext } from "../AuthContext";
-import { RoomContext } from "../RoomContext";
+import { RoomContext } from "../contexts/RoomContext";
 
 const MatchingPage = ({ setIsMatching, difficulty, setDifficulty }) => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token

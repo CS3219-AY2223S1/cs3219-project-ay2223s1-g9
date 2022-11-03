@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext";
-import { RoomContext } from "../RoomContext";
+import { RoomContext } from "../contexts/RoomContext";
 
 import CodeEditor from "../components/CodeEditor";
 import VideoPlayer from "../components/VideoPlayer";
