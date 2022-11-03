@@ -1,0 +1,48 @@
+@import "../../styles/scss/global.scss";
+
+.wrapper {
+  background-color: $color-dark;
+  border-radius: 10px;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+
+  @include flexCenter;
+
+  @include mb {
+    width: 100%;
+  }
+}
+
+.form {
+  width: 300px;
+  margin-bottom: 20px;
+  @include flexCenter;
+  flex-direction: column;
+}
+
+.field {
+  background-color: transparent;
+  border-style: none;
+  border-bottom: 1px solid $color-light;
+  color: white;
+  font-size: 18px;
+  padding: 8px 5px;
+  font-family: $montserrat-medium;
+  margin-bottom: 48px;
+  transition: 0.2s;
+  width: 100%;
+
+  &:focus {
+    outline: none !important;
+  }
+
+  &:hover {
+    border-color: white;
+  }
+
+  &::placeholder {
+    color: $color-light;
+    font-family: $montserrat-medium;
+  }
+}

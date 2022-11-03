@@ -1,12 +1,14 @@
-import styles from "./BodyCopy.module.scss";
+import { Link, useNavigate } from "react-router-dom";
 
-const BodyCopy = ({ text, style, bold, children }) => {
+import styles from "./LinkText.module.scss";
+
+const LinkText = ({ text, link = "/", children, style }) => {
   return (
-    <p className={`${styles.text} ${styles[bold]}`} style={style}>
+    <Link className={styles.text} to={link}>
       {text}
       {children}
-    </p>
+    </Link>
   );
 };
 
-export default BodyCopy;
+export default LinkText;

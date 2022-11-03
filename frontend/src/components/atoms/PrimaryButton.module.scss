@@ -3,11 +3,12 @@
 .wrapper {
   background-color: $color-primary;
   width: 310px;
-  height: 64px;
+  height: 60px;
   border-radius: 32px;
   @include flexCenter;
   text-transform: uppercase;
   color: black;
+  transition: 0.2s;
 
   @include mb {
     width: 100%;
