@@ -25,6 +25,10 @@ import { useCookies } from "react-cookie";
 
 import styles from "./LoginPage.module.scss";
 import "../styles/scss/global.scss";
+import Heading2 from "../components/atoms/Heading2";
+import Heading3 from "../components/atoms/Heading3";
+import Logo from "../assets/icons/Logo";
+import BodyCopy from "../components/atoms/BodyCopy";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -77,6 +81,12 @@ function LoginPage() {
       width={"30%"}
       padding={"4rem"}
     >
+      <Box backgroundColor={"black"}>
+        <Heading3 text={"hello"} />
+        <Heading2 text={"hello"} />
+        <Logo />
+        <BodyCopy text={"hello"} />
+      </Box>
       <Typography variant={"h3"} marginBottom={"2rem"} className={styles.trial}>
         Login
       </Typography>
