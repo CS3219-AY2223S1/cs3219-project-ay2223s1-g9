@@ -17,14 +17,10 @@ export const RoomProvider = ({ children }) => {
     roomId: "",
     difficulty: "",
   });
-  const [me, setMe] = useState(null);
+  const [me, setMe] = useState(new Peer());
   const [myStream, setMyStream] = useState(null);
 
   useEffect(() => {
-    const meId = uuidV4();
-    const peer = new Peer(meId);
-    setMe(peer);
-
     try {
       navigator.mediaDevices
         .getUserMedia({ video: true, audio: true })
@@ -36,7 +32,7 @@ export const RoomProvider = ({ children }) => {
 
   return (
     <RoomContext.Provider
-      value={{ page, setPage, room, setRoom, me, myStream, socket }}
+      value={{ page, setPage, room, setRoom, socket, me, myStream }}
     >
       {children}
     </RoomContext.Provider>

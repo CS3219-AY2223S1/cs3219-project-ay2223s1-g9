@@ -8,7 +8,7 @@ import RoomPage from "./RoomPage";
 export const NavigationPage = () => {
   const { page } = useContext(RoomContext);
   const [difficulty, setDifficulty] = useState("");
-  console.log(page);
+
   return (
     <>
       {page === Pages.HomePage && (

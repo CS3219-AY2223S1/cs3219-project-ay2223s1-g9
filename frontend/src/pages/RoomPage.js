@@ -45,7 +45,7 @@ const RoomPage = () => {
         userOne: room.personOne,
         userTwo: room.personTwo,
       });
-      socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
+      // socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
     }
 
     socket.on("question", (questionData) => {
@@ -134,6 +134,9 @@ const RoomPage = () => {
               roomId: room.roomId,
               showStream: !isShowingMyStream,
             });
+            if (!isShowingMyStream) {
+              socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
+            }
             setIsShowingMyStream(!isShowingMyStream);
           }}
         >
