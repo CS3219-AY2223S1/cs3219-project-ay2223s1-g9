@@ -23,12 +23,11 @@ import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-import styles from "./LoginPage.module.scss";
-import "../styles/scss/global.scss";
 import Heading2 from "../components/atoms/Heading2";
 import Heading3 from "../components/atoms/Heading3";
 import Logo from "../assets/icons/Logo";
 import BodyCopy from "../components/atoms/BodyCopy";
+import PrimaryButton from "../components/atoms/PrimaryButton";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -86,8 +85,9 @@ function LoginPage() {
         <Heading2 text={"hello"} />
         <Logo />
         <BodyCopy text={"hello"} />
+        <PrimaryButton text={"button"} />
       </Box>
-      <Typography variant={"h3"} marginBottom={"2rem"} className={styles.trial}>
+      <Typography variant={"h3"} marginBottom={"2rem"}>
         Login
       </Typography>
       <TextField

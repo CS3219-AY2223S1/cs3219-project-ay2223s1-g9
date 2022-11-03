@@ -31,17 +31,19 @@ function App() {
                     path="/"
                     //element={<Navigate replace to="/login" />}
                     element={
-                      <ProtectedRoute>
-                        <HomePage />
-                      </ProtectedRoute>
+                      <HomePage />
+                      // <ProtectedRoute>
+                      //   <HomePage />
+                      // </ProtectedRoute>
                     }
                   />
                   <Route
                     path="/room"
                     element={
-                      <ProtectedRoute>
-                        <RoomPage />
-                      </ProtectedRoute>
+                      <RoomPage />
+                      // <ProtectedRoute>
+                      //   <RoomPage />
+                      // </ProtectedRoute>
                     }
                   />
                   <Route path="/signup" element={<SignupPage />} />

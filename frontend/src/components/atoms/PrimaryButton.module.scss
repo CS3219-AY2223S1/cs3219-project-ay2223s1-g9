@@ -1,0 +1,11 @@
+@import "../../styles/scss/global.scss";
+
+.wrapper {
+  background-color: $color-primary;
+  width: 100%;
+  height: 64px;
+  border-radius: 32px;
+  @include flexCenter;
+  text-transform: uppercase;
+  color: black;
+}
