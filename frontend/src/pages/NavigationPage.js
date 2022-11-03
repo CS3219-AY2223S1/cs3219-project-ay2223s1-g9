@@ -1,22 +1,21 @@
 import { useState, useContext } from "react";
 
-import { PageContext, Pages } from "../contexts/PageContext";
-import { RoomProvider } from "../contexts/RoomProvider";
+import { RoomContext, Pages } from "../contexts/RoomContext";
 import MatchingPage from "./MatchingPage";
 import HomePage from "./HomePage";
 import RoomPage from "./RoomPage";
 
 export const NavigationPage = () => {
-  const { page } = useContext(PageContext);
+  const { page } = useContext(RoomContext);
   const [difficulty, setDifficulty] = useState("");
-
+  console.log(page);
   return (
-    <RoomProvider>
+    <>
       {page === Pages.HomePage && (
         <HomePage difficulty={difficulty} setDifficulty={setDifficulty} />
       )}
       {page === Pages.MatchingPage && <MatchingPage difficulty={difficulty} />}
       {page === Pages.RoomPage && <RoomPage />}
-    </RoomProvider>
+    </>
   );
 };

@@ -1,19 +1,10 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignupPage from "./pages/SignupPage";
 import { Box } from "@mui/material";
 import LoginPage from "./pages/LoginPage";
-import HomePage from "./pages/HomePage";
-import RoomPage from "./pages/RoomPage";
 import { NavigationPage } from "./pages/NavigationPage";
-import { AuthContext } from "./AuthContext";
-import { useEffect, useState, useContext } from "react";
 import { AuthProvider } from "./AuthProvider";
-import { PageProvider } from "./contexts/PageProvider";
+import { RoomProvider } from "./contexts/RoomProvider";
 import ProtectedRoute from "./ProtectedRoute";
 import { CookiesProvider } from "react-cookie";
 
@@ -31,9 +22,9 @@ function App() {
                   //element={<Navigate replace to="/login" />}
                   element={
                     <ProtectedRoute>
-                      <PageProvider>
+                      <RoomProvider>
                         <NavigationPage />
-                      </PageProvider>
+                      </RoomProvider>
                     </ProtectedRoute>
                   }
                 />

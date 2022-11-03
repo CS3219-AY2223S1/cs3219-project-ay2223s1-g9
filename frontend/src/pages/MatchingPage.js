@@ -13,13 +13,11 @@ import {
 import Countdown from "react-countdown";
 
 import { AuthContext } from "../AuthContext";
-import { RoomContext } from "../contexts/RoomContext";
-import { PageContext, Pages } from "../contexts/PageContext";
+import { RoomContext, Pages } from "../contexts/RoomContext";
 
 const MatchingPage = ({ difficulty }) => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { setRoom, socket } = useContext(RoomContext);
-  const { setPage } = useContext(PageContext);
+  const { setRoom, socket, setPage } = useContext(RoomContext);
   const waitTime = 30000;
   const [key, setKey] = useState(0);
 

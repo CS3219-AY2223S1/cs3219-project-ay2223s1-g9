@@ -13,15 +13,13 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../AuthContext";
-import { RoomContext } from "../contexts/RoomContext";
-import { PageContext, Pages } from "../contexts/PageContext";
+import { RoomContext, Pages } from "../contexts/RoomContext";
 import CodeEditor from "../components/CodeEditor";
 import VideoPlayer from "../components/VideoPlayer";
 
 const RoomPage = () => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { room, socket, myStream, me } = useContext(RoomContext);
-  const { setPage } = useContext(PageContext);
+  const { setPage, room, socket, myStream, me } = useContext(RoomContext);
   const [question, setQuestion] = useState({
     title: "",
     data: <p>question data here</p>,

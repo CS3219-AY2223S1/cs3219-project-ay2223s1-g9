@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 
 import NavBar from "../components/NavBar";
-import { PageContext, Pages } from "../contexts/PageContext";
+import { RoomContext, Pages } from "../contexts/RoomContext";
 
 const HomePage = ({ setDifficulty }) => {
-  const { setPage } = useContext(PageContext);
+  const { setPage } = useContext(RoomContext);
 
   const handleSelectDifficulty = (event) => {
     setDifficulty(event.currentTarget.id);

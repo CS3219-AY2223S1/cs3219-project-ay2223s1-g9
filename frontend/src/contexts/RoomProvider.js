@@ -4,12 +4,13 @@ import io from "socket.io-client";
 import Peer from "peerjs";
 import { v4 as uuidV4 } from "uuid";
 
-import { RoomContext } from "./RoomContext";
+import { RoomContext, Pages } from "./RoomContext";
 
 const SOCKET_ROUTE = "http://localhost:8010";
 const socket = io(SOCKET_ROUTE);
 
 export const RoomProvider = ({ children }) => {
+  const [page, setPage] = useState(Pages.HomePage);
   const [room, setRoom] = useState({
     personOne: "",
     personTwo: "",
@@ -34,7 +35,9 @@ export const RoomProvider = ({ children }) => {
   }, []);
 
   return (
-    <RoomContext.Provider value={{ room, setRoom, me, myStream, socket }}>
+    <RoomContext.Provider
+      value={{ page, setPage, room, setRoom, me, myStream, socket }}
+    >
       {children}
     </RoomContext.Provider>
   );

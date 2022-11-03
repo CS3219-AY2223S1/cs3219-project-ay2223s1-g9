@@ -1,3 +1,10 @@
 import { createContext } from "react";
+
 const RoomContext = createContext();
-export { RoomContext };
+const Pages = {
+  HomePage: "homepage",
+  MatchingPage: "matchingPage",
+  RoomPage: "roomPage",
+};
+
+export { RoomContext, Pages };
