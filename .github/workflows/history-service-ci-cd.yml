@@ -6,10 +6,12 @@ name: history-service-ci-cd
 on:
   workflow_dispatch:
   push:
-    paths: ./history-service
+    paths:
+      - history-service/**
     branches: [ "main" ]
   pull_request:
-    paths: ./history-service
+    paths:
+      - history-service/**
     branches: [ "main" ]
 
 env:

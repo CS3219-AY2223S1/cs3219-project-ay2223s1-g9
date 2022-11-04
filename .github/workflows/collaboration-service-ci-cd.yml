@@ -6,10 +6,12 @@ name: collaboration-service-ci-cd
 on:
   workflow_dispatch:
   push:
-    paths: ./collaboration-service
+    paths:
+      - collaboration-service/**
     branches: [ "main" ]
   pull_request:
-    paths: ./collaboration-service
+    paths:
+      - collaboration-service/**
     branches: [ "main" ]
 
 env:

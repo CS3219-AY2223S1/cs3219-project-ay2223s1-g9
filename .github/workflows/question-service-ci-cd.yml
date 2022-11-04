@@ -6,10 +6,12 @@ name: question-service-ci-cd
 on:
   workflow_dispatch:
   push:
-    paths: ./question-service
+    paths:
+      - question-service/**
     branches: [ "main" ]
   pull_request:
-    paths: ./question-service
+    paths:
+      - question-service/**
     branches: [ "main" ]
 
 env:

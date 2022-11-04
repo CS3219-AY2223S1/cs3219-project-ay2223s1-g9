@@ -6,10 +6,12 @@ name: user-service-ci-cd
 on:
   workflow_dispatch:
   push:
-    paths: ./user-service
+    paths:
+      - user-service/**
     branches: [ "main" ]
   pull_request:
-    paths: ./user-service
+    paths:
+      - user-service/**
     branches: [ "main" ]
 
 env:
