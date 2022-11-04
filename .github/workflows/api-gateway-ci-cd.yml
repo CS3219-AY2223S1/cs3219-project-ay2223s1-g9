@@ -6,10 +6,12 @@ name: api-gateway-ci-cd
 on:
   workflow_dispatch:
   push:
-    paths: ./api-gateway
+    paths:
+      - api-gateway/**
     branches: [ "main" ]
   pull_request:
-    paths: ./api-gateway
+    paths: 
+      - api-gateway/**
     branches: [ "main" ]
 
 env:
