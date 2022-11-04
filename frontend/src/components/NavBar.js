@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { MdAccountCircle } from "react-icons/md";
 import { useState, useContext } from "react";
-import config from "../configs";
+import { API_GATEWAY_URL } from "../configs";
 import { API_PATH } from "../constants";
 import axios from "axios";
 import { AuthContext } from "../AuthContext";
@@ -68,7 +68,7 @@ export default function NavBar() {
   const handleUpdate = async () => {
     const res = await axios
       .post(
-        config.API_GATEWAY_URL + API_PATH.USER_UPDATE_PATH,
+        API_GATEWAY_URL + API_PATH.USER_UPDATE_PATH,
         { password },
         {
           headers: {
@@ -90,7 +90,7 @@ export default function NavBar() {
 
   const handleDelete = async () => {
     const res = await axios
-      .delete(config.API_GATEWAY_URL + API_PATH.USER_PATH, {
+      .delete(API_GATEWAY_URL + API_PATH.USER_PATH, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -111,7 +111,7 @@ export default function NavBar() {
   const handleLogOut = async () => {
     const res = await axios
       .post(
-        config.API_GATEWAY_URL + API_PATH.LOGOUT_PATH,
+        API_GATEWAY_URL + API_PATH.LOGOUT_PATH,
         {},
         {
           headers: {
