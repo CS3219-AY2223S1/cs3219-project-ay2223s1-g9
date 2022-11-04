@@ -11,7 +11,8 @@ import {
 } from "@mui/material";
 import { useState, useContext } from "react";
 import axios from "axios";
-import { URI_USER_SVC } from "../configs";
+import config from "../configs";
+import { API_PATH } from "../constants";
 import {
   STATUS_CODE_CONFLICT,
   STATUS_CODE_CREATED,
@@ -37,7 +38,7 @@ function LoginPage() {
 
   const handleLogIn = async () => {
     const res = await axios
-      .post(URI_USER_SVC + "/login", { username, password })
+      .post(config.API_GATEWAY_URL + API_PATH.LOGIN_PATH, { username, password })
       .catch((err) => {
         if (err.response.status === STATUS_CODE_BAD_REQUEST) {
           setErrorDialog("Missing username or password");

@@ -22,7 +22,8 @@ import {
 } from "@mui/material";
 import { MdAccountCircle } from "react-icons/md";
 import { useState, useContext } from "react";
-import { URL_USER_SVC, URI_USER_SVC } from "../configs";
+import config from "../configs";
+import { API_PATH } from "../constants";
 import axios from "axios";
 import { AuthContext } from "../AuthContext";
 import { STATUS_CODE_SUCCESS, STATUS_CODE_BAD_REQUEST } from "../constants";
@@ -67,7 +68,7 @@ export default function NavBar() {
   const handleUpdate = async () => {
     const res = await axios
       .post(
-        URL_USER_SVC + "/update",
+        config.API_GATEWAY_URL + API_PATH.USER_UPDATE_PATH,
         { password },
         {
           headers: {
@@ -89,7 +90,7 @@ export default function NavBar() {
 
   const handleDelete = async () => {
     const res = await axios
-      .delete(URL_USER_SVC, {
+      .delete(config.API_GATEWAY_URL + API_PATH.USER_PATH, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -110,7 +111,7 @@ export default function NavBar() {
   const handleLogOut = async () => {
     const res = await axios
       .post(
-        URI_USER_SVC + "/logout",
+        config.API_GATEWAY_URL + API_PATH.LOGOUT_PATH,
         {},
         {
           headers: {

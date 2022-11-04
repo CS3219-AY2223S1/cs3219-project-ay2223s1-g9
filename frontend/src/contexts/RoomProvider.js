@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Peer from "peerjs";
 import { v4 as uuidV4 } from "uuid";
+import config from "../configs"
 
 import { RoomContext, Pages } from "./RoomContext";
 
-const SOCKET_ROUTE = "http://localhost:8010";
+const SOCKET_ROUTE = config.API_GATEWAY_URL;
 const socket = io(SOCKET_ROUTE);
 
 export const RoomProvider = ({ children }) => {

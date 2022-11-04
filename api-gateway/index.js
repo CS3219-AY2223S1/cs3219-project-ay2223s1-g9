@@ -12,14 +12,14 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+app.use(cors()); // config cors so that front-end can use
+app.options("*", cors());
+
 app.get('/', (_, res) => res.send('Hello World from api-gateway'))
 app.use(UserServiceRouter)
 app.use(HistoryServiceRouter)
 app.use(CollabServiceRouter)
-
-app.use(express.urlencoded({ extended: true }));
-app.use(cors()); // config cors so that front-end can use
-app.options("*", cors());
 app.use(express.json())
 
 const httpServer = initiateSocket(app);
