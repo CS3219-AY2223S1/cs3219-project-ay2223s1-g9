@@ -1,3 +1,3 @@
-export const API_GATEWAY_URL = process.env.API_GATEWAY_URL || "http://localhost:8010"
+export const API_GATEWAY_URL = process.env.REACT_APP_API_GATEWAY_URL || "http://localhost:8010"
 
 
