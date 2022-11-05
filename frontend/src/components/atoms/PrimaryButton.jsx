@@ -4,13 +4,14 @@ import styles from "./PrimaryButton.module.scss";
 
 const PrimaryButton = ({ text, onClick }) => {
   return (
-    <div className={styles.wrapper} onClick={onClick}>
-      {/* <BodyCopyLarge
-        style={{ color: "black" }}
-        className={styles.text}
+    <div className={`${styles["btn__wrapper"]}`} onClick={onClick}>
+      <div className={styles.btn__text}>Start Now</div>
+
+      {/* <BodyCopy
+        //style={{ color: "black" }}
+        bold={"bold"}
         text={text}
       /> */}
-      <BodyCopy style={{ color: "black" }} bold={"bold"} text={text} />
     </div>
   );
 };
