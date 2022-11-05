@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 import io from "socket.io-client";
 import Peer from "peerjs";
-import { v4 as uuidV4 } from "uuid";
 import { API_GATEWAY_URL } from "../configs";
 
 import { RoomContext, Pages } from "./RoomContext";

@@ -21,7 +21,8 @@ export const socketAuthenticate = async (socket, next) => {
     console.log("You are authenticated");
     next();
   } else {
-    return socket.disconnect();
+    console.log("You are unauthenticated");
+    next(new Error("You are unauthenticated"));
   }
 };
 
