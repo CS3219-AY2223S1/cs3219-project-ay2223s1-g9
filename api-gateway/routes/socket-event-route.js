@@ -1,8 +1,8 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { v4 as uuidv4 } from "uuid";
 
 import { SOCKET_EVENT } from "../constant/constant.js";
+import { socketAuthenticate } from "../middleware/authentication.js";
 
 import {
   matchingUsers,
@@ -15,6 +15,8 @@ import {
 export const initiateSocket = (app) => {
   const httpServer = createServer(app);
   const io = new Server(httpServer, { cors: { origin: "*" } });
+
+  io.use(socketAuthenticate);
 
   io.on(SOCKET_EVENT.CONNECTION, (socket) => {
     console.log("New socket has been connected");

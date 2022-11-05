@@ -8,7 +8,13 @@ import { API_GATEWAY_URL } from "../configs";
 import { RoomContext, Pages } from "./RoomContext";
 
 const SOCKET_ROUTE = API_GATEWAY_URL;
-const socket = io(SOCKET_ROUTE);
+let socket = null;
+
+const initializeSocket = (token) => {
+  socket = io(SOCKET_ROUTE, {
+    auth: { token },
+  });
+};
 
 export const RoomProvider = ({ children }) => {
   const [page, setPage] = useState(Pages.HomePage);
@@ -33,7 +39,16 @@ export const RoomProvider = ({ children }) => {
 
   return (
     <RoomContext.Provider
-      value={{ page, setPage, room, setRoom, socket, me, myStream }}
+      value={{
+        page,
+        setPage,
+        room,
+        setRoom,
+        socket,
+        me,
+        myStream,
+        initializeSocket,
+      }}
     >
       {children}
     </RoomContext.Provider>

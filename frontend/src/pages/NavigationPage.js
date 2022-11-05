@@ -1,4 +1,5 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import MatchingPage from "./MatchingPage";
@@ -6,8 +7,17 @@ import HomePage from "./HomePage";
 import RoomPage from "./RoomPage";
 
 export const NavigationPage = () => {
-  const { page } = useContext(RoomContext);
+  const { page, initializeSocket } = useContext(RoomContext);
+  const [cookies] = useCookies(["user"]);
   const [difficulty, setDifficulty] = useState("");
+  const [isSettingUp, setIsSettingUp] = useState(true);
+
+  useEffect(() => {
+    if (isSettingUp) {
+      setIsSettingUp(false);
+      initializeSocket(cookies.token);
+    }
+  }, []);
 
   return (
     <>

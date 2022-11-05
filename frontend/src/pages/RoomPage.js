@@ -128,6 +128,9 @@ const RoomPage = () => {
         >
           <CodeEditor socket={socket} roomId={room.roomId} />
         </Box>
+        <Button onClick={() => setPage(Pages.HomePage)}>
+          Go back home page
+        </Button>
         <Button
           onClick={(_) => {
             socket.emit("togglePeerStream", {
