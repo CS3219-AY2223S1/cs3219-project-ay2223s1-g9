@@ -18,7 +18,7 @@ env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   SERVICE: frontend
   REGION: asia-southeast1
-  PORT: 3000
+  PORT: 80
 
 defaults:
   run:
