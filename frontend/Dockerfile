@@ -1,6 +1,6 @@
 FROM node:alpine as build
 
-ARG PORT_ARG="http://localhost:8010"
+ARG REACT_APP_API_GATEWAY_URL="http://localhost:8010"
 # Create app directory
 WORKDIR /app
 
