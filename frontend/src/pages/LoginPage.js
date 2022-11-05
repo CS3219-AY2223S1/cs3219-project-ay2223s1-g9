@@ -30,7 +30,8 @@ import BodyCopy from "../components/atoms/BodyCopy";
 import PrimaryButton from "../components/atoms/PrimaryButton";
 import StandardPage from "../components/templates/StandardPage";
 import SecondaryNavBar from "../components/molecules/SecondaryNavBar";
-import LoginCard from "../components/organisms/LoginCard";
+import AuthCard from "../components/organisms/AuthCard";
+import LinkText from "../components/atoms/LinkText";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -78,11 +79,21 @@ function LoginPage() {
 
   return (
     <StandardPage header={<SecondaryNavBar />}>
-      <LoginCard
+      <AuthCard
+        title={"Login"}
         username={username}
         setUsername={setUsername}
         password={password}
         setPassword={setPassword}
+        buttonText={"login"}
+        footer={
+          <>
+            <BodyCopy>
+              Need an account? <LinkText text={"Sign up"} link={"/signup"} />
+            </BodyCopy>
+          </>
+        }
+        handleSubmit={handleLogIn}
       />
       {/* <Box
         display={"flex"}
@@ -90,35 +101,7 @@ function LoginPage() {
         width={"30%"}
         padding={"4rem"}
       >
-        <Typography variant={"h3"} marginBottom={"2rem"}>
-          Login
-        </Typography>
-        <TextField
-          label="Username"
-          variant="standard"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          sx={{ marginBottom: "1rem" }}
-          autoFocus
-        />
-        <TextField
-          label="Password"
-          variant="standard"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          sx={{ marginBottom: "2rem" }}
-        />
-        <Box
-          display={"flex"}
-          flexDirection={"row"}
-          justifyContent={"flex-end"}
-          sx={{ marginBottom: "1rem" }}
-        >
-          <Button variant={"outlined"} onClick={handleLogIn}>
-            Log in
-          </Button>
-        </Box>
+      
         <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
           <Typography>
             or <Link to={"/signup"}> create an account</Link>

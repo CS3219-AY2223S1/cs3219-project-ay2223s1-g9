@@ -17,11 +17,14 @@ import PrimaryButton from "../atoms/PrimaryButton";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const LoginCard = ({
+const AuthCard = ({
+  title = "Login",
   username = "",
   setUsername,
   password = "",
   setPassword,
+  buttonText = "",
+  footer = "",
   handleSubmit,
 }) => {
   const [usernameFocus, setUsernameFocus] = useState(false);
@@ -44,7 +47,7 @@ const LoginCard = ({
 
   return (
     <div className={styles.wrapper}>
-      <Heading4 text={"Login"} />
+      <Heading4 text={title} />
       <form className={styles.form}>
         <div className={styles.field__wrapper}>
           <input
@@ -89,22 +92,14 @@ const LoginCard = ({
             Password
           </div>
         </div>
-
-        {/* <input
-          className={styles.field}
-          type="password"
-          //placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        /> */}
-        <PrimaryButton text={"login"} onClick={handleSubmit} />
+        <PrimaryButton text={buttonText} onClick={handleSubmit} />
       </form>
-
-      <BodyCopy>
+      {footer}
+      {/* <BodyCopy>
         Need an account? <LinkText>Sign up</LinkText>
-      </BodyCopy>
+      </BodyCopy> */}
     </div>
   );
 };
 
-export default LoginCard;
+export default AuthCard;
