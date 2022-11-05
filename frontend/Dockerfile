@@ -4,7 +4,7 @@ FROM node:alpine as build
 WORKDIR /app
 
 # Install app dependencies
-COPY package*.json .
+COPY package*.json ./
 
 # Run npm install in our local machine
 RUN npm install
