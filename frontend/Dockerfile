@@ -1,10 +1,10 @@
-FROM node:alpine
+FROM node:alpine as build
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install app dependencies
-COPY package*.json ./
+COPY package*.json .
 
 # Run npm install in our local machine
 RUN npm install
@@ -12,6 +12,12 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD [ "npm", "start" ]
+FROM nginx:alpine
+
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/build /usr/share/nginx/html
+
+
+
