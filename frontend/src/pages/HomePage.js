@@ -13,7 +13,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  useNavigate,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
@@ -28,6 +28,8 @@ import PrimaryButton from "../components/atoms/PrimaryButton";
 const HomePage = () => {
   const [isMatching, setIsMatching] = useState(false);
   const [difficulty, setDifficulty] = useState("");
+  const navigate = useNavigate();
+
   const handleSelectDifficulty = (event) => {
     setIsMatching(true);
     setDifficulty(event.currentTarget.id);
@@ -47,7 +49,12 @@ const HomePage = () => {
             editor.
           </BodyCopyLarge>
           <div className={styles.content__button}>
-            <PrimaryButton text={"start now"} />
+            <PrimaryButton
+              text={"start now"}
+              onClick={() => {
+                navigate("/login");
+              }}
+            />
           </div>
         </div>
         <div className={styles.image}>

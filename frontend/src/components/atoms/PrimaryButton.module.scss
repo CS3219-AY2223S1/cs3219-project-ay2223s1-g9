@@ -3,7 +3,7 @@
 .wrapper {
   background-color: $color-primary;
   width: 310px;
-  height: 60px;
+  height: 50px; // used to be 60
   border-radius: 32px;
   @include flexCenter;
   text-transform: uppercase;

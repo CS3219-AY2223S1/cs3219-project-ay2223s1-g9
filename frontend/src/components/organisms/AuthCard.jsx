@@ -95,9 +95,6 @@ const AuthCard = ({
         <PrimaryButton text={buttonText} onClick={handleSubmit} />
       </form>
       {footer}
-      {/* <BodyCopy>
-        Need an account? <LinkText>Sign up</LinkText>
-      </BodyCopy> */}
     </div>
   );
 };

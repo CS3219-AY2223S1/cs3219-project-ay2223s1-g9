@@ -95,29 +95,15 @@ function LoginPage() {
         }
         handleSubmit={handleLogIn}
       />
-      {/* <Box
-        display={"flex"}
-        flexDirection={"column"}
-        width={"30%"}
-        padding={"4rem"}
-      >
-      
-        <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-          <Typography>
-            or <Link to={"/signup"}> create an account</Link>
-          </Typography>
-        </Box>
-
-        <Dialog open={isDialogOpen} onClose={closeDialog}>
-          <DialogTitle>{dialogTitle}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>{dialogMsg}</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeDialog}>OK</Button>
-          </DialogActions>
-        </Dialog>
-      </Box> */}
+      <Dialog open={isDialogOpen} onClose={closeDialog}>
+        <DialogTitle>{dialogTitle}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{dialogMsg}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog}>OK</Button>
+        </DialogActions>
+      </Dialog>
     </StandardPage>
   );
 }

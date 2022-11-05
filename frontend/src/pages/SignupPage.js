@@ -20,6 +20,12 @@ import {
 } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
+import StandardPage from "../components/templates/StandardPage";
+import SecondaryNavBar from "../components/molecules/SecondaryNavBar";
+import AuthCard from "../components/organisms/AuthCard";
+import LinkText from "../components/atoms/LinkText";
+import BodyCopy from "../components/atoms/BodyCopy";
+
 import { useCookies } from "react-cookie";
 
 function SignupPage() {
@@ -87,59 +93,87 @@ function SignupPage() {
   };
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      width={"30%"}
-      padding={"4rem"}
-    >
-      <Typography variant={"h3"} marginBottom={"2rem"}>
-        Sign Up
-      </Typography>
-      <TextField
-        label="Username"
-        variant="standard"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        sx={{ marginBottom: "1rem" }}
-        autoFocus
+    <StandardPage header={<SecondaryNavBar />}>
+      <AuthCard
+        title={"Sign Up"}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        buttonText={"Create Account"}
+        footer={
+          <>
+            <BodyCopy>
+              Have an existing account?{" "}
+              <LinkText text={"Log in"} link={"/signup"} />
+            </BodyCopy>
+          </>
+        }
+        handleSubmit={handleLogIn}
       />
-      <TextField
-        label="Password"
-        variant="standard"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        sx={{ marginBottom: "2rem" }}
-      />
-      <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-        <Button variant={"outlined"} onClick={handleSignup}>
-          Create account
-        </Button>
-      </Box>
-      <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-        <Typography>
-          or <Link to={"/login"}> login</Link>
-        </Typography>
-      </Box>
-
       <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
           <DialogContentText>{dialogMsg}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          {isSignupSuccess ? (
-            <>
-              <Button onClick={closeDialog}>Cancel</Button>
-              <Button onClick={handleLogIn}>Log in</Button>
-            </>
-          ) : (
-            <Button onClick={closeDialog}>Done</Button>
-          )}
+          <Button onClick={closeDialog}>OK</Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </StandardPage>
+    // <Box
+    //   display={"flex"}
+    //   flexDirection={"column"}
+    //   width={"30%"}
+    //   padding={"4rem"}
+    // >
+    //   <Typography variant={"h3"} marginBottom={"2rem"}>
+    //     Sign Up
+    //   </Typography>
+    //   <TextField
+    //     label="Username"
+    //     variant="standard"
+    //     value={username}
+    //     onChange={(e) => setUsername(e.target.value)}
+    //     sx={{ marginBottom: "1rem" }}
+    //     autoFocus
+    //   />
+    //   <TextField
+    //     label="Password"
+    //     variant="standard"
+    //     type="password"
+    //     value={password}
+    //     onChange={(e) => setPassword(e.target.value)}
+    //     sx={{ marginBottom: "2rem" }}
+    //   />
+    //   <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
+    //     <Button variant={"outlined"} onClick={handleSignup}>
+    //       Create account
+    //     </Button>
+    //   </Box>
+    //   <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+    //     <Typography>
+    //       or <Link to={"/login"}> login</Link>
+    //     </Typography>
+    //   </Box>
+
+    //   <Dialog open={isDialogOpen} onClose={closeDialog}>
+    //     <DialogTitle>{dialogTitle}</DialogTitle>
+    //     <DialogContent>
+    //       <DialogContentText>{dialogMsg}</DialogContentText>
+    //     </DialogContent>
+    //     <DialogActions>
+    //       {isSignupSuccess ? (
+    //         <>
+    //           <Button onClick={closeDialog}>Cancel</Button>
+    //           <Button onClick={handleLogIn}>Log in</Button>
+    //         </>
+    //       ) : (
+    //         <Button onClick={closeDialog}>Done</Button>
+    //       )}
+    //     </DialogActions>
+    //   </Dialog>
+    // </Box>
   );
 }
 
