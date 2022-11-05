@@ -22,27 +22,51 @@
 }
 
 .field {
-  background-color: transparent;
-  border-style: none;
-  border-bottom: 1px solid $color-light;
-  color: white;
-  font-size: 18px;
-  padding: 8px 5px;
-  font-family: $montserrat-medium;
-  margin-bottom: 48px;
-  transition: 0.2s;
-  width: 100%;
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 48px;
 
-  &:focus {
-    outline: none !important;
+    &:hover .field__label {
+      top: -2px;
+      font-size: 12px;
+    }
   }
-
-  &:hover {
-    border-color: white;
-  }
-
-  &::placeholder {
-    color: $color-light;
+  &__input {
+    background-color: transparent;
+    border-style: none;
+    border-bottom: 1px solid $color-light;
+    color: white;
+    font-size: 18px;
+    padding: 8px 5px;
     font-family: $montserrat-medium;
+    transition: 0.2s;
+    width: 100%;
+
+    &:focus {
+      outline: none !important;
+    }
+
+    &:hover {
+      border-color: white;
+    }
+
+    &::placeholder {
+      color: $color-light;
+      font-family: $montserrat-medium;
+    }
+  }
+  &__label {
+    color: $color-light;
+    font-size: 18px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.2s;
+
+    &--focus {
+      top: -2px;
+      font-size: 12px;
+    }
   }
 }

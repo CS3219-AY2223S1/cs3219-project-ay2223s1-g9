@@ -30,7 +30,6 @@ import BodyCopy from "../components/atoms/BodyCopy";
 import PrimaryButton from "../components/atoms/PrimaryButton";
 import StandardPage from "../components/templates/StandardPage";
 import SecondaryNavBar from "../components/molecules/SecondaryNavBar";
-import LoginCard from "../components/organisms/LoginCard";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -78,8 +77,7 @@ function LoginPage() {
 
   return (
     <StandardPage header={<SecondaryNavBar />}>
-      <LoginCard username={username} setUsername={setUsername} />
-      {/* <Box
+      <Box
         display={"flex"}
         flexDirection={"column"}
         width={"30%"}
@@ -129,7 +127,7 @@ function LoginPage() {
             <Button onClick={closeDialog}>OK</Button>
           </DialogActions>
         </Dialog>
-      </Box> */}
+      </Box>
     </StandardPage>
   );
 }
