@@ -26,11 +26,6 @@
     position: relative;
     width: 100%;
     margin-bottom: 48px;
-
-    &:hover .field__label {
-      top: -2px;
-      font-size: 12px;
-    }
   }
   &__input {
     background-color: transparent;
@@ -53,19 +48,21 @@
 
     &::placeholder {
       color: $color-light;
-      font-family: $montserrat-medium;
+      font-family: $montserrat-regular;
     }
   }
   &__label {
     color: $color-light;
+    font-family: $montserrat-regular;
     font-size: 18px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     transition: 0.2s;
+    pointer-events: none;
 
     &--focus {
-      top: -2px;
+      top: -4px;
       font-size: 12px;
     }
   }

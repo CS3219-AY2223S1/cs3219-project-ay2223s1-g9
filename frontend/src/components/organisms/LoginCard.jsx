@@ -20,26 +20,27 @@ import { useEffect } from "react";
 const LoginCard = ({
   username = "",
   setUsername,
-  password,
+  password = "",
   setPassword,
   handleSubmit,
 }) => {
   const [usernameFocus, setUsernameFocus] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
 
   useEffect(() => {
     const html = document.querySelector("html");
     html.addEventListener("click", function (e) {
-      const btn = document.querySelector("#usernameField");
-      if (e.target !== btn) {
+      const usernameField = document.querySelector("#usernameField");
+      const passwordField = document.querySelector("#passwordField");
+
+      if (e.target !== usernameField) {
         setUsernameFocus(false);
+      }
+      if (e.target !== passwordField) {
+        setPasswordFocus(false);
       }
     });
   }, []);
-
-  useEffect(() => {
-    console.log(username);
-    console.log(username !== "");
-  }, [username]);
 
   return (
     <div className={styles.wrapper}>
@@ -66,13 +67,36 @@ const LoginCard = ({
           </div>
         </div>
 
-        <input
+        <div className={styles.field__wrapper}>
+          <input
+            className={styles.field__input}
+            type="password"
+            //placeholder="Password"
+            value={password}
+            id={"passwordField"}
+            onChange={(e) => setPassword(e.target.value)}
+            onClick={() => {
+              setPasswordFocus("hello");
+            }}
+          />
+          <div
+            className={`${styles["field__label"]} ${
+              passwordFocus || password !== ""
+                ? styles["field__label--focus"]
+                : ""
+            }`}
+          >
+            Password
+          </div>
+        </div>
+
+        {/* <input
           className={styles.field}
           type="password"
           //placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        />
+        /> */}
         <PrimaryButton text={"login"} onClick={handleSubmit} />
       </form>
 

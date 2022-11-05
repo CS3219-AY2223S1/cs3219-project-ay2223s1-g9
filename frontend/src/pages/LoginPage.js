@@ -78,7 +78,12 @@ function LoginPage() {
 
   return (
     <StandardPage header={<SecondaryNavBar />}>
-      <LoginCard username={username} setUsername={setUsername} />
+      <LoginCard
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+      />
       {/* <Box
         display={"flex"}
         flexDirection={"column"}
