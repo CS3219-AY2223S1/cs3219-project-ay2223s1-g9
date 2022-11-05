@@ -3,6 +3,8 @@ FROM node:alpine as build
 # Create app directory
 WORKDIR /app
 
+ENV REACT_APP_API_GATEWAY_URL=$REACT_APP_API_GATEWAY_URL
+
 # Install app dependencies
 COPY package*.json ./
 
