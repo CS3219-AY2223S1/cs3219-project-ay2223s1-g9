@@ -50,11 +50,13 @@ export const initiateSocket = (app) => {
 
     // COMMUNICATION
     socket.on(SOCKET_EVENT.SEND_STREAM, ({ peerId, roomId }) => {
-      socket.broadcast.to(roomId).emit("receiveStream", { peerId });
+      socket.broadcast.to(roomId).emit(SOCKET_EVENT.RECEIVE_STREAM, { peerId });
     });
 
     socket.on(SOCKET_EVENT.TOGGLE_PEER_STREAM, ({ roomId, showStream }) => {
-      socket.broadcast.to(roomId).emit("togglePeerStream", { showStream });
+      socket.broadcast
+        .to(roomId)
+        .emit(SOCKET_EVENT.TOGGLE_PEER_STREAM, { showStream });
     });
 
     socket.on(SOCKET_EVENT.DISONNECTION, async () => {

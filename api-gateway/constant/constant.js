@@ -52,4 +52,5 @@ export const SOCKET_EVENT = {
 
   SEND_STREAM: "sendStream",
   TOGGLE_PEER_STREAM: "togglePearStream",
+  RECEIVE_STREAM: "receiveStream",
 };
