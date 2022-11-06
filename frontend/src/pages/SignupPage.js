@@ -104,8 +104,8 @@ function SignupPage() {
         footer={
           <>
             <BodyCopy>
-              Have an existing account?{" "}
-              <LinkText text={"Log in"} link={"/signup"} />
+              Have an account?{" "}
+              <LinkText text={"Sign in"} link={"/signup"} />
             </BodyCopy>
           </>
         }

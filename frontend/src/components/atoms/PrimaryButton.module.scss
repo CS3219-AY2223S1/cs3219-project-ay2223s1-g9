@@ -35,7 +35,7 @@
     }
 
     &:hover::before {
-      opacity: 0;
+      // opacity: 0;
     }
 
     // transition effect
@@ -89,5 +89,6 @@
     font-family: $montserrat-medium;
     font-size: 18px;
     z-index: 2;
+    transition: 0.3s;
   }
 }
