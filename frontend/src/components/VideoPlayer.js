@@ -11,7 +11,7 @@ const VideoPlayer = ({ stream }) => {
 
   return (
     <>
-      <video ref={videoRef} autoPlay muted={true} />
+      <video ref={videoRef} autoPlay />
     </>
   );
 };
