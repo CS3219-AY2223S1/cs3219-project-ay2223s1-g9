@@ -48,17 +48,17 @@ export const initiateSocket = (app) => {
       userLeaveRoom(socket, roomId);
     });
 
-    socket.on(SOCKET_EVENT.DISONNECTION, async () => {
-      console.log("A socket has been disconnected");
-    });
-
     // COMMUNICATION
-    socket.on("sendStream", ({ peerId, roomId }) => {
+    socket.on(SOCKET_EVENT.SEND_STREAM, ({ peerId, roomId }) => {
       socket.broadcast.to(roomId).emit("receiveStream", { peerId });
     });
 
-    socket.on("togglePeerStream", ({ roomId, showStream }) => {
+    socket.on(SOCKET_EVENT.TOGGLE_PEER_STREAM, ({ roomId, showStream }) => {
       socket.broadcast.to(roomId).emit("togglePeerStream", { showStream });
+    });
+
+    socket.on(SOCKET_EVENT.DISONNECTION, async () => {
+      console.log("A socket has been disconnected");
     });
   });
 
