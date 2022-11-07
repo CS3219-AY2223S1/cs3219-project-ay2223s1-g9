@@ -6,10 +6,12 @@ name: matching-service-ci-cd
 on:
   workflow_dispatch:
   push:
-    paths: ./matching-service
+    paths:
+      - matching-service/**
     branches: [ "main" ]
   pull_request:
-    paths: ./matching-service
+    paths:
+      - matching-service/**
     branches: [ "main" ]
 
 env:

@@ -17,16 +17,13 @@ collabRouter.post(API_PATH.CREATE_COLLABORATION, async (req, res, next) => {
   }
 });
 
-collabRouter.get(
-  API_PATH.GET_MULTIPLE_COLLABORATION,
-  async (req, res, next) => {
-    try {
-      const collaboration = await ormFindCollaborationRoom(req.query.roomId);
-      res.send(collaboration);
-    } catch (err) {
-      next();
-    }
+collabRouter.get(API_PATH.GET_COLLABORATION, async (req, res, next) => {
+  try {
+    const collaboration = await ormFindCollaborationRoom(req.query.roomId);
+    res.send(collaboration);
+  } catch (err) {
+    next();
   }
-);
+});
 
 export default collabRouter;

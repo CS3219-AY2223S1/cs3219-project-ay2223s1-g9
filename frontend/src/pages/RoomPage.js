@@ -1,5 +1,4 @@
-import { Room } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,16 +10,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../AuthContext";
-import { RoomContext } from "../RoomContext";
+import { useNavigate } from "react-router-dom";
 
+import { AuthContext } from "../AuthContext";
+import { RoomContext, Pages } from "../contexts/RoomContext";
 import CodeEditor from "../components/CodeEditor";
 import VideoPlayer from "../components/VideoPlayer";
 
 const RoomPage = () => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
-  const { room, socket, myStream, me } = useContext(RoomContext);
+  const { setPage, room, socket, myStream, me } = useContext(RoomContext);
   const [question, setQuestion] = useState({
     title: "",
     data: <p>question data here</p>,
@@ -28,11 +27,14 @@ const RoomPage = () => {
   const [myPeerStream, setMyPeerStream] = useState(null);
   const [isShowingMyStream, setIsShowingMyStream] = useState(false);
   const [isShowingPeerStream, setIsShowingPeerStream] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    // NOTE TO ANDREA: HELP CREATE A BUTTON TO LEAVE THE ROOM SO WE CAN USE THAT INSTEAD OF THE BROWSER BACK BUTTON.
     window.onpopstate = (_) => {
       socket.emit("leaveRoom", { roomId: room.roomId });
+      setPage(Pages.HomePage);
       navigate("/");
     };
 
@@ -43,7 +45,7 @@ const RoomPage = () => {
         userOne: room.personOne,
         userTwo: room.personTwo,
       });
-      socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
+      // socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
     }
 
     socket.on("question", (questionData) => {
@@ -126,12 +128,18 @@ const RoomPage = () => {
         >
           <CodeEditor socket={socket} roomId={room.roomId} />
         </Box>
+        <Button onClick={() => setPage(Pages.HomePage)}>
+          Go back home page
+        </Button>
         <Button
           onClick={(_) => {
             socket.emit("togglePeerStream", {
               roomId: room.roomId,
               showStream: !isShowingMyStream,
             });
+            if (!isShowingMyStream) {
+              socket.emit("sendStream", { peerId: me.id, roomId: room.roomId });
+            }
             setIsShowingMyStream(!isShowingMyStream);
           }}
         >

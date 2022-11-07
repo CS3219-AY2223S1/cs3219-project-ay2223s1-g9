@@ -1,7 +1,10 @@
-FROM node:alpine
+FROM node:alpine as build
 
+ARG REACT_APP_API_GATEWAY_URL="http://localhost:8010"
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
+
+ENV REACT_APP_API_GATEWAY_URL=$REACT_APP_API_GATEWAY_URL
 
 # Install app dependencies
 COPY package*.json ./
@@ -12,6 +15,12 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD [ "npm", "start" ]
+FROM nginx:alpine
+
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/build /usr/share/nginx/html
+
+
+

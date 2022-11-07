@@ -49,4 +49,8 @@ export const SOCKET_EVENT = {
   UPDATE_CODE: "updateCode",
 
   QUESTION: "question",
+
+  SEND_STREAM: "sendStream",
+  TOGGLE_PEER_STREAM: "togglePeerStream",
+  RECEIVE_STREAM: "receiveStream",
 };

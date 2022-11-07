@@ -1,28 +1,28 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: question-service-ci-cd
+name: frontend-ci-cd
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - question-service/**
+      - frontend/**
     branches: [ "main" ]
   pull_request:
-    paths:
-      - question-service/**
+    paths: 
+      - frontend/**
     branches: [ "main" ]
 
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
-  SERVICE: question-service
+  SERVICE: frontend
   REGION: asia-southeast1
-  PORT: 8002
+  PORT: 80
 
 defaults:
   run:
-    working-directory: ./question-service
+    working-directory: ./frontend
 
 jobs:
   build:
@@ -30,7 +30,6 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-        mongodb-version: ['6.0']
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
   
     steps:
@@ -40,16 +39,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: ./question-service/package-lock.json
+        cache-dependency-path: ./api-gateway/package-lock.json
         
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.8.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-       
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: npm run lint
   deploy:
     needs: build
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
@@ -79,7 +72,7 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
+        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} --build-arg REACT_APP_API_GATEWAY_URL=https://api-gateway-hywbpmheia-as.a.run.app .
         docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
     - name: Deploy to Cloud Run
       run: |-

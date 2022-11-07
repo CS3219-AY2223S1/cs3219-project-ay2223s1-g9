@@ -1,8 +1,8 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { v4 as uuidv4 } from "uuid";
 
 import { SOCKET_EVENT } from "../constant/constant.js";
+import { socketAuthenticate } from "../middleware/authentication.js";
 
 import {
   matchingUsers,
@@ -15,6 +15,8 @@ import {
 export const initiateSocket = (app) => {
   const httpServer = createServer(app);
   const io = new Server(httpServer, { cors: { origin: "*" } });
+
+  io.use(socketAuthenticate);
 
   io.on(SOCKET_EVENT.CONNECTION, (socket) => {
     console.log("New socket has been connected");
@@ -51,12 +53,14 @@ export const initiateSocket = (app) => {
     });
 
     // COMMUNICATION
-    socket.on("sendStream", ({ peerId, roomId }) => {
-      socket.broadcast.to(roomId).emit("receiveStream", { peerId });
+    socket.on(SOCKET_EVENT.SEND_STREAM, ({ peerId, roomId }) => {
+      socket.broadcast.to(roomId).emit(SOCKET_EVENT.RECEIVE_STREAM, { peerId });
     });
 
-    socket.on("togglePeerStream", ({ roomId, showStream }) => {
-      socket.broadcast.to(roomId).emit("togglePeerStream", { showStream });
+    socket.on(SOCKET_EVENT.TOGGLE_PEER_STREAM, ({ roomId, showStream }) => {
+      socket.broadcast
+        .to(roomId)
+        .emit(SOCKET_EVENT.TOGGLE_PEER_STREAM, { showStream });
     });
   });
 
