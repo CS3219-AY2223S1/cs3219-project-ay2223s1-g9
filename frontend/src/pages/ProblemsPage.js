@@ -100,7 +100,6 @@ const ProblemsPage = ({ setDifficulty }) => {
 
   return (
     <StandardPage header={<PrimaryNavBar />}>
-      <ProfileDropdown />
       {/* <NavBar />
       <Box
         display={"flex"}
