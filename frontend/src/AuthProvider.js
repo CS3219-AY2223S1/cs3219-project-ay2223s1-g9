@@ -7,11 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [cookies, setCookie] = useCookies(["user"]);
 
   useEffect(() => {
-    // const currentUser = localStorage.getItem("user");
-    // if (currentUser) {
-    //   setUser(JSON.parse(currentUser));
-    // }
-
     if (cookies) {
       const currentUser = { username: cookies.username, token: cookies.token };
       setUser(currentUser);

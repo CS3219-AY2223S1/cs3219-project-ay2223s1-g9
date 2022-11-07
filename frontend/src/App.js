@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignupPage from "./pages/SignupPage";
 import { Box } from "@mui/material";
 import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
 import { NavigationPage } from "./pages/NavigationPage";
 import { AuthProvider } from "./AuthProvider";
 import { RoomProvider } from "./contexts/RoomProvider";
@@ -19,7 +20,7 @@ function App() {
               <Routes>
                 <Route
                   exact
-                  path="/"
+                  path="/problems"
                   //element={<Navigate replace to="/login" />}
                   element={
                     <ProtectedRoute>
@@ -29,6 +30,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route path="/" element={<HomePage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
               </Routes>

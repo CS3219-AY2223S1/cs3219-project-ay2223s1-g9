@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import {
   Box,
   Button,
@@ -10,63 +9,64 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
+import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
-import { RoomContext, Pages } from "../contexts/RoomContext";
+import MatchingPage from "./MatchingPage";
+import StandardPage from "../components/templates/StandardPage";
+import BodyCopyLarge from "../components/atoms/BodyCopyLarge";
+import SecondaryNavBar from "../components/molecules/SecondaryNavBar";
+import styles from "./HomePage.module.scss";
+import Heading2 from "../components/atoms/Heading2";
+import PrimaryButton from "../components/atoms/PrimaryButton";
 
-const HomePage = ({ setDifficulty }) => {
-  const { setPage } = useContext(RoomContext);
+const HomePage = () => {
+  const [isMatching, setIsMatching] = useState(false);
+  const [difficulty, setDifficulty] = useState("");
+  const navigate = useNavigate();
 
   const handleSelectDifficulty = (event) => {
+    setIsMatching(true);
     setDifficulty(event.currentTarget.id);
-    setPage(Pages.MatchingPage);
   };
+  useEffect(() => {
+    console.log(isMatching);
+  }, [isMatching]);
 
   return (
-    <>
-      <NavBar />
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        height={"100%"}
-        padding={"4rem"}
-        justifyContent={"center"}
-      >
-        <Typography variant={"h6"} marginBottom={"10px"}>
-          Start coding!
-        </Typography>
-        <Typography>Select a difficulty level</Typography>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          gap={"10px"}
-          justifyContent={"flex-end"}
-        >
-          <Button
-            id={"Easy"}
-            variant={"outlined"}
-            onClick={handleSelectDifficulty}
-          >
-            Easy
-          </Button>
-          <Button
-            id={"Medium"}
-            variant={"outlined"}
-            onClick={handleSelectDifficulty}
-          >
-            Medium
-          </Button>
-          <Button
-            id={"Hard"}
-            variant={"outlined"}
-            onClick={handleSelectDifficulty}
-          >
-            Hard
-          </Button>
-        </Box>
-      </Box>
-    </>
+    <StandardPage header={<SecondaryNavBar />}>
+      <div className={styles.wrapper}>
+        <div className={styles.content}>
+          <Heading2>Collaborative problem solving </Heading2>
+          <BodyCopyLarge>
+            PEERPREP lets you practice solving popular technical interview
+            questions with your peers in real-time using a collaborative code
+            editor.
+          </BodyCopyLarge>
+          <div className={styles.content__button}>
+            <PrimaryButton
+              text={"start now"}
+              onClick={() => {
+                navigate("/login");
+              }}
+            />
+          </div>
+        </div>
+        <div className={styles.image}>
+          <img
+            src={require("../assets/images/collab.png")}
+            width="493"
+            height="323"
+          />
+        </div>
+      </div>
+    </StandardPage>
   );
 };
 
-export default ProblemsPage;
+export default HomePage;

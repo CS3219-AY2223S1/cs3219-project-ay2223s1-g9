@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import MatchingPage from "./MatchingPage";
-import HomePage from "./HomePage";
+import ProblemsPage from "./ProblemsPage";
 import RoomPage from "./RoomPage";
 
 export const NavigationPage = () => {
@@ -21,8 +21,8 @@ export const NavigationPage = () => {
 
   return (
     <>
-      {page === Pages.HomePage && (
-        <HomePage difficulty={difficulty} setDifficulty={setDifficulty} />
+      {page === Pages.ProblemsPage && (
+        <ProblemsPage difficulty={difficulty} setDifficulty={setDifficulty} />
       )}
       {page === Pages.MatchingPage && <MatchingPage difficulty={difficulty} />}
       {page === Pages.RoomPage && <RoomPage />}

@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import { useState, useContext } from "react";
 import axios from "axios";
-import { API_GATEWAY_URL } from "../configs"
-import { API_PATH } from "../constants"
+import { API_GATEWAY_URL } from "../configs";
+import { API_PATH } from "../constants";
 import {
   STATUS_CODE_BAD_REQUEST,
   STATUS_CODE_CONFLICT,
@@ -75,7 +75,7 @@ function SignupPage() {
       setUser(currentUser);
       setCookie("username", username, { path: "/" });
       setCookie("token", token, { path: "/" });
-      navigate("/");
+      navigate("/roblems");
     }
   };
 
@@ -105,8 +105,7 @@ function SignupPage() {
         footer={
           <>
             <BodyCopy>
-              Have an account?{" "}
-              <LinkText text={"Sign in"} link={"/signup"} />
+              Have an account? <LinkText text={"Sign in"} link={"/signup"} />
             </BodyCopy>
           </>
         }
