@@ -1,4 +1,4 @@
-import Logo from "../../assets/icons/Logo";
+import Logo from "../../assets/icons/LogoIcon";
 import { Link } from "react-router-dom";
 
 import styles from "./LogoLink.module.scss";

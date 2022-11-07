@@ -26,7 +26,7 @@ import { useCookies } from "react-cookie";
 
 import Heading2 from "../components/atoms/Heading2";
 import Heading3 from "../components/atoms/Heading3";
-import Logo from "../assets/icons/Logo";
+import Logo from "../assets/icons/LogoIcon";
 import BodyCopy from "../components/atoms/BodyCopy";
 import PrimaryButton from "../components/atoms/PrimaryButton";
 import StandardPage from "../components/templates/StandardPage";
@@ -66,7 +66,7 @@ function LoginPage() {
       setCookie("username", username, { path: "/" });
       setCookie("token", token, { path: "/" });
 
-      navigate("/");
+      navigate("/problems");
     }
   };
 

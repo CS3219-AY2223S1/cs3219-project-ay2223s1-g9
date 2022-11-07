@@ -25,6 +25,9 @@ import NavBar from "../components/NavBar";
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import { useEffect } from "react";
 import { useState } from "react";
+import StandardPage from "../components/templates/StandardPage";
+import PrimaryNavBar from "../components/molecules/PrimaryNavBar";
+import ProfileDropdown from "../components/atoms/ProfileDropdown";
 
 const ProblemsPage = ({ setDifficulty }) => {
   const { setPage } = useContext(RoomContext);
@@ -96,8 +99,9 @@ const ProblemsPage = ({ setDifficulty }) => {
   };
 
   return (
-    <>
-      <NavBar />
+    <StandardPage header={<PrimaryNavBar />}>
+      <ProfileDropdown />
+      {/* <NavBar />
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -154,8 +158,8 @@ const ProblemsPage = ({ setDifficulty }) => {
             </Box>
           )}
         </Box>
-      </Box>
-    </>
+      </Box> */}
+    </StandardPage>
   );
 };
 
