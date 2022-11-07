@@ -5,6 +5,12 @@ import styles from "./NavBar.module.scss";
 
 const PrimaryNavBar = () => {
   return (
+    // <div className={styles.wrapper}>
+    //   <LogoLink />
+
+    //   <NavBarLink text={"Problems"} />
+    //   <ProfileDropdown />
+    // </div>
     <div className={styles.wrapper}>
       <LogoLink />
       <div className={styles.content}>
