@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import { useState, useContext } from "react";
 import axios from "axios";
-import { API_GATEWAY_URL } from "../configs"
-import { API_PATH } from "../constants"
+import { API_GATEWAY_URL } from "../configs";
+import { API_PATH } from "../constants";
 import {
   STATUS_CODE_BAD_REQUEST,
   STATUS_CODE_CONFLICT,
@@ -21,6 +21,12 @@ import {
 } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
+import StandardPage from "../components/templates/StandardPage";
+import SecondaryNavBar from "../components/molecules/SecondaryNavBar";
+import AuthCard from "../components/organisms/AuthCard";
+import LinkText from "../components/atoms/LinkText";
+import BodyCopy from "../components/atoms/BodyCopy";
+
 import { useCookies } from "react-cookie";
 
 function SignupPage() {
@@ -69,7 +75,7 @@ function SignupPage() {
       setUser(currentUser);
       setCookie("username", username, { path: "/" });
       setCookie("token", token, { path: "/" });
-      navigate("/");
+      navigate("/problems");
     }
   };
 
@@ -88,42 +94,23 @@ function SignupPage() {
   };
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      width={"30%"}
-      padding={"4rem"}
-    >
-      <Typography variant={"h3"} marginBottom={"2rem"}>
-        Sign Up
-      </Typography>
-      <TextField
-        label="Username"
-        variant="standard"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        sx={{ marginBottom: "1rem" }}
-        autoFocus
+    <StandardPage header={<SecondaryNavBar />}>
+      <AuthCard
+        title={"Sign Up"}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        buttonText={"Create Account"}
+        footer={
+          <>
+            <BodyCopy>
+              Have an account? <LinkText text={"Sign in"} link={"/login"} />
+            </BodyCopy>
+          </>
+        }
+        handleSubmit={handleSignup}
       />
-      <TextField
-        label="Password"
-        variant="standard"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        sx={{ marginBottom: "2rem" }}
-      />
-      <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-        <Button variant={"outlined"} onClick={handleSignup}>
-          Create account
-        </Button>
-      </Box>
-      <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-        <Typography>
-          or <Link to={"/login"}> login</Link>
-        </Typography>
-      </Box>
-
       <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
@@ -140,7 +127,7 @@ function SignupPage() {
           )}
         </DialogActions>
       </Dialog>
-    </Box>
+    </StandardPage>
   );
 }
 

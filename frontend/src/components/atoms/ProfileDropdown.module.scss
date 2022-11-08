@@ -1,0 +1,47 @@
+@import "../../styles/scss/global.scss";
+.wrapper {
+  height: 30px;
+  @include flexCenter;
+  gap: 5px;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  bottom: -140px;
+  right: 0px;
+  width: 180px;
+  gap: 10px;
+  padding: 5px 0px;
+  background-color: $color-dark;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.2s;
+
+  &--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__elem {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    transition: 0.3s;
+    border-bottom: transparent 1px solid;
+
+    &:hover {
+      cursor: pointer;
+      border-bottom: white 1px solid;
+    }
+  }
+}

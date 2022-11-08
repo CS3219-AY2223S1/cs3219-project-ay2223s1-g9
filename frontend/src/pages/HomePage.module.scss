@@ -1,0 +1,28 @@
+@import "../styles/scss/global.scss";
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.content {
+  width: 500px;
+
+  @include mb {
+    width: 100%;
+  }
+
+  &__button {
+    margin-top: 56px;
+  }
+}
+
+.image {
+  // background-color: green;
+  @include flexCenter;
+
+  @include ip {
+    display: none;
+  }
+}

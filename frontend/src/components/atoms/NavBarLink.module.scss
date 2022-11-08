@@ -1,0 +1,14 @@
+@import "../../styles/scss/global.scss";
+.wrapper {
+  height: 30px;
+  border-bottom: white solid 1px;
+  @include flexCenter;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.link {
+  text-decoration: none;
+}

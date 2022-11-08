@@ -1,0 +1,106 @@
+// Desktop small
+@mixin dtSm {
+  @media (max-width: 1199px) {
+    @content;
+  }
+}
+
+// Ipad Pro
+@mixin ipPr {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+// Ipad
+@mixin ip {
+  @media (max-width: 991px) {
+    @content;
+  }
+}
+
+// Ipad Small
+@mixin ipSm {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+// Mobile
+@mixin mb {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+// Mobile small
+@mixin mbSm {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin absoluteCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin textOverflowEllipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin customScrollbar {
+  &::-webkit-scrollbar {
+    width: 10px; /* width of the entire scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; /* color of the tracking area */
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #00000040; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+    width: 1px;
+
+    &:hover {
+      background-color: #00000060;
+    }
+  }
+}
+
+@mixin noScrollbar {
+  &::-webkit-scrollbar {
+    width: 0px; /* width of the entire scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; /* color of the tracking area */
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #00000040; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+    width: 1px;
+
+    &:hover {
+      background-color: #00000060;
+    }
+  }
+}

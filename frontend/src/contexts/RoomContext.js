@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 const RoomContext = createContext();
 const Pages = {
-  HomePage: "homepage",
+  ProblemsPage: "problemsPage",
   MatchingPage: "matchingPage",
   RoomPage: "roomPage",
 };

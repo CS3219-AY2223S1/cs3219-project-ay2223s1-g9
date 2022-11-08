@@ -14,6 +14,9 @@ import Countdown from "react-countdown";
 
 import { AuthContext } from "../AuthContext";
 import { RoomContext, Pages } from "../contexts/RoomContext";
+import BodyCopyLarge from "../components/atoms/BodyCopyLarge";
+import BodyCopy from "../components/atoms/BodyCopy";
+import LinkText from "../components/atoms/LinkText";
 
 const MatchingPage = ({ difficulty }) => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
@@ -51,11 +54,15 @@ const MatchingPage = ({ difficulty }) => {
   const Completionist = () => (
     <span>
       <Box>
-        <Typography>No match found</Typography>
+        <BodyCopyLarge text={"No match found"} />
       </Box>
-      <Box width={"100%"} display={"flex"} justifyContent={"space-between"}>
-        <Button onClick={handleTryAgain}>Try Again</Button>
-        <Button onClick={() => setPage(Pages.HomePage)}>Return</Button>
+      <Box
+        width={"100%"}
+        display={"flex"}
+        justifyContent={"center"}
+        marginTop={"30px"}
+      >
+        <LinkText onClick={() => setPage(Pages.ProblemsPage)} text={"Return"} />
       </Box>
     </span>
   );
@@ -67,34 +74,42 @@ const MatchingPage = ({ difficulty }) => {
     } else {
       // Render a countdown
       return (
-        <span>
-          <Typography variant={"h6"} marginBottom={"20px"}>
-            Finding you a match...
-          </Typography>
+        <Box
+          width={"60%"}
+          display={"flex"}
+          alignItems={"center"}
+          flexDirection={"column"}
+        >
+          <BodyCopyLarge text={"Finding you a match..."} />
 
           <Box
             width={"100%"}
             height={"30px"}
-            border={"solid 1px #1976D2"}
+            border={"solid 1px white"}
             position={"relative"}
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
             marginBottom={"40px"}
+            marginTop={"40px"}
           >
-            <Typography zIndex={2}>{props.seconds} seconds</Typography>
+            <BodyCopy style={{ zIndex: 2 }}>{props.seconds} seconds</BodyCopy>
+
             <Box
               width={`${((waitTime - props.total) / waitTime) * 100}%`}
               height={"30px"}
-              backgroundColor={"#1976D2"}
+              backgroundColor={
+                difficulty == "Easy"
+                  ? "#15c79c"
+                  : difficulty == "Medium"
+                  ? "#f4dc87"
+                  : "#fd6584"
+              }
               position={"absolute"}
               left={0}
             ></Box>
           </Box>
-          <Box width={"100%"} display={"flex"} justifyContent={"flex-end"}>
-            <Button onClick={() => setPage(Pages.HomePage)}>Cancel</Button>
-          </Box>
-        </span>
+        </Box>
       );
     }
   };
@@ -107,11 +122,14 @@ const MatchingPage = ({ difficulty }) => {
       padding={"8rem"}
       justifyContent={"center"}
       sx={{ boxSizing: "border-box" }}
+      backgroundColor={"black"}
     >
       <Box
-        backgroundColor={"#1976D220"}
-        padding={"1rem 2rem"}
-        borderRadius={"5px"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        width={"100%"}
+        height={"100%"}
       >
         <Countdown
           date={Date.now() + waitTime}

@@ -24,6 +24,16 @@ import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
+import Heading2 from "../components/atoms/Heading2";
+import Heading3 from "../components/atoms/Heading3";
+import Logo from "../assets/icons/LogoIcon";
+import BodyCopy from "../components/atoms/BodyCopy";
+import PrimaryButton from "../components/atoms/PrimaryButton";
+import StandardPage from "../components/templates/StandardPage";
+import SecondaryNavBar from "../components/molecules/SecondaryNavBar";
+import AuthCard from "../components/organisms/AuthCard";
+import LinkText from "../components/atoms/LinkText";
+
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -56,7 +66,7 @@ function LoginPage() {
       setCookie("username", username, { path: "/" });
       setCookie("token", token, { path: "/" });
 
-      navigate("/");
+      navigate("/problems");
     }
   };
 
@@ -69,47 +79,23 @@ function LoginPage() {
   };
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"column"}
-      width={"30%"}
-      padding={"4rem"}
-    >
-      <Typography variant={"h3"} marginBottom={"2rem"}>
-        Login
-      </Typography>
-      <TextField
-        label="Username"
-        variant="standard"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        sx={{ marginBottom: "1rem" }}
-        autoFocus
+    <StandardPage header={<SecondaryNavBar />}>
+      <AuthCard
+        title={"Login"}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+        buttonText={"login"}
+        footer={
+          <>
+            <BodyCopy>
+              Need an account? <LinkText text={"Sign up"} link={"/signup"} />
+            </BodyCopy>
+          </>
+        }
+        handleSubmit={handleLogIn}
       />
-      <TextField
-        label="Password"
-        variant="standard"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        sx={{ marginBottom: "2rem" }}
-      />
-      <Box
-        display={"flex"}
-        flexDirection={"row"}
-        justifyContent={"flex-end"}
-        sx={{ marginBottom: "1rem" }}
-      >
-        <Button variant={"outlined"} onClick={handleLogIn}>
-          Log in
-        </Button>
-      </Box>
-      <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-        <Typography>
-          or <Link to={"/signup"}> create an account</Link>
-        </Typography>
-      </Box>
-
       <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
@@ -119,7 +105,7 @@ function LoginPage() {
           <Button onClick={closeDialog}>OK</Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </StandardPage>
   );
 }
 

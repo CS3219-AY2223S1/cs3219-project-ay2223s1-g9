@@ -16,7 +16,7 @@ const initializeSocket = (token) => {
 };
 
 export const RoomProvider = ({ children }) => {
-  const [page, setPage] = useState(Pages.HomePage);
+  const [page, setPage] = useState(Pages.ProblemsPage);
   const [room, setRoom] = useState({
     personOne: "",
     personTwo: "",

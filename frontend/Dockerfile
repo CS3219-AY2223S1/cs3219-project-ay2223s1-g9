@@ -1,4 +1,4 @@
-FROM node:alpine as build
+FROM node as build
 
 ARG REACT_APP_API_GATEWAY_URL="http://localhost:8010"
 # Create app directory

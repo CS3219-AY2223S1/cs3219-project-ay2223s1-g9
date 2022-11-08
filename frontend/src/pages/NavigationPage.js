@@ -3,14 +3,16 @@ import { useCookies } from "react-cookie";
 
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import MatchingPage from "./MatchingPage";
-import HomePage from "./HomePage";
+import ProblemsPage from "./ProblemsPage";
 import RoomPage from "./RoomPage";
+import { AuthContext } from "../AuthContext";
 
 export const NavigationPage = () => {
   const { page, initializeSocket } = useContext(RoomContext);
   const [cookies] = useCookies(["user"]);
   const [difficulty, setDifficulty] = useState("");
   const [isSettingUp, setIsSettingUp] = useState(true);
+  const { user, setUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (isSettingUp) {
@@ -21,8 +23,12 @@ export const NavigationPage = () => {
 
   return (
     <>
-      {page === Pages.HomePage && (
-        <HomePage difficulty={difficulty} setDifficulty={setDifficulty} />
+      {page === Pages.ProblemsPage && (
+        <ProblemsPage
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+          user={user}
+        />
       )}
       {page === Pages.MatchingPage && <MatchingPage difficulty={difficulty} />}
       {page === Pages.RoomPage && <RoomPage />}

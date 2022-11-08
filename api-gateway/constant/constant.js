@@ -33,6 +33,7 @@ export const HTTP_STATUS_CODE = {
   CREATED: 201,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
+  NOT_MODIFIED: 304,
 };
 
 export const SOCKET_EVENT = {
