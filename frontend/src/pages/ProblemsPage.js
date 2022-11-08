@@ -62,7 +62,7 @@ const ProblemsPage = ({ setDifficulty, user }) => {
         easy++;
       } else if (item.roomDifficulty == "Medium") {
         med++;
-      } else {
+      } else if (item.roomDifficulty == "Hard") {
         hard++;
       }
     });
