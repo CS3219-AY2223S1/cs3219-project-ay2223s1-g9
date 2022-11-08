@@ -105,11 +105,11 @@ function SignupPage() {
         footer={
           <>
             <BodyCopy>
-              Have an account? <LinkText text={"Sign in"} link={"/signup"} />
+              Have an account? <LinkText text={"Sign in"} link={"/login"} />
             </BodyCopy>
           </>
         }
-        handleSubmit={handleLogIn}
+        handleSubmit={handleSignup}
       />
       <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogTitle>{dialogTitle}</DialogTitle>
@@ -121,59 +121,6 @@ function SignupPage() {
         </DialogActions>
       </Dialog>
     </StandardPage>
-    // <Box
-    //   display={"flex"}
-    //   flexDirection={"column"}
-    //   width={"30%"}
-    //   padding={"4rem"}
-    // >
-    //   <Typography variant={"h3"} marginBottom={"2rem"}>
-    //     Sign Up
-    //   </Typography>
-    //   <TextField
-    //     label="Username"
-    //     variant="standard"
-    //     value={username}
-    //     onChange={(e) => setUsername(e.target.value)}
-    //     sx={{ marginBottom: "1rem" }}
-    //     autoFocus
-    //   />
-    //   <TextField
-    //     label="Password"
-    //     variant="standard"
-    //     type="password"
-    //     value={password}
-    //     onChange={(e) => setPassword(e.target.value)}
-    //     sx={{ marginBottom: "2rem" }}
-    //   />
-    //   <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-    //     <Button variant={"outlined"} onClick={handleSignup}>
-    //       Create account
-    //     </Button>
-    //   </Box>
-    //   <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-    //     <Typography>
-    //       or <Link to={"/login"}> login</Link>
-    //     </Typography>
-    //   </Box>
-
-    //   <Dialog open={isDialogOpen} onClose={closeDialog}>
-    //     <DialogTitle>{dialogTitle}</DialogTitle>
-    //     <DialogContent>
-    //       <DialogContentText>{dialogMsg}</DialogContentText>
-    //     </DialogContent>
-    //     <DialogActions>
-    //       {isSignupSuccess ? (
-    //         <>
-    //           <Button onClick={closeDialog}>Cancel</Button>
-    //           <Button onClick={handleLogIn}>Log in</Button>
-    //         </>
-    //       ) : (
-    //         <Button onClick={closeDialog}>Done</Button>
-    //       )}
-    //     </DialogActions>
-    //   </Dialog>
-    // </Box>
   );
 }
 

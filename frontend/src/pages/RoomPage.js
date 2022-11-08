@@ -63,6 +63,7 @@ const RoomPage = () => {
         title: questionData.questionTitle,
         data: questionData.question,
       });
+      console.log("WHERE QN", questionData);
     });
 
     socket.on("receiveStream", ({ peerId }) => {
