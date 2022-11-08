@@ -75,7 +75,7 @@ function SignupPage() {
       setUser(currentUser);
       setCookie("username", username, { path: "/" });
       setCookie("token", token, { path: "/" });
-      navigate("/roblems");
+      navigate("/problems");
     }
   };
 
@@ -117,7 +117,14 @@ function SignupPage() {
           <DialogContentText>{dialogMsg}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDialog}>OK</Button>
+          {isSignupSuccess ? (
+            <>
+              <Button onClick={closeDialog}>Cancel</Button>
+              <Button onClick={handleLogIn}>Log in</Button>
+            </>
+          ) : (
+            <Button onClick={closeDialog}>Done</Button>
+          )}
         </DialogActions>
       </Dialog>
     </StandardPage>
