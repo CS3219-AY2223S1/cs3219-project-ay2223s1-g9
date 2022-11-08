@@ -2,11 +2,12 @@
 
 .matching {
   &__div {
-    margin: 20px 0;
+    margin: 10px 0;
     @include flexCenter;
     flex-direction: column;
     padding-bottom: 60px;
     border-bottom: 1px solid grey;
+    width: 100%;
   }
 
   &__cards {
@@ -26,7 +27,7 @@
 
 .pastAttempts {
   &__div {
-    margin: 20px 0;
+    margin: 10px 0;
     width: 100%;
     @include flexCenter;
     flex-direction: column;
