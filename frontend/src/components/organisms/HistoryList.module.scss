@@ -23,6 +23,7 @@
   &__itemWrapper {
     @include flexCenter;
     flex-direction: column;
+    overflow-x: hidden;
   }
 
   &__item {
@@ -54,7 +55,7 @@
       padding: 0 4px;
 
       &--title {
-        flex: 3;
+        flex: 3.5;
       }
       &--difficulty {
         flex: 1;
@@ -64,7 +65,8 @@
         }
       }
       &--date {
-        flex: 1;
+        // flex: 1;
+        width: 80px;
       }
     }
   }

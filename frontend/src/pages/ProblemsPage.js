@@ -149,20 +149,12 @@ const ProblemsPage = ({ setDifficulty, user }) => {
       </div>
       <div className={styles.pastAttempts__div}>
         <Heading3 text={"Past Attempts"} style={{ textAlign: "center" }} />
-        <HistoryList history={history} user={user} />
-        <div>
-          {history.map((question) => (
-            <div
-              style={{ color: "white", border: "white solid 1px" }}
-              onClick={() => getQuestion(question.roomId)}
-            >
-              {question.createdAt}
-              {question.question_title}
-              {/* {question.roomId} */}
-            </div>
-          ))}
+        <div className={styles.pastAttempts__content}>
+          <div className={styles.pastAttempts__history}>
+            <HistoryList history={history} user={user} />
+          </div>
+          <div className={styles.pastAttempts__stats}>hi</div>
         </div>
-        {/* {question ? question : ""} */}
       </div>
     </StandardPage>
   );
