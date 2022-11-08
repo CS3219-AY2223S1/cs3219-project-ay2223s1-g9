@@ -9,8 +9,5 @@ export async function ormCreateHistory(params) {
 
 export async function ormGetHistoryByUsername(username) {
   const listOfHistory = await getHistoryByUsername({ username });
-  if (listOfHistory.length === 0) {
-    throw new NotFoundError(`No history for ${username}`);
-  }
   return listOfHistory;
 }

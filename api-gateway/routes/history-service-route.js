@@ -21,7 +21,7 @@ router.get(
     selfHandleResponse: true,
     onProxyRes: responseInterceptor(
       async (responseBuffer, proxyRes, req, res) => {
-        if (proxyRes.statusCode !== HTTP_STATUS_CODE.NOT_MODIFIED) {
+        if (proxyRes.statusCode === HTTP_STATUS_CODE.OK) {
           let data = JSON.parse(responseBuffer.toString("utf8"));
           data["data"].forEach((entry) => {
             const date = new Date(entry.createdAt);
