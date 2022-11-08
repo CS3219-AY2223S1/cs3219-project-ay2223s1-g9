@@ -20,7 +20,7 @@ import {
   STATUS_CODE_SUCCESS,
 } from "../constants";
 import { AuthContext } from "../AuthContext";
-
+import Countdown from "react-countdown";
 import NavBar from "../components/NavBar";
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import { useEffect } from "react";
@@ -33,10 +33,16 @@ import BodyCopy from "../components/atoms/BodyCopy";
 import styles from "./ProblemsPage.module.scss";
 import MatchCard from "../components/molecules/MatchCard";
 
-const ProblemsPage = ({ setDifficulty }) => {
-  const { setPage } = useContext(RoomContext);
+const ProblemsPage = ({ difficulty, setDifficulty }) => {
   const { user, setUser } = useContext(AuthContext);
+  const { setRoom, socket, setPage } = useContext(RoomContext);
   const [history, setHistory] = useState([]);
+  const [key, setKey] = useState(0);
+
+  const handleTryAgain = () => {
+    key == 0 ? setKey(1) : setKey(0);
+  };
+  const waitTime = 30000;
 
   const handleSelectDifficulty = (event) => {
     setDifficulty(event.currentTarget.id);
@@ -46,6 +52,7 @@ const ProblemsPage = ({ setDifficulty }) => {
   useEffect(() => {
     console.log("token", user.token);
     getHistory();
+    // startMatch();
   }, []);
 
   const getHistory = async () => {
@@ -101,30 +108,145 @@ const ProblemsPage = ({ setDifficulty }) => {
       // console.log(history[0]);
     }
   };
+  const Completionist = () => (
+    <span>
+      <Box>
+        <Typography>No match found</Typography>
+      </Box>
+      <Box width={"100%"} display={"flex"} justifyContent={"space-between"}>
+        <Button onClick={handleTryAgain}>Try Again</Button>
+        <Button onClick={() => setPage(Pages.HomePage)}>Return</Button>
+      </Box>
+    </span>
+  );
 
+  const renderer = (props /*hours, minutes, seconds, completed*/) => {
+    if (props.completed) {
+      // Render a completed state
+      return <Completionist />;
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          <Box
+            width={"100%"}
+            height={"30px"}
+            border={"solid 1px #1976D2"}
+            position={"relative"}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            marginBottom={"40px"}
+          >
+            <Typography zIndex={2}>{props.seconds} seconds</Typography>
+            <Box
+              width={`${((waitTime - props.total) / waitTime) * 100}%`}
+              height={"30px"}
+              backgroundColor={"#1976D2"}
+              position={"absolute"}
+              left={0}
+            ></Box>
+          </Box>
+        </span>
+      );
+    }
+  };
+
+  const startMatch = () => {
+    socket.emit(
+      "match",
+      {
+        username: user.username,
+        roomDifficulty: difficulty,
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    socket.on("matchSuccess", (matchRoom) => {
+      setRoom({
+        personOne: matchRoom.personOneUsername,
+        personTwo: matchRoom.personTwoUsername,
+        roomId: matchRoom.roomId + "",
+        difficulty: matchRoom.roomDifficulty,
+      });
+      setPage(Pages.RoomPage);
+    });
+  };
   return (
-    <StandardPage
-      header={<PrimaryNavBar />}
-      contentStyle={{ alignItems: "flex-start" }}
-    >
-      <div className={styles.matching__div}>
-        <Heading3 text={"Problem Matching"} style={{ textAlign: "center" }} />
-        <BodyCopy style={{ textAlign: "center" }}>
-          Select your difficulty level and we will match you with someone of the
-          same chosen level and assign a random question of that difficulty.
-        </BodyCopy>
-        <div>
-          <MatchCard
-            title={"EASY"}
-            content={"Takes 20–30 minutes to solve"}
-            color={"green"}
-            buttonText={"Match Now"}
-            disable={false}
-          />
-        </div>
-      </div>
-
-      {/* <NavBar />
+    // <StandardPage
+    //   header={<PrimaryNavBar />}
+    //   contentStyle={{ alignItems: "flex-start" }}
+    // >
+    //   <div className={styles.matching__div}>
+    //     <Heading3 text={"Problem Matching"} style={{ textAlign: "center" }} />
+    //     <BodyCopy style={{ textAlign: "center" }}>
+    //       Select your difficulty level and we will match you with someone of the
+    //       same chosen level and assign a random question of that difficulty.
+    //     </BodyCopy>
+    //     <div className={styles.matching__cards}>
+    //       <MatchCard
+    //         id={"Easy"}
+    //         title={"EASY"}
+    //         content={"Takes 20–30 minutes to solve"}
+    //         color={"green"}
+    //         buttonText={"Match Now"}
+    //         disable={false}
+    //         onClick={handleSelectDifficulty}
+    //         isMatching={false}
+    //         // countdown={
+    //         //   <Countdown
+    //         //     date={Date.now() + waitTime}
+    //         //     key={key}
+    //         //     intervalDelay={0}
+    //         //     precision={2}
+    //         //     renderer={renderer}
+    //         //   />
+    //         // }
+    //       />
+    //       <MatchCard
+    //         id={"Medium"}
+    //         title={"MEDIUM"}
+    //         content={"Takes 30–40 minutes to solve"}
+    //         color={"yellow"}
+    //         disable={false}
+    //         onClick={handleSelectDifficulty}
+    //         isMatching={false}
+    //         // countdown={
+    //         //   <Countdown
+    //         //     date={Date.now() + waitTime}
+    //         //     key={key}
+    //         //     intervalDelay={0}
+    //         //     precision={2}
+    //         //     renderer={renderer}
+    //         //   />
+    //         // }
+    //       />
+    //       <MatchCard
+    //         id={"Hard"}
+    //         title={"HARD"}
+    //         content={"Takes 40-50 minutes to solve"}
+    //         color={"red"}
+    //         buttonText={"Match Now"}
+    //         disable={false}
+    //         onClick={handleSelectDifficulty}
+    //         isMatching={false}
+    //         // countdown={
+    //         //   <Countdown
+    //         //     date={Date.now() + waitTime}
+    //         //     key={key}
+    //         //     intervalDelay={0}
+    //         //     precision={2}
+    //         //     renderer={renderer}
+    //         //   />
+    //         // }
+    //       />
+    //     </div>
+    //   </div>
+    //  </StandardPage>
+    <>
+      <NavBar />
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -181,8 +303,8 @@ const ProblemsPage = ({ setDifficulty }) => {
             </Box>
           )}
         </Box>
-      </Box> */}
-    </StandardPage>
+      </Box>
+    </>
   );
 };
 

@@ -26,7 +26,16 @@ import AccountIcon from "../../assets/icons/AccountIcon";
 import PrimaryButton from "../atoms/PrimaryButton";
 import SecondaryButton from "../atoms/SecondaryButton";
 
-const MatchCard = ({ title, content, color, disable, buttonText }) => {
+const MatchCard = ({
+  title,
+  content,
+  color,
+  disable,
+  buttonText,
+  onClick,
+  countdown,
+  isMatching,
+}) => {
   const { user, setUser } = useContext(AuthContext);
   const [dropdown, setDropdown] = useState(false);
   const [password, setPassword] = useState("");
@@ -36,8 +45,17 @@ const MatchCard = ({ title, content, color, disable, buttonText }) => {
   return (
     <div className={styles.wrapper}>
       <BodyCopy text={title} bold={"bold"} />
-      <BodyCopy text={content} style={{ textAlign: "center" }} />
-      <SecondaryButton text={buttonText} color={color} disable={disable} />
+      {isMatching ? (
+        countdown
+      ) : (
+        <BodyCopy text={content} style={{ textAlign: "center" }} />
+      )}
+      <SecondaryButton
+        text={isMatching ? "matching..." : "match now"}
+        color={color}
+        disable={disable}
+        onClick={onClick}
+      />
     </div>
   );
 };
