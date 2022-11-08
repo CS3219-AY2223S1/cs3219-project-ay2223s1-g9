@@ -149,7 +149,7 @@ const ProblemsPage = ({ setDifficulty, user }) => {
       </div>
       <div className={styles.pastAttempts__div}>
         <Heading3 text={"Past Attempts"} style={{ textAlign: "center" }} />
-        <HistoryList history={history} getQuestion={getQuestion} />
+        <HistoryList history={history} user={user} />
         <div>
           {history.map((question) => (
             <div
