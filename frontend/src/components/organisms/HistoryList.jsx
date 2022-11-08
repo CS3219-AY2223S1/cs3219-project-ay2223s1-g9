@@ -87,36 +87,36 @@ const HistoryList = ({ history, user }) => {
           </div>
         </div>
         <div className={styles.history__list}>
-          {history.map((question, index) => (
+          {history.map((item, index) => (
             <div className={`${styles[`history__itemWrapper`]}`}>
               <div
                 className={`${styles[`history__item`]} ${
                   styles[`history__item--${index % 2 ? "even" : ""}`]
                 }`}
-                onClick={() => handleSelect(question._id, question.roomId)}
+                onClick={() => handleSelect(item._id, item.roomId)}
               >
                 <div
                   className={`${styles.history__itemColumn} ${styles["history__itemColumn--title"]}`}
                 >
-                  <BodyCopy text={question.question_title} />
+                  <BodyCopy text={item.question_title} />
                 </div>
                 <div
                   className={`${styles.history__itemColumn} ${
                     styles["history__itemColumn--difficulty"]
                   } ${
                     styles[
-                      `history__itemColumn--difficulty${question.roomDifficulty}`
+                      `history__itemColumn--difficulty${item.roomDifficulty}`
                     ]
                   }`}
                 >
                   <BodyCopy
-                    text={question.roomDifficulty}
+                    text={item.roomDifficulty}
                     color={
-                      question.roomDifficulty == "Easy"
+                      item.roomDifficulty == "Easy"
                         ? "green"
-                        : question.roomDifficulty == "Medium"
+                        : item.roomDifficulty == "Medium"
                         ? "yellow"
-                        : question.roomDifficulty == "Hard"
+                        : item.roomDifficulty == "Hard"
                         ? "red"
                         : ""
                     }
@@ -125,14 +125,12 @@ const HistoryList = ({ history, user }) => {
                 <div
                   className={`${styles.history__itemColumn} ${styles["history__itemColumn--date"]}`}
                 >
-                  <BodyCopy text={question.createdAt} />
+                  <BodyCopy text={item.createdAt} />
                 </div>
               </div>
 
-              {question && selected == question._id && isOpen && (
+              {question && selected == item._id && isOpen && (
                 <div className={styles.question__wrapper}>
-                  hello
-                  <BodyCopyLarge>{question.title}</BodyCopyLarge>
                   <div
                     className={styles.question__data}
                     dangerouslySetInnerHTML={{ __html: question.question }}
@@ -142,9 +140,6 @@ const HistoryList = ({ history, user }) => {
             </div>
           ))}
         </div>
-        <BodyCopy>
-          ew{selected} {question.id}
-        </BodyCopy>
       </div>
     </>
   );
