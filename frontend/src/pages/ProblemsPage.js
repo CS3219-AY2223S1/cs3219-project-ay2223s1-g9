@@ -29,11 +29,12 @@ import BodyCopy from "../components/atoms/BodyCopy";
 import styles from "./ProblemsPage.module.scss";
 import MatchCard from "../components/molecules/MatchCard";
 import userEvent from "@testing-library/user-event";
+import HistoryList from "../components/organisms/HistoryList";
 
 const ProblemsPage = ({ setDifficulty, user }) => {
   const { setPage } = useContext(RoomContext);
   // const { user, setUser } = useContext(AuthContext);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([{}]);
   const [question, setQuestion] = useState("");
   console.log(history);
   const handleSelectDifficulty = (event) => {
@@ -51,8 +52,8 @@ const ProblemsPage = ({ setDifficulty, user }) => {
     console.log("attempting to get history");
     const res = await axios
       .get(
-        // API_GATEWAY_URL + "/api/history",
-        "http://localhost:8004" + "/api/history",
+        API_GATEWAY_URL + "/api/history",
+        //"http://localhost:8004" + "/api/history",
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -77,10 +78,11 @@ const ProblemsPage = ({ setDifficulty, user }) => {
   const getQuestion = async (roomId) => {
     const res = await axios
       .get(
-        // API_GATEWAY_URL + "/getCollab",
-        "http://localhost:8003" + "/getCollab",
-        { params: { roomId: roomId } },
+        API_GATEWAY_URL + "/getCollab",
+        //"http://localhost:8003" + "/getCollab",
         {
+          params: { roomId: roomId },
+
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -147,6 +149,7 @@ const ProblemsPage = ({ setDifficulty, user }) => {
       </div>
       <div className={styles.pastAttempts__div}>
         <Heading3 text={"Past Attempts"} style={{ textAlign: "center" }} />
+        <HistoryList history={history} getQuestion={getQuestion} />
         <div>
           {history.map((question) => (
             <div
