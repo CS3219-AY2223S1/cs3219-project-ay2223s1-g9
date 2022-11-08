@@ -2,7 +2,7 @@
 
 .matching {
   &__div {
-    margin-top: 20px;
+    margin: 20px 0;
     @include flexCenter;
     flex-direction: column;
     padding-bottom: 60px;
@@ -21,5 +21,14 @@
       justify-content: center;
       gap: 20px;
     }
+  }
+}
+
+.pastAttempts {
+  &__div {
+    margin: 20px 0;
+    width: 100%;
+    @include flexCenter;
+    flex-direction: column;
   }
 }

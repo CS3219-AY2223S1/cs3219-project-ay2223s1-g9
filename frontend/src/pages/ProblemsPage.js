@@ -28,10 +28,11 @@ import Heading3 from "../components/atoms/Heading3";
 import BodyCopy from "../components/atoms/BodyCopy";
 import styles from "./ProblemsPage.module.scss";
 import MatchCard from "../components/molecules/MatchCard";
+import userEvent from "@testing-library/user-event";
 
-const ProblemsPage = ({ setDifficulty }) => {
+const ProblemsPage = ({ setDifficulty, user }) => {
   const { setPage } = useContext(RoomContext);
-  const { user, setUser } = useContext(AuthContext);
+  // const { user, setUser } = useContext(AuthContext);
   const [history, setHistory] = useState([]);
   const [question, setQuestion] = useState("");
   console.log(history);
@@ -47,6 +48,7 @@ const ProblemsPage = ({ setDifficulty }) => {
   }, []);
 
   const getHistory = async () => {
+    console.log("attempting to get history");
     const res = await axios
       .get(
         // API_GATEWAY_URL + "/api/history",
@@ -68,6 +70,7 @@ const ProblemsPage = ({ setDifficulty }) => {
     if (res && res.status === STATUS_CODE_SUCCESS) {
       const historyList = res.data.data;
       setHistory(historyList);
+      console.log("hist", historyList);
     }
   };
 
@@ -96,7 +99,6 @@ const ProblemsPage = ({ setDifficulty }) => {
       setQuestion(data);
 
       console.log("HII", data);
-      // console.log(history[0]);
     }
   };
 
@@ -121,15 +123,6 @@ const ProblemsPage = ({ setDifficulty }) => {
             disable={false}
             onClick={handleSelectDifficulty}
             isMatching={false}
-            // countdown={
-            //   <Countdown
-            //     date={Date.now() + waitTime}
-            //     key={key}
-            //     intervalDelay={0}
-            //     precision={2}
-            //     renderer={renderer}
-            //   />
-            // }
           />
           <MatchCard
             id={"Medium"}
@@ -139,15 +132,6 @@ const ProblemsPage = ({ setDifficulty }) => {
             disable={false}
             onClick={handleSelectDifficulty}
             isMatching={false}
-            // countdown={
-            //   <Countdown
-            //     date={Date.now() + waitTime}
-            //     key={key}
-            //     intervalDelay={0}
-            //     precision={2}
-            //     renderer={renderer}
-            //   />
-            // }
           />
           <MatchCard
             id={"Hard"}
@@ -158,29 +142,23 @@ const ProblemsPage = ({ setDifficulty }) => {
             disable={false}
             onClick={handleSelectDifficulty}
             isMatching={false}
-            // countdown={
-            //   <Countdown
-            //     date={Date.now() + waitTime}
-            //     key={key}
-            //     intervalDelay={0}
-            //     precision={2}
-            //     renderer={renderer}
-            //   />
-            // }
           />
         </div>
       </div>
-      <div>
-        {history.map((question) => (
-          <div
-            style={{ color: "white", border: "white solid 1px" }}
-            onClick={() => getQuestion(question.roomId)}
-          >
-            {question.createdAt}
-            {question.question_title}
-            {/* {question.roomId} */}
-          </div>
-        ))}
+      <div className={styles.pastAttempts__div}>
+        <Heading3 text={"Past Attempts"} style={{ textAlign: "center" }} />
+        <div>
+          {history.map((question) => (
+            <div
+              style={{ color: "white", border: "white solid 1px" }}
+              onClick={() => getQuestion(question.roomId)}
+            >
+              {question.createdAt}
+              {question.question_title}
+              {/* {question.roomId} */}
+            </div>
+          ))}
+        </div>
         {/* {question ? question : ""} */}
       </div>
     </StandardPage>
