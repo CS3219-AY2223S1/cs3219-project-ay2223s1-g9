@@ -5,6 +5,8 @@
     margin-top: 20px;
     @include flexCenter;
     flex-direction: column;
+    padding-bottom: 60px;
+    border-bottom: 1px solid grey;
   }
 
   &__cards {

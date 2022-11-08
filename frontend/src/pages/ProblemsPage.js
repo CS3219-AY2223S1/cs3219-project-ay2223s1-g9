@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -10,7 +10,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
+import axios from "axios";
+import { API_GATEWAY_URL } from "../configs";
+import { API_PATH } from "../constants";
+import {
+  STATUS_CODE_CONFLICT,
+  STATUS_CODE_CREATED,
+  STATUS_CODE_BAD_REQUEST,
+  STATUS_CODE_SUCCESS,
+} from "../constants";
+import { AuthContext } from "../AuthContext";
 import NavBar from "../components/NavBar";
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import StandardPage from "../components/templates/StandardPage";
@@ -22,17 +31,79 @@ import MatchCard from "../components/molecules/MatchCard";
 
 const ProblemsPage = ({ setDifficulty }) => {
   const { setPage } = useContext(RoomContext);
-
+  const { user, setUser } = useContext(AuthContext);
+  const [history, setHistory] = useState([]);
+  const [question, setQuestion] = useState("");
+  console.log(history);
   const handleSelectDifficulty = (event) => {
-    console.log("WATS THE ID", event.currentTarget.id);
     setDifficulty(event.currentTarget.id);
     setPage(Pages.MatchingPage);
+  };
+
+  useEffect(() => {
+    //  console.log("token", user.token);
+    getHistory();
+    // startMatch();
+  }, []);
+
+  const getHistory = async () => {
+    const res = await axios
+      .get(
+        // API_GATEWAY_URL + "/api/history",
+        "http://localhost:8004" + "/api/history",
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .catch((err) => {
+        if (err.response.status === STATUS_CODE_BAD_REQUEST) {
+          alert(err);
+        } else {
+          alert("Please try again later");
+          console.log("error: ", err);
+        }
+      });
+    if (res && res.status === STATUS_CODE_SUCCESS) {
+      const historyList = res.data.data;
+      setHistory(historyList);
+    }
+  };
+
+  const getQuestion = async (roomId) => {
+    const res = await axios
+      .get(
+        // API_GATEWAY_URL + "/getCollab",
+        "http://localhost:8003" + "/getCollab",
+        { params: { roomId: roomId } },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .catch((err) => {
+        if (err.response.status === STATUS_CODE_BAD_REQUEST) {
+          alert(err);
+        } else {
+          alert("Please try again later");
+          console.log("error: ", err);
+        }
+      });
+    if (res && res.status === STATUS_CODE_SUCCESS) {
+      const data = res.data;
+      setQuestion(data);
+
+      console.log("HII", data);
+      // console.log(history[0]);
+    }
   };
 
   return (
     <StandardPage
       header={<PrimaryNavBar />}
-      contentStyle={{ alignItems: "flex-start" }}
+      contentStyle={{ alignItems: "flex-start", flexDirection: "column" }}
     >
       <div className={styles.matching__div}>
         <Heading3 text={"Problem Matching"} style={{ textAlign: "center" }} />
@@ -98,6 +169,19 @@ const ProblemsPage = ({ setDifficulty }) => {
             // }
           />
         </div>
+      </div>
+      <div>
+        {history.map((question) => (
+          <div
+            style={{ color: "white", border: "white solid 1px" }}
+            onClick={() => getQuestion(question.roomId)}
+          >
+            {question.createdAt}
+            {question.question_title}
+            {/* {question.roomId} */}
+          </div>
+        ))}
+        {/* {question ? question : ""} */}
       </div>
     </StandardPage>
   );
