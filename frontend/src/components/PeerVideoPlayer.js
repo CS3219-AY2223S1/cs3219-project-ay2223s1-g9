@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import styles from "./VideoPlayer.module.scss";
 
-const VideoPlayer = ({ stream }) => {
+const PeerVideoPlayer = ({ stream }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -12,14 +12,9 @@ const VideoPlayer = ({ stream }) => {
 
   return (
     <>
-      <video
-        className={styles.videoInsert}
-        ref={videoRef}
-        autoPlay
-        muted={true}
-      />
+      <video className={styles.videoInsert} ref={videoRef} autoPlay />
     </>
   );
 };
 
-export default VideoPlayer;
+export default PeerVideoPlayer;

@@ -16,6 +16,7 @@ import { AuthContext } from "../AuthContext";
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import CodeEditor from "../components/CodeEditor";
 import VideoPlayer from "../components/VideoPlayer";
+import PeerVideoPlayer from "../components/PeerVideoPlayer";
 import StandardPage from "../components/templates/StandardPage";
 import BodyCopy from "../components/atoms/BodyCopy";
 import LinkText from "../components/atoms/LinkText";
@@ -159,10 +160,12 @@ const RoomPage = () => {
                 )}
               </div>
               <div className={`${styles[`rightSide__video`]}`}>
-                {isShowingPeerStream && <VideoPlayer stream={myPeerStream} />}
+                {isShowingPeerStream && (
+                  <PeerVideoPlayer stream={myPeerStream} />
+                )}
                 <div className={styles.rightSide__label}>
                   <BodyCopy style={{ margin: 0 }}>
-                    {user.username == room.personOne
+                    {user.username === room.personOne
                       ? room.personTwo
                       : room.personOne}
                   </BodyCopy>
