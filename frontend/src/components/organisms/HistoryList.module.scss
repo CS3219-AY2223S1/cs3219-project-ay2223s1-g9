@@ -49,11 +49,9 @@
 
       &--title {
         flex: 3;
-        @include textOverflowEllipsis;
       }
       &--difficulty {
         flex: 1;
-        @include textOverflowEllipsis;
 
         &Easy {
           color: $color-easy;
@@ -61,7 +59,6 @@
       }
       &--date {
         flex: 1;
-        @include textOverflowEllipsis;
       }
     }
   }
