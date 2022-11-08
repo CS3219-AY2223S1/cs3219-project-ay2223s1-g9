@@ -102,6 +102,16 @@ const RoomPage = () => {
     setIsShowingMyStream(!isShowingMyStream);
   };
 
+  const onRoomLeave = () => {
+    socket.emit("leaveRoom", { roomId: room.roomId });
+    socket.emit("togglePeerStream", {
+      roomId: room.roomId,
+      showStream: false,
+    });
+    setPage(Pages.ProblemsPage);
+    navigate("/problems");
+  };
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -115,7 +125,7 @@ const RoomPage = () => {
               <LinkText
                 style={{ width: "100%" }}
                 text={"Leave Room"}
-                onClick={() => setPage(Pages.ProblemsPage)}
+                onClick={onRoomLeave}
               />
             </div>
             {/* <div className={styles.header__submit}>
