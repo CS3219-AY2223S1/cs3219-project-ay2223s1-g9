@@ -43,8 +43,8 @@ const RoomPage = () => {
     // NOTE TO ANDREA: HELP CREATE A BUTTON TO LEAVE THE ROOM SO WE CAN USE THAT INSTEAD OF THE BROWSER BACK BUTTON.
     window.onpopstate = (_) => {
       socket.emit("leaveRoom", { roomId: room.roomId });
-      setPage(Pages.HomePage);
-      navigate("/");
+      setPage(Pages.ProblemsPage);
+      navigate("/problems");
     };
 
     if (user.username === room.personOne) {
@@ -114,12 +114,12 @@ const RoomPage = () => {
               <LinkText
                 style={{ width: "100%" }}
                 text={"Leave Room"}
-                onClick={() => setPage(Pages.HomePage)}
+                onClick={() => setPage(Pages.ProblemsPage)}
               />
             </div>
-            <div className={styles.header__submit}>
+            {/* <div className={styles.header__submit}>
               <SecondaryButton text={"submit"} />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={styles.body}>
