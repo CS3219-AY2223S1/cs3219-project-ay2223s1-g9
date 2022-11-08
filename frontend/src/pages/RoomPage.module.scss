@@ -35,18 +35,63 @@
     flex: 1;
     @include flexCenter;
   }
+}
+.body {
+  padding: 0 2%;
+  display: flex;
+  gap: 5px;
+  height: 100%;
+  // height: 500px;
+  background-color: pink;
+}
+.question {
+  &__wrapper {
+    flex: 1 1 0;
+    width: 0;
 
-  &__cards {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 900px;
+    background-color: $color-dark;
+    padding: 2%;
+    // overflow-y: overlay;
+    overflow: scroll;
+    //  @include customScrollbar;
+  }
+  &__data {
+    color: white;
+    font-family: $montserrat-regular;
+  }
+}
+
+.rightSide {
+  &__wrapper {
+    flex: 1 1 0;
+    width: 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    @include ip {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
+    flex-direction: column;
+  }
+
+  &__code {
+    flex: 3;
+  }
+
+  &__videos {
+    flex: 2;
+    display: flex;
+    width: 100%;
+  }
+
+  &__video {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    border: 2px yellow solid;
+  }
+
+  &__label {
+    background-color: #00000050;
+    // height: 24px;
+    padding: 2px;
+    position: absolute;
+    @include flexCenter;
+    z-index: 5;
   }
 }

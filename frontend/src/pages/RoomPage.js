@@ -22,6 +22,7 @@ import LinkText from "../components/atoms/LinkText";
 import styles from "./RoomPage.module.scss";
 import SecondaryButton from "../components/atoms/SecondaryButton";
 import PrimaryButton from "../components/atoms/PrimaryButton";
+import BodyCopyLarge from "../components/atoms/BodyCopyLarge";
 
 const RoomPage = () => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
@@ -83,35 +84,80 @@ const RoomPage = () => {
     });
   }, []);
 
+  const handleVideoToggle = () => {
+    socket.emit("togglePeerStream", {
+      roomId: room.roomId,
+      showStream: !isShowingMyStream,
+    });
+    if (!isShowingMyStream) {
+      socket.emit("sendStream", {
+        peerId: me.id,
+        roomId: room.roomId,
+      });
+    }
+    setIsShowingMyStream(!isShowingMyStream);
+  };
+
   return (
     <>
       <StandardPage
+        headerStyle={{ maxHeight: "100vh" }}
         header={
-          <div className={styles.header__wrapper}>
-            <div className={styles.header__details}>
-              <BodyCopy>
-                Users: {room.personOne + ", " + room.personTwo}
-              </BodyCopy>
-              <BodyCopy>Difficulty: {room.difficulty}</BodyCopy>
+          <>
+            <div className={styles.header__wrapper}>
+              <div className={styles.header__details}>
+                <BodyCopy>
+                  Users: {room.personOne + ", " + room.personTwo}
+                </BodyCopy>
+                <BodyCopy>Difficulty: {room.difficulty}</BodyCopy>
+              </div>
+              <div className={styles.header__buttons}>
+                <div className={styles.header__leave}>
+                  <LinkText
+                    style={{ width: "100%" }}
+                    text={"Leave Room"}
+                    onClick={() => setPage(Pages.HomePage)}
+                  />
+                </div>
+                <div className={styles.header__submit}>
+                  <SecondaryButton text={"submit"} />
+                </div>
+              </div>
             </div>
-            <div className={styles.header__buttons}>
-              <div className={styles.header__leave}>
-                <LinkText
-                  style={{ width: "100%" }}
-                  text={"Leave Room"}
-                  onClick={() => setPage(Pages.HomePage)}
+            <div className={styles.body}>
+              <div className={styles.question__wrapper}>
+                <BodyCopyLarge>{question.title}</BodyCopyLarge>
+                <div
+                  className={styles.question__data}
+                  dangerouslySetInnerHTML={{ __html: question.data }}
                 />
               </div>
-              <div className={styles.header__submit}>
-                <SecondaryButton text={"submit"} />
-                {/* <PrimaryButton text={"submit"} style={{ width: "100%" }} /> */}
+              <div className={styles.rightSide__wrapper}>
+                <div className={styles.rightSide__code}>
+                  <CodeEditor socket={socket} roomId={room.roomId} />
+                </div>
+
+                <Button onClick={handleVideoToggle}>clickme</Button>
+                <div className={styles.rightSide__videos}>
+                  <div className={`${styles[`rightSide__video`]}`}>
+                    {isShowingMyStream && <VideoPlayer stream={myStream} />}
+                    <div className={styles.rightSide__label}>
+                      <BodyCopy text={user.username} style={{ margin: 0 }} />
+                    </div>
+                  </div>
+                  <div className={`${styles[`rightSide__video`]}`}>
+                    {isShowingPeerStream && (
+                      <VideoPlayer stream={myPeerStream} />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </>
         }
       ></StandardPage>
 
-      <Box
+      {/* <Box
         display={"flex"}
         flexDirection={"column"}
         height={"100vh"}
@@ -184,7 +230,7 @@ const RoomPage = () => {
           {isShowingMyStream && <VideoPlayer stream={myStream} />}
           {isShowingPeerStream && <VideoPlayer stream={myPeerStream} />}
         </Box>
-      </Box>
+      </Box> */}
     </>
   );
 };
