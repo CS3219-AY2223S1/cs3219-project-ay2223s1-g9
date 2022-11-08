@@ -50,8 +50,6 @@
   padding: 0 2%;
   display: flex;
   gap: 5px;
-  // height: 100vh;
-  // height: 500px;
   flex: 1 1 100px;
   overflow: hidden;
 }
@@ -61,9 +59,10 @@
     width: 0;
     background-color: $color-dark;
     padding: 2%;
+    overflow: auto;
     // overflow-y: overlay;
-    overflow: scroll;
-    //  @include customScrollbar;
+    // overflow-x: scroll;
+    // @include customScrollbar;
   }
   &__data {
     color: white;
