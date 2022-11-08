@@ -55,7 +55,8 @@ export const createUserHistory = async (
   userOne,
   userTwo,
   roomId,
-  question_title
+  question_title,
+  roomDifficulty,
 ) => {
   return await axios({
     method: HTTP_METHODS.POST,
@@ -65,6 +66,7 @@ export const createUserHistory = async (
       userTwo,
       roomId,
       question_title,
+      roomDifficulty,
     },
   });
 };
