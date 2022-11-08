@@ -1,0 +1,113 @@
+@import "../../styles/scss/global.scss";
+
+.btn {
+  // parent size
+  &__wrapper {
+    margin-top: 16px;
+    width: 100%;
+    height: 46px;
+    border-radius: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+    background-color: $color-primary;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &:hover .btn__text {
+      color: black;
+    }
+
+    &--disable {
+      background-color: #ffffff20;
+      pointer-events: none;
+    }
+
+    &--green {
+      background-color: $color-easy;
+      // transition effect
+      &::after {
+        content: "";
+        position: absolute;
+        background-color: $color-easy-active;
+        width: 0;
+        padding-top: 0;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        transition: 0.3s;
+      }
+      &:hover::after {
+        width: 100%;
+        padding-top: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &--yellow {
+      background-color: $color-med;
+      // transition effect
+      &::after {
+        content: "";
+        position: absolute;
+        background-color: $color-med-active;
+        width: 0;
+        padding-top: 0;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        transition: 0.3s;
+      }
+      &:hover::after {
+        width: 100%;
+        padding-top: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &--red {
+      background-color: $color-hard;
+      // transition effect
+      &::after {
+        content: "";
+        position: absolute;
+        background-color: $color-hard-active;
+        width: 0;
+        padding-top: 0;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        transition: 0.3s;
+      }
+      &:hover::after {
+        width: 100%;
+        padding-top: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  &__text {
+    @include absoluteCenter;
+    text-transform: uppercase;
+    text-align: center;
+    font-family: $montserrat-medium;
+    font-size: 16px;
+    width: 100%;
+    z-index: 2;
+    transition: 0.3s;
+  }
+}

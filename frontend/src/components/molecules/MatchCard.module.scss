@@ -1,0 +1,11 @@
+@import "../../styles/scss/global.scss";
+
+.wrapper {
+  background-color: $color-dark;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  @include flexCenter;
+  flex-direction: column;
+  padding: 32px;
+}

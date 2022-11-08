@@ -28,6 +28,10 @@ import { useState } from "react";
 import StandardPage from "../components/templates/StandardPage";
 import PrimaryNavBar from "../components/molecules/PrimaryNavBar";
 import ProfileDropdown from "../components/atoms/ProfileDropdown";
+import Heading3 from "../components/atoms/Heading3";
+import BodyCopy from "../components/atoms/BodyCopy";
+import styles from "./ProblemsPage.module.scss";
+import MatchCard from "../components/molecules/MatchCard";
 
 const ProblemsPage = ({ setDifficulty }) => {
   const { setPage } = useContext(RoomContext);
@@ -99,7 +103,27 @@ const ProblemsPage = ({ setDifficulty }) => {
   };
 
   return (
-    <StandardPage header={<PrimaryNavBar />}>
+    <StandardPage
+      header={<PrimaryNavBar />}
+      contentStyle={{ alignItems: "flex-start" }}
+    >
+      <div className={styles.matching__div}>
+        <Heading3 text={"Problem Matching"} style={{ textAlign: "center" }} />
+        <BodyCopy style={{ textAlign: "center" }}>
+          Select your difficulty level and we will match you with someone of the
+          same chosen level and assign a random question of that difficulty.
+        </BodyCopy>
+        <div>
+          <MatchCard
+            title={"EASY"}
+            content={"Takes 20–30 minutes to solve"}
+            color={"green"}
+            buttonText={"Match Now"}
+            disable={false}
+          />
+        </div>
+      </div>
+
       {/* <NavBar />
       <Box
         display={"flex"}

@@ -5,7 +5,7 @@ import styles from "./PrimaryButton.module.scss";
 const PrimaryButton = ({ text, onClick }) => {
   return (
     <div className={`${styles["btn__wrapper"]}`} onClick={onClick}>
-      <div className={styles.btn__text}>Start Now</div>
+      <div className={styles.btn__text}>{text}</div>
 
       {/* <BodyCopy
         //style={{ color: "black" }}
