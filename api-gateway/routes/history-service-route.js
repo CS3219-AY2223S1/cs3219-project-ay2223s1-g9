@@ -4,7 +4,7 @@ import {
   responseInterceptor,
 } from "http-proxy-middleware";
 import config from "../config/config.js";
-import { API_PATH } from "../constant/constant.js";
+import { API_PATH, HTTP_STATUS_CODE } from "../constant/constant.js";
 import { authenticate } from "../middleware/authentication.js";
 
 const router = express.Router();
@@ -21,13 +21,16 @@ router.get(
     selfHandleResponse: true,
     onProxyRes: responseInterceptor(
       async (responseBuffer, proxyRes, req, res) => {
-        let data = JSON.parse(responseBuffer.toString("utf8"));
-        data["data"].forEach((entry) => {
-          const date = new Date(entry.createdAt);
-          entry.createdAt = date.toLocaleDateString();
-        });
-
-        return JSON.stringify(data);
+        if (proxyRes.statusCode !== HTTP_STATUS_CODE.NOT_MODIFIED) {
+          let data = JSON.parse(responseBuffer.toString("utf8"));
+          data["data"].forEach((entry) => {
+            const date = new Date(entry.createdAt);
+            entry.createdAt = date.toLocaleDateString();
+          });
+          return JSON.stringify(data);
+        } else {
+          return responseBuffer
+        }
       }
     ),
   })
