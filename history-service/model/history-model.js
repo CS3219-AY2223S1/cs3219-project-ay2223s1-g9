@@ -14,6 +14,10 @@ let HistoryModelSchema = new Schema({
         type: String,
         required: true,
     },
+    roomDifficulty: {
+        type: String,
+        required: true,
+    },
     createdAt: {
         type: Date,
         default: Date.now,

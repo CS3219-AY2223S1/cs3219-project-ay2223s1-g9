@@ -60,7 +60,8 @@ export const userJoinRoom = async (
         userOne,
         userTwo,
         roomId,
-        questionJSON.question_title
+        questionJSON.question_title,
+        roomDifficulty
       );
 
       io.to(roomId).emit(SOCKET_EVENT.QUESTION, {
