@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import CodeEditor from "../components/CodeEditor";
-import VideoPlayer from "../components/VideoPlayer";
+import VideoPlayer from "../components/organisms/VideoPlayer";
 import StandardPage from "../components/templates/StandardPage";
 import BodyCopy from "../components/atoms/BodyCopy";
 import LinkText from "../components/atoms/LinkText";
@@ -23,6 +23,8 @@ import styles from "./RoomPage.module.scss";
 import SecondaryButton from "../components/atoms/SecondaryButton";
 import PrimaryButton from "../components/atoms/PrimaryButton";
 import BodyCopyLarge from "../components/atoms/BodyCopyLarge";
+import VideoOffIcon from "../assets/icons/VideoOffIcon";
+import VideoIcon from "../assets/icons/VideoIcon";
 
 const RoomPage = () => {
   const { user, setUser } = useContext(AuthContext); // contains user.username and user.token
@@ -100,137 +102,76 @@ const RoomPage = () => {
 
   return (
     <>
-      <StandardPage
-        headerStyle={{ maxHeight: "100vh" }}
-        header={
-          <>
-            <div className={styles.header__wrapper}>
-              <div className={styles.header__details}>
-                <BodyCopy>
-                  Users: {room.personOne + ", " + room.personTwo}
-                </BodyCopy>
-                <BodyCopy>Difficulty: {room.difficulty}</BodyCopy>
-              </div>
-              <div className={styles.header__buttons}>
-                <div className={styles.header__leave}>
-                  <LinkText
-                    style={{ width: "100%" }}
-                    text={"Leave Room"}
-                    onClick={() => setPage(Pages.HomePage)}
-                  />
-                </div>
-                <div className={styles.header__submit}>
-                  <SecondaryButton text={"submit"} />
-                </div>
-              </div>
+      <div className={styles.wrapper}>
+        <div className={styles.header__wrapper}>
+          <div className={styles.header__details}>
+            <BodyCopy>Users: {room.personOne + ", " + room.personTwo}</BodyCopy>
+            <BodyCopy>Difficulty: {room.difficulty}</BodyCopy>
+          </div>
+          <div className={styles.header__buttons}>
+            <div className={styles.header__leave}>
+              <LinkText
+                style={{ width: "100%" }}
+                text={"Leave Room"}
+                onClick={() => setPage(Pages.HomePage)}
+              />
             </div>
-            <div className={styles.body}>
-              <div className={styles.question__wrapper}>
-                <BodyCopyLarge>{question.title}</BodyCopyLarge>
-                <div
-                  className={styles.question__data}
-                  dangerouslySetInnerHTML={{ __html: question.data }}
-                />
-              </div>
-              <div className={styles.rightSide__wrapper}>
-                <div className={styles.rightSide__code}>
-                  <CodeEditor socket={socket} roomId={room.roomId} />
+            <div className={styles.header__submit}>
+              <SecondaryButton text={"submit"} />
+            </div>
+          </div>
+        </div>
+        <div className={styles.body}>
+          <div className={styles.question__wrapper}>
+            <BodyCopyLarge>{question.title}</BodyCopyLarge>
+            <div
+              className={styles.question__data}
+              dangerouslySetInnerHTML={{ __html: question.data }}
+            />
+          </div>
+          <div className={styles.rightSide__wrapper}>
+            <div className={styles.rightSide__code}>
+              <CodeEditor socket={socket} roomId={room.roomId} />
+            </div>
+            <div className={styles.rightSide__videos}>
+              <div className={`${styles[`rightSide__video`]}`}>
+                {isShowingMyStream && <VideoPlayer stream={myStream} />}
+                <div className={styles.rightSide__label}>
+                  <BodyCopy text={user.username} style={{ margin: 0 }} />
                 </div>
-
-                <Button onClick={handleVideoToggle}>clickme</Button>
-                <div className={styles.rightSide__videos}>
-                  <div className={`${styles[`rightSide__video`]}`}>
-                    {isShowingMyStream && <VideoPlayer stream={myStream} />}
-                    <div className={styles.rightSide__label}>
-                      <BodyCopy text={user.username} style={{ margin: 0 }} />
+                {!isShowingMyStream ? (
+                  <LinkText onClick={handleVideoToggle}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      Start
+                      <div style={{ marginLeft: "3px" }}>
+                        <VideoIcon color={"#a287f4"} />
+                      </div>
                     </div>
+                  </LinkText>
+                ) : (
+                  <div
+                    onClick={handleVideoToggle}
+                    className={styles.rightSide__icon}
+                  >
+                    <VideoOffIcon color={"black"} />
                   </div>
-                  <div className={`${styles[`rightSide__video`]}`}>
-                    {isShowingPeerStream && (
-                      <VideoPlayer stream={myPeerStream} />
-                    )}
-                  </div>
+                )}
+              </div>
+              <div className={`${styles[`rightSide__video`]}`}>
+                {isShowingPeerStream && <VideoPlayer stream={myPeerStream} />}
+                <div className={styles.rightSide__label}>
+                  <BodyCopy style={{ margin: 0 }}>
+                    {user.username == room.personOne
+                      ? room.personTwo
+                      : room.personOne}
+                  </BodyCopy>
                 </div>
+                {!isShowingPeerStream && <VideoOffIcon />}
               </div>
             </div>
-          </>
-        }
-      ></StandardPage>
-
-      {/* <Box
-        display={"flex"}
-        flexDirection={"column"}
-        height={"100vh"}
-        padding={"1rem"}
-        justifyContent={"center"}
-        border={"blue 1px solid"}
-        sx={{ boxSizing: "border-box" }}
-      >
-        <Box
-          display={"flex"}
-          flexDirection={"row"}
-          justifyContent={"space-between"}
-        >
-          <Box display={"flex"} flexDirection={"row"}>
-            <Typography>Room: </Typography>
-            <Typography>{room.roomId}</Typography>
-          </Box>
-          <Box display={"flex"} flexDirection={"row"}>
-            <Typography>Users: </Typography>
-            <Typography>{room.personOne + ", " + room.personTwo}</Typography>
-          </Box>
-        </Box>
-        <Box display={"flex"} flexDirection={"row"} flex={1}>
-          <Box
-            border={"red 1px solid"}
-            height={"100%"}
-            flex={1}
-            display={"flex"}
-            flexDirection={"column"}
-            padding={"1rem"}
-            sx={{ boxSizing: "border-box" }}
-            gap={"0.5rem"}
-          >
-            <Box>{<Typography>Difficulty: {room.difficulty}</Typography>}</Box>
-            <Box flex={1}>
-              <Typography
-                dangerouslySetInnerHTML={{ __html: question.data }}
-              ></Typography>
-            </Box>
-          </Box>
-          <Box
-            border={"red 1px solid"}
-            padding={"1rem"}
-            height={"100%"}
-            flex={1}
-            sx={{ boxSizing: "border-box" }}
-          >
-            <CodeEditor socket={socket} roomId={room.roomId} />
-          </Box>
-          <Button onClick={() => setPage(Pages.HomePage)}>
-            Go back home page
-          </Button>
-          <Button
-            onClick={(_) => {
-              socket.emit("togglePeerStream", {
-                roomId: room.roomId,
-                showStream: !isShowingMyStream,
-              });
-              if (!isShowingMyStream) {
-                socket.emit("sendStream", {
-                  peerId: me.id,
-                  roomId: room.roomId,
-                });
-              }
-              setIsShowingMyStream(!isShowingMyStream);
-            }}
-          >
-            Click me
-          </Button>
-          {isShowingMyStream && <VideoPlayer stream={myStream} />}
-          {isShowingPeerStream && <VideoPlayer stream={myPeerStream} />}
-        </Box>
-      </Box> */}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

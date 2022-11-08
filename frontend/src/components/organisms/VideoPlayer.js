@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import styles from "./VideoPlayer.module.scss";
 
 const VideoPlayer = ({ stream }) => {
   const videoRef = useRef(null);
@@ -11,7 +12,7 @@ const VideoPlayer = ({ stream }) => {
 
   return (
     <>
-      <video ref={videoRef} autoPlay />
+      <video className={styles.videoInsert} ref={videoRef} autoPlay />
     </>
   );
 };
