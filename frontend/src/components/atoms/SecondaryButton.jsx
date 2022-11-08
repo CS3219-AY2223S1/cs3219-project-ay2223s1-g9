@@ -2,9 +2,10 @@ import BodyCopy from "./BodyCopy";
 import BodyCopyLarge from "./BodyCopyLarge";
 import styles from "./SecondaryButton.module.scss";
 
-const SecondaryButton = ({ text, onClick, color = "green", disable }) => {
+const SecondaryButton = ({ id, text, onClick, color = "green", disable }) => {
   return (
     <div
+      id={id}
       className={`${styles["btn__wrapper"]} ${
         styles[`btn__wrapper--${disable ? "disable" : color}`]
       }`}

@@ -130,7 +130,7 @@ const ProfileDropdown = () => {
       }}
     >
       <AccountIcon />
-      <BodyCopy text={user.username} />
+      {user && <BodyCopy text={user.username} />}
       <div
         className={`${styles.dropdown} ${
           dropdown ? "" : styles["dropdown--hidden"]

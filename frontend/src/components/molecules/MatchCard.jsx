@@ -27,6 +27,7 @@ import PrimaryButton from "../atoms/PrimaryButton";
 import SecondaryButton from "../atoms/SecondaryButton";
 
 const MatchCard = ({
+  id,
   title,
   content,
   color,
@@ -51,6 +52,7 @@ const MatchCard = ({
         <BodyCopy text={content} style={{ textAlign: "center" }} />
       )}
       <SecondaryButton
+        id={id}
         text={isMatching ? "matching..." : "match now"}
         color={color}
         disable={disable}
