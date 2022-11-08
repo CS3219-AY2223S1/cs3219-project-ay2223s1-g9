@@ -45,11 +45,11 @@ const MatchCard = ({
 
   return (
     <div className={styles.wrapper}>
-      <BodyCopy text={title} bold={"bold"} />
+      <BodyCopy text={title} bold={"bold"} style={{ margin: 0 }} />
       {isMatching ? (
         countdown
       ) : (
-        <BodyCopy text={content} style={{ textAlign: "center" }} />
+        <BodyCopy text={content} style={{ textAlign: "center", margin: 0 }} />
       )}
       <SecondaryButton
         id={id}

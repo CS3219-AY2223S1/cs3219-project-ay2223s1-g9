@@ -30,117 +30,76 @@ const ProblemsPage = ({ setDifficulty }) => {
   };
 
   return (
-    <>
-      <StandardPage header={<PrimaryNavBar />}>
-        <div className={styles.matching__div}>
-          <Heading3 text={"Problem Matching"} style={{ textAlign: "center" }} />
-          <BodyCopy style={{ textAlign: "center" }}>
-            Select your difficulty level and we will match you with someone of
-            the same chosen level and assign a random question of that
-            difficulty.
-          </BodyCopy>
-          <div className={styles.matching__cards}>
-            <MatchCard
-              id={"Easy"}
-              title={"EASY"}
-              content={"Takes 20–30 minutes to solve"}
-              color={"green"}
-              buttonText={"Match Now"}
-              disable={false}
-              onClick={handleSelectDifficulty}
-              isMatching={false}
-              // countdown={
-              //   <Countdown
-              //     date={Date.now() + waitTime}
-              //     key={key}
-              //     intervalDelay={0}
-              //     precision={2}
-              //     renderer={renderer}
-              //   />
-              // }
-            />
-            <MatchCard
-              id={"Medium"}
-              title={"MEDIUM"}
-              content={"Takes 30–40 minutes to solve"}
-              color={"yellow"}
-              disable={false}
-              onClick={handleSelectDifficulty}
-              isMatching={false}
-              // countdown={
-              //   <Countdown
-              //     date={Date.now() + waitTime}
-              //     key={key}
-              //     intervalDelay={0}
-              //     precision={2}
-              //     renderer={renderer}
-              //   />
-              // }
-            />
-            <MatchCard
-              id={"Hard"}
-              title={"HARD"}
-              content={"Takes 40-50 minutes to solve"}
-              color={"red"}
-              buttonText={"Match Now"}
-              disable={false}
-              onClick={handleSelectDifficulty}
-              isMatching={false}
-              // countdown={
-              //   <Countdown
-              //     date={Date.now() + waitTime}
-              //     key={key}
-              //     intervalDelay={0}
-              //     precision={2}
-              //     renderer={renderer}
-              //   />
-              // }
-            />
-          </div>
-        </div>
-      </StandardPage>
-      <NavBar />
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        height={"100%"}
-        padding={"4rem"}
-        justifyContent={"center"}
-      >
-        <Typography variant={"h6"} marginBottom={"10px"}>
-          Start coding!
-        </Typography>
-        <Typography>Select a difficulty level</Typography>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          gap={"10px"}
-          justifyContent={"flex-end"}
-        >
-          <Button
+    <StandardPage
+      header={<PrimaryNavBar />}
+      contentStyle={{ alignItems: "flex-start" }}
+    >
+      <div className={styles.matching__div}>
+        <Heading3 text={"Problem Matching"} style={{ textAlign: "center" }} />
+        <BodyCopy style={{ textAlign: "center" }}>
+          Select your difficulty level and we will match you with someone of the
+          same chosen level and assign a random question of that difficulty.
+        </BodyCopy>
+        <div className={styles.matching__cards}>
+          <MatchCard
             id={"Easy"}
-            variant={"outlined"}
+            title={"EASY"}
+            content={"Takes 20–30 minutes to solve"}
+            color={"green"}
+            buttonText={"Match Now"}
+            disable={false}
             onClick={handleSelectDifficulty}
-          >
-            Easy
-          </Button>
-          <Button
+            isMatching={false}
+            // countdown={
+            //   <Countdown
+            //     date={Date.now() + waitTime}
+            //     key={key}
+            //     intervalDelay={0}
+            //     precision={2}
+            //     renderer={renderer}
+            //   />
+            // }
+          />
+          <MatchCard
             id={"Medium"}
-            variant={"outlined"}
+            title={"MEDIUM"}
+            content={"Takes 30–40 minutes to solve"}
+            color={"yellow"}
+            disable={false}
             onClick={handleSelectDifficulty}
-          >
-            Medium
-          </Button>
-          <Button
+            isMatching={false}
+            // countdown={
+            //   <Countdown
+            //     date={Date.now() + waitTime}
+            //     key={key}
+            //     intervalDelay={0}
+            //     precision={2}
+            //     renderer={renderer}
+            //   />
+            // }
+          />
+          <MatchCard
             id={"Hard"}
-            variant={"outlined"}
+            title={"HARD"}
+            content={"Takes 40-50 minutes to solve"}
+            color={"red"}
+            buttonText={"Match Now"}
+            disable={false}
             onClick={handleSelectDifficulty}
-          >
-            Hard
-          </Button>
-        </Box>
-      </Box>
-    </>
+            isMatching={false}
+            // countdown={
+            //   <Countdown
+            //     date={Date.now() + waitTime}
+            //     key={key}
+            //     intervalDelay={0}
+            //     precision={2}
+            //     renderer={renderer}
+            //   />
+            // }
+          />
+        </div>
+      </div>
+    </StandardPage>
   );
 };
 

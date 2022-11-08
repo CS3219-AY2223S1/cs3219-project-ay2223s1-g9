@@ -3,9 +3,21 @@
 .matching {
   &__div {
     margin-top: 20px;
+    @include flexCenter;
+    flex-direction: column;
   }
 
   &__cards {
-    margin-top: 40px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include ip {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
   }
 }
