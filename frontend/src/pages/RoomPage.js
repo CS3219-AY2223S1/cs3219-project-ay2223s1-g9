@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import CodeEditor from "../components/CodeEditor";
-import VideoPlayer from "../components/organisms/VideoPlayer";
+import VideoPlayer from "../components/VideoPlayer";
 import StandardPage from "../components/templates/StandardPage";
 import BodyCopy from "../components/atoms/BodyCopy";
 import LinkText from "../components/atoms/LinkText";

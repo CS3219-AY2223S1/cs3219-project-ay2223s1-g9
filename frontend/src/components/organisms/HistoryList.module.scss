@@ -1,69 +1,79 @@
 @import "../../styles/scss/global.scss";
 
-.wrapper {
-  background-color: $color-dark;
-  border-radius: 10px;
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-
-  @include flexCenter;
-
-  @include mb {
-    width: 100%;
-  }
-}
-
-.form {
-  width: 300px;
-  margin-bottom: 20px;
-  @include flexCenter;
-  flex-direction: column;
-}
-
-.field {
+.history {
   &__wrapper {
-    position: relative;
+    height: 100%;
     width: 100%;
-    margin-bottom: 48px;
+    display: flex;
+    flex-direction: column;
   }
-  &__input {
-    background-color: transparent;
-    border-style: none;
-    border-bottom: 1px solid $color-light;
-    color: white;
-    font-size: 18px;
-    padding: 8px 5px;
-    font-family: $montserrat-medium;
-    transition: 0.2s;
-    width: 100%;
 
-    &:focus {
-      outline: none !important;
+  &__list {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-dark;
+    border-radius: $br-primary;
+    //  overflow-y: overlay;
+    height: 100%;
+    overflow-x: hidden;
+
+    // @include noScrollbar;
+  }
+
+  &__item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    // max-height: 50px;
+    padding: 5px 5px;
+    flex-shrink: 0;
+    transition: 0.2s;
+    overflow: hidden;
+    background-color: $color-dark;
+    border-bottom: solid $color-dark 0.1px;
+
+    &--even {
+      background-color: $color-dark2;
     }
 
     &:hover {
-      border-color: white;
+      // background-color: $color-dark;
+      filter: brightness(1.2);
+      cursor: pointer;
     }
 
-    &::placeholder {
-      color: $color-light;
-      font-family: $montserrat-regular;
+    &Column {
+      padding: 0 4px;
+
+      &--title {
+        flex: 3;
+        @include textOverflowEllipsis;
+      }
+      &--difficulty {
+        flex: 1;
+        @include textOverflowEllipsis;
+
+        &Easy {
+          color: $color-easy;
+        }
+      }
+      &--date {
+        flex: 1;
+        @include textOverflowEllipsis;
+      }
     }
   }
-  &__label {
-    color: $color-light;
-    font-family: $montserrat-regular;
-    font-size: 18px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: 0.2s;
-    pointer-events: none;
 
-    &--focus {
-      top: -4px;
-      font-size: 12px;
-    }
+  &__title {
+    // color: $color-primary;
+    box-shadow: 0px 2px 10px #00000025;
+    // position: -webkit-sticky;
+    // position: sticky;
+    // top: 0;
+    background-color: transparent;
+    pointer-events: none; //cancel hover
+    border: none; // cancel border
   }
 }

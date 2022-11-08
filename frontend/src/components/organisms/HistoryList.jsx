@@ -19,22 +19,74 @@ import { useEffect } from "react";
 
 const HistoryList = ({ history, getQuestion }) => {
   return (
-    <div>
-      <div></div>
-      <div>
-        {history.map((question) => (
+    <>
+      <div className={styles.history__wrapper}>
+        <div className={`${styles.history__item} ${styles.history__title}`}>
           <div
-            style={{ color: "white", border: "white solid 1px" }}
-            onClick={() => getQuestion(question.roomId)}
+            className={`${styles.history__itemColumn} ${styles["history__itemColumn--title"]}`}
           >
-            {question.createdAt}
-            {question.question_title}
-            {/* {question.roomId} */}
+            <BodyCopy text={"Problems"} />
           </div>
-        ))}
+          <div
+            className={`${styles.history__itemColumn} ${styles["history__itemColumn--difficulty"]}`}
+          >
+            <BodyCopy text={"Difficulty"} />
+          </div>
+          <div
+            className={`${styles.history__itemColumn} ${styles["history__itemColumn--date"]}`}
+          >
+            <BodyCopy text={"Date"} />
+          </div>
+        </div>
+        <div className={styles.history__list}>
+          {history.map((question, index) => (
+            <div
+              className={`${styles[`history__item`]} ${
+                styles[`history__item--${index % 2 ? "even" : ""}`]
+              }`}
+              onClick={() => getQuestion(question.roomId)}
+            >
+              <div
+                className={`${styles.history__itemColumn} ${styles["history__itemColumn--title"]}`}
+              >
+                <BodyCopy text={question.question_title} />
+              </div>
+              <div
+                className={`${styles.history__itemColumn} ${
+                  styles["history__itemColumn--difficulty"]
+                } ${
+                  styles[
+                    `history__itemColumn--difficulty${question.roomDifficulty}`
+                  ]
+                }`}
+              >
+                <BodyCopy
+                  text={question.roomDifficulty}
+                  color={
+                    question.roomDifficulty == "Easy"
+                      ? "green"
+                      : question.roomDifficulty == "Medium"
+                      ? "yellow"
+                      : question.roomDifficulty == "Hard"
+                      ? "red"
+                      : ""
+                  }
+                />
+              </div>
+              <div
+                className={`${styles.history__itemColumn} ${styles["history__itemColumn--date"]}`}
+              >
+                <BodyCopy text={question.createdAt} />
+              </div>
+
+              {/* {question.roomId} */}
+            </div>
+          ))}
+        </div>
+
+        {/* {question ? question : ""} */}
       </div>
-      {/* {question ? question : ""} */}
-    </div>
+    </>
   );
 };
 
