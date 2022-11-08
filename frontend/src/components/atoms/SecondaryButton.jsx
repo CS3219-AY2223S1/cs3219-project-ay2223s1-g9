@@ -2,7 +2,7 @@ import BodyCopy from "./BodyCopy";
 import BodyCopyLarge from "./BodyCopyLarge";
 import styles from "./SecondaryButton.module.scss";
 
-const SecondaryButton = ({ id, text, onClick, color = "green", disable }) => {
+const SecondaryButton = ({ id, text, onClick, color, disable }) => {
   return (
     <div
       id={id}

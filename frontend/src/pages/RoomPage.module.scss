@@ -1,0 +1,52 @@
+@import "../styles/scss/global.scss";
+
+.header {
+  &__wrapper {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4%;
+  }
+
+  &__details {
+    display: flex;
+    gap: 20px;
+    margin-right: 10px;
+    @include flexCenter;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    flex: 1;
+    //@include flexCenter;
+  }
+
+  &__leave {
+    flex: 1;
+    max-width: 100px;
+    @include flexCenter;
+  }
+
+  &__submit {
+    max-width: 150px;
+    min-width: 80px;
+    flex: 1;
+    @include flexCenter;
+  }
+
+  &__cards {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include ip {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+}

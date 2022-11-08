@@ -18,6 +18,27 @@
       color: black;
     }
 
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: $color-primary-active;
+      width: 0;
+      padding-top: 0;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      transition: 0.3s;
+    }
+    &:hover::after {
+      width: 100%;
+      padding-top: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
     &--disable {
       background-color: #ffffff20;
       pointer-events: none;
