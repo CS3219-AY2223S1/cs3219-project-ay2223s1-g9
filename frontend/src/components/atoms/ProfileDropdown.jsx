@@ -20,14 +20,14 @@ import axios from "axios";
 import { STATUS_CODE_SUCCESS, STATUS_CODE_BAD_REQUEST } from "../../constants";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { RoomContext} from "../../contexts/RoomContext"
+import { RoomContext } from "../../contexts/RoomContext";
 import BodyCopy from "./BodyCopy";
 import styles from "./ProfileDropdown.module.scss";
 import AccountIcon from "../../assets/icons/AccountIcon";
 
 const ProfileDropdown = () => {
   const { user, setUser } = useContext(AuthContext);
-  const { socket } = useContext(RoomContext)
+  const { socket } = useContext(RoomContext);
   const [dropdown, setDropdown] = useState(false);
   const [password, setPassword] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -72,7 +72,7 @@ const ProfileDropdown = () => {
         }
       });
     if (res && res.status === STATUS_CODE_SUCCESS) {
-      alert("pw changed");
+      alert("Password changed");
     }
   };
 
@@ -118,7 +118,7 @@ const ProfileDropdown = () => {
     if (res && res.status === STATUS_CODE_SUCCESS) {
       removeCookie("username");
       removeCookie("token");
-      socket.disconnect()
+      socket.disconnect();
       alert("Logout successfully");
       navigate("/login");
     }
