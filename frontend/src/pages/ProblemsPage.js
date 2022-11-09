@@ -1,15 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-  Typography,
-} from "@mui/material";
 import axios from "axios";
 import { API_GATEWAY_URL } from "../configs";
 import { API_PATH } from "../constants";
@@ -19,8 +8,6 @@ import {
   STATUS_CODE_BAD_REQUEST,
   STATUS_CODE_SUCCESS,
 } from "../constants";
-import { AuthContext } from "../AuthContext";
-import NavBar from "../components/NavBar";
 import { RoomContext, Pages } from "../contexts/RoomContext";
 import StandardPage from "../components/templates/StandardPage";
 import PrimaryNavBar from "../components/molecules/PrimaryNavBar";
@@ -28,28 +15,23 @@ import Heading3 from "../components/atoms/Heading3";
 import BodyCopy from "../components/atoms/BodyCopy";
 import styles from "./ProblemsPage.module.scss";
 import MatchCard from "../components/molecules/MatchCard";
-import userEvent from "@testing-library/user-event";
 import HistoryList from "../components/organisms/HistoryList";
 import BodyCopyLarge from "../components/atoms/BodyCopyLarge";
 import Heading4 from "../components/atoms/Heading4";
 
 const ProblemsPage = ({ setDifficulty, user }) => {
   const { setPage } = useContext(RoomContext);
-  // const { user, setUser } = useContext(AuthContext);
   const [history, setHistory] = useState([]);
   const [question, setQuestion] = useState("");
   const [stats, setStats] = useState();
   const [donut, setDonut] = useState();
-  console.log(history);
   const handleSelectDifficulty = (event) => {
     setDifficulty(event.currentTarget.id);
     setPage(Pages.MatchingPage);
   };
 
   useEffect(() => {
-    //  console.log("token", user.token);
     getHistory();
-    // startMatch();
   }, []);
 
   useEffect(() => {
@@ -75,7 +57,6 @@ const ProblemsPage = ({ setDifficulty, user }) => {
   }, [history]);
 
   const getHistory = async () => {
-    console.log("attempting to get history");
     const res = await axios
       .get(
         API_GATEWAY_URL + "/api/history",
@@ -97,7 +78,6 @@ const ProblemsPage = ({ setDifficulty, user }) => {
     if (res && res.status === STATUS_CODE_SUCCESS) {
       const historyList = res.data.data;
       setHistory(historyList);
-      console.log("hist", historyList);
     }
   };
 

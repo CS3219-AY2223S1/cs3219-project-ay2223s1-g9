@@ -17,12 +17,9 @@ import { RoomContext, Pages } from "../contexts/RoomContext";
 import CodeEditor from "../components/CodeEditor";
 import VideoPlayer from "../components/VideoPlayer";
 import PeerVideoPlayer from "../components/PeerVideoPlayer";
-import StandardPage from "../components/templates/StandardPage";
 import BodyCopy from "../components/atoms/BodyCopy";
 import LinkText from "../components/atoms/LinkText";
 import styles from "./RoomPage.module.scss";
-import SecondaryButton from "../components/atoms/SecondaryButton";
-import PrimaryButton from "../components/atoms/PrimaryButton";
 import BodyCopyLarge from "../components/atoms/BodyCopyLarge";
 import VideoOffIcon from "../assets/icons/VideoOffIcon";
 import VideoIcon from "../assets/icons/VideoIcon";
@@ -64,13 +61,11 @@ const RoomPage = () => {
         title: questionData.questionTitle,
         data: questionData.question,
       });
-      console.log("WHERE QN", questionData);
     });
 
     socket.on("receiveStream", ({ peerId }) => {
       const call = me.call(peerId, myStream);
       call.on("stream", (peerStream) => {
-        console.log(peerStream);
         setMyPeerStream(peerStream);
       });
     });
@@ -78,7 +73,6 @@ const RoomPage = () => {
     me.on("call", (call) => {
       call.answer(myStream);
       call.on("stream", (peerStream) => {
-        console.log(peerStream);
         setMyPeerStream(peerStream);
       });
     });
