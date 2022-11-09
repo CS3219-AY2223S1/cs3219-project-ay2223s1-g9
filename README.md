@@ -1,14 +1,14 @@
-# CS3219-AY22-23-Project-Skeleton
+# CS3219-AY22-23-ProjectGroup 9
 
 This is a template repository for CS3219 project.
 
-## User Service
-1. Rename `.env.sample` file to `.env`.
-2. Create a Cloud DB URL using Mongo Atlas.
-3. Enter the DB URL created as `DB_CLOUD_URI` in `.env` file.
-4. Install npm packages using `npm i`.
-5. Run User Service using `npm run dev`.
+## Local Deployment
+1. Clone repository
+2. Rename `.env.sample` file to `.env`.
+3. Run `docker-compose build`
+4. Run `docker-compose up -d`
 
-## Frontend
-1. Install npm packages using `npm i`.
-2. Run Frontend using `npm start`.
+**You can access docker mongodb using port 27018
+
+## Cloud Deployment
+1. Application URL: `https://frontend-hywbpmheia-as.a.run.app/`
