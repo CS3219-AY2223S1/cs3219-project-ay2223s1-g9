@@ -1,0 +1,126 @@
+@import "../styles/scss/global.scss";
+
+.matching {
+  &__div {
+    margin: 10px 0;
+    @include flexCenter;
+    flex-direction: column;
+    padding-bottom: 60px;
+    border-bottom: 1px solid grey;
+    width: 100%;
+  }
+
+  &__cards {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include ip {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+}
+
+.pastAttempts {
+  &__div {
+    margin: 10px 0;
+    width: 100%;
+    @include flexCenter;
+    flex-direction: column;
+  }
+
+  &__content {
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    gap: 40px;
+  }
+
+  &__history {
+    flex: 3;
+  }
+  &__stats {
+    flex: 1;
+    max-width: 300px;
+
+    @include ipSm {
+      display: none;
+    }
+  }
+
+  &__donut {
+    width: 100%;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // background: conic-gradient(
+    //   red 0deg 80deg,
+    //   green 80deg 190deg,
+    //   blue 190deg 360deg
+    // );
+
+    &::after {
+      content: "";
+      padding-bottom: 100%;
+    }
+  }
+
+  &__hole {
+    width: 65%;
+    height: 65%;
+    position: absolute;
+    border-radius: 50%;
+    background: $color-background;
+    @include flexCenter;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &__text {
+    width: 100%;
+    @include ip {
+      display: none;
+    }
+  }
+
+  &__legend {
+    @include flexCenter;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  &__circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  &__group {
+    @include flexCenter;
+    gap: 10px;
+  }
+  &__easy {
+    background: $color-easy;
+  }
+  &__med {
+    background: $color-med;
+  }
+  &__hard {
+    background: $color-hard;
+  }
+
+  &__null {
+    padding: 50px 0;
+    color: $color-dark;
+  }
+}

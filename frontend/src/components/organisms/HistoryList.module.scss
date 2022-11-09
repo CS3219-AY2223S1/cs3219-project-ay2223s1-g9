@@ -1,0 +1,96 @@
+@import "../../styles/scss/global.scss";
+
+.history {
+  &__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-dark;
+    border-radius: $br-primary;
+    //  overflow-y: overlay;
+    height: 100%;
+    overflow-x: hidden;
+
+    // @include noScrollbar;
+  }
+
+  &__itemWrapper {
+    @include flexCenter;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  &__item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 44px;
+    // max-height: 50px;
+    padding: 5px 5px;
+    flex-shrink: 0;
+    transition: 0.2s;
+    overflow: hidden;
+    background-color: $color-dark;
+    border-bottom: solid $color-dark 0.1px;
+    box-sizing: border-box;
+
+    &--even {
+      background-color: $color-dark2;
+    }
+
+    &:hover {
+      // background-color: $color-dark;
+      filter: brightness(1.2);
+      cursor: pointer;
+    }
+
+    &Column {
+      padding: 0 4px;
+
+      &--title {
+        flex: 3.5;
+      }
+      &--difficulty {
+        flex: 1;
+
+        &Easy {
+          color: $color-easy;
+        }
+      }
+      &--date {
+        // flex: 1;
+        width: 80px;
+      }
+    }
+  }
+
+  &__title {
+    box-shadow: 0px 2px 10px #00000025;
+    background-color: transparent;
+    pointer-events: none; //cancel hover
+    border: none; // cancel border
+  }
+}
+
+.question {
+  &__wrapper {
+    width: 100%;
+    background-color: $color-dark;
+    padding: 10px 20px;
+    max-height: 500px;
+    overflow: auto;
+    box-sizing: border-box;
+    box-shadow: inset 0px 2px 10px #00000060;
+  }
+  &__data {
+    color: white;
+    font-family: $montserrat-regular;
+  }
+}
