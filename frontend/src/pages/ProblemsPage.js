@@ -36,7 +36,7 @@ import Heading4 from "../components/atoms/Heading4";
 const ProblemsPage = ({ setDifficulty, user }) => {
   const { setPage } = useContext(RoomContext);
   // const { user, setUser } = useContext(AuthContext);
-  const [history, setHistory] = useState([{}]);
+  const [history, setHistory] = useState([]);
   const [question, setQuestion] = useState("");
   const [stats, setStats] = useState();
   const [donut, setDonut] = useState();
@@ -147,54 +147,60 @@ const ProblemsPage = ({ setDifficulty, user }) => {
 
       <div className={styles.pastAttempts__div}>
         <Heading3 text={"Past Attempts"} style={{ textAlign: "center" }} />
-        <div className={styles.pastAttempts__content}>
-          <div className={styles.pastAttempts__history}>
-            <HistoryList history={history} user={user} />
-          </div>
-          {stats && (
-            <div className={styles.pastAttempts__stats}>
-              <div
-                className={styles.pastAttempts__donut}
-                style={{
-                  background: `conic-gradient( #15c79c 0deg ${donut.easy}deg
+        {history.length > 0 ? (
+          <div className={styles.pastAttempts__content}>
+            <div className={styles.pastAttempts__history}>
+              <HistoryList history={history} user={user} />
+            </div>
+            {stats && (
+              <div className={styles.pastAttempts__stats}>
+                <div
+                  className={styles.pastAttempts__donut}
+                  style={{
+                    background: `conic-gradient( #15c79c 0deg ${donut.easy}deg
               , #f4dc87 ${donut.easy}deg ${
-                    donut.easy + donut.med
-                  }deg, #fd6584 ${donut.med}deg 360deg`,
-                }}
-              >
-                <div className={styles.pastAttempts__hole}>
-                  <Heading4 text={stats.total} style={{ margin: 0 }} />
-                  <div className={styles.pastAttempts__text}>
-                    <BodyCopy
-                      text={"problems attempted"}
-                      style={{ textAlign: "center", margin: 0 }}
-                    />
+                      donut.easy + donut.med
+                    }deg, #fd6584 ${donut.med}deg 360deg`,
+                  }}
+                >
+                  <div className={styles.pastAttempts__hole}>
+                    <Heading4 text={stats.total} style={{ margin: 0 }} />
+                    <div className={styles.pastAttempts__text}>
+                      <BodyCopy
+                        text={"problems attempted"}
+                        style={{ textAlign: "center", margin: 0 }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.pastAttempts__legend}>
+                  <div className={styles.pastAttempts__group}>
+                    <div
+                      className={`${styles.pastAttempts__circle} ${styles.pastAttempts__easy}`}
+                    ></div>
+                    <BodyCopy text={stats.easy} />
+                  </div>
+                  <div className={styles.pastAttempts__group}>
+                    <div
+                      className={`${styles.pastAttempts__circle} ${styles.pastAttempts__med}`}
+                    ></div>
+                    <BodyCopy text={stats.med} />
+                  </div>
+                  <div className={styles.pastAttempts__group}>
+                    <div
+                      className={`${styles.pastAttempts__circle} ${styles.pastAttempts__hard}`}
+                    ></div>
+                    <BodyCopy text={stats.hard} />
                   </div>
                 </div>
               </div>
-              <div className={styles.pastAttempts__legend}>
-                <div className={styles.pastAttempts__group}>
-                  <div
-                    className={`${styles.pastAttempts__circle} ${styles.pastAttempts__easy}`}
-                  ></div>
-                  <BodyCopy text={stats.easy} />
-                </div>
-                <div className={styles.pastAttempts__group}>
-                  <div
-                    className={`${styles.pastAttempts__circle} ${styles.pastAttempts__med}`}
-                  ></div>
-                  <BodyCopy text={stats.med} />
-                </div>
-                <div className={styles.pastAttempts__group}>
-                  <div
-                    className={`${styles.pastAttempts__circle} ${styles.pastAttempts__hard}`}
-                  ></div>
-                  <BodyCopy text={stats.hard} />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        ) : (
+          <div className={styles.pastAttempts__null}>
+            <BodyCopyLarge>No attempts yet.</BodyCopyLarge>
+          </div>
+        )}
       </div>
     </StandardPage>
   );

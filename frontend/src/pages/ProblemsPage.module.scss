@@ -118,4 +118,9 @@
   &__hard {
     background: $color-hard;
   }
+
+  &__null {
+    padding: 50px 0;
+    color: $color-dark;
+  }
 }
