@@ -19,16 +19,10 @@ import {
   STATUS_CODE_BAD_REQUEST,
   STATUS_CODE_SUCCESS,
 } from "../constants";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
-import Heading2 from "../components/atoms/Heading2";
-import Heading3 from "../components/atoms/Heading3";
-import Logo from "../assets/icons/LogoIcon";
 import BodyCopy from "../components/atoms/BodyCopy";
-import PrimaryButton from "../components/atoms/PrimaryButton";
 import StandardPage from "../components/templates/StandardPage";
 import SecondaryNavBar from "../components/molecules/SecondaryNavBar";
 import AuthCard from "../components/organisms/AuthCard";

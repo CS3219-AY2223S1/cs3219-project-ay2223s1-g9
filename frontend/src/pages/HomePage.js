@@ -1,23 +1,5 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-  Typography,
-} from "@mui/material";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import NavBar from "../components/NavBar";
-import MatchingPage from "./MatchingPage";
 import StandardPage from "../components/templates/StandardPage";
 import BodyCopyLarge from "../components/atoms/BodyCopyLarge";
 import SecondaryNavBar from "../components/molecules/SecondaryNavBar";
@@ -34,9 +16,6 @@ const HomePage = () => {
     setIsMatching(true);
     setDifficulty(event.currentTarget.id);
   };
-  useEffect(() => {
-    console.log(isMatching);
-  }, [isMatching]);
 
   return (
     <StandardPage header={<SecondaryNavBar />}>
