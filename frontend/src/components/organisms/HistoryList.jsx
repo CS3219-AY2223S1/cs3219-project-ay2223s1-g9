@@ -32,9 +32,10 @@ const HistoryList = ({ history, user }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (id, roomId) => {
-    console.log("IDDD", id);
-    setSelected(id);
-    getQuestion(roomId);
+    if (!isOpen) {
+      setSelected(id);
+      getQuestion(roomId);
+    }
     setIsOpen(!isOpen);
   };
 
@@ -62,8 +63,6 @@ const HistoryList = ({ history, user }) => {
     if (res && res.status === STATUS_CODE_SUCCESS) {
       const data = res.data;
       setQuestion(data);
-
-      console.log("HII", data);
     }
   };
   return (
