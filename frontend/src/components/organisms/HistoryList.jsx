@@ -32,8 +32,10 @@ const HistoryList = ({ history, user }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (id, roomId) => {
-    setSelected(id);
-    getQuestion(roomId);
+    if (!isOpen) {
+      setSelected(id);
+      getQuestion(roomId);
+    }
     setIsOpen(!isOpen);
   };
 
