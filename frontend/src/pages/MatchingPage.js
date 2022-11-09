@@ -36,7 +36,7 @@ const MatchingPage = ({ difficulty }) => {
         roomDifficulty: difficulty,
       },
       (error) => {
-        console.log(error);
+        console.log("error", error);
       }
     );
 
